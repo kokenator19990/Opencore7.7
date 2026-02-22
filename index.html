@@ -3327,6 +3327,34 @@
       white-space: nowrap;
     }
 
+    /* Impact card label */
+    .impact-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .impact-label .test-company-badge {
+      font-size: .78rem;
+      padding: 6px 14px;
+      letter-spacing: .04em;
+    }
+
+    .impact-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      flex-shrink: 0;
+    }
+
+    /* Override quote pseudo on impact cards */
+    .test-card-v2.impact-card::before {
+      content: '';
+    }
+
     /* ================================================
        LEAD MAGNETS
     ================================================ */
@@ -4604,68 +4632,38 @@
     <section class="testimonials" id="testimonios">
       <div class="container">
         <div class="sec-hdr reveal">
-          <div class="sec-tag">Prueba Social</div>
-          <h2 class="sec-title">Empresas que ya recuperaron<br><span class="grad">su capital operativo.</span></h2>
-          <p class="sec-sub">Directivos que confiaron su infraestructura crítica a OpenCORE y vieron resultados
-            medibles.</p>
+          <div class="sec-tag">Resultados Comprobados</div>
+          <h2 class="sec-title">Impacto real en<br><span class="grad">operaciones críticas.</span></h2>
+          <p class="sec-sub">Resultados tangibles obtenidos al integrar y modernizar la infraestructura de empresas líderes en Latinoamérica.</p>
         </div>
         <div class="test-grid" style="margin-bottom:40px">
-          <div class="test-card-v2 reveal">
-            <div class="test-stars">★★★★★</div>
-            <p class="test-quote">OpenCORE migró nuestro sistema crítico sin detener producción ni un solo día.
-              <strong>La continuidad operacional fue total.</strong> Logramos visibilidad de activos que nunca habíamos
-              tenido en 15 años.
-            </p>
-            <div class="test-meta">
-              <div class="test-avatar">👨‍💼</div>
-              <div>
-                <div class="test-name">Roberto Vásquez</div>
-                <div class="test-role">Gerente de Operaciones</div>
-              </div>
-              <span class="test-company-badge">Minería</span>
+          <div class="test-card-v2 impact-card reveal">
+            <div class="impact-label">
+              <span class="impact-dot"></span>
+              <span class="test-company-badge">Sector Minero &amp; Maquinaria</span>
             </div>
+            <p class="test-quote">Migración de sistema core sin detener la producción operativa. Se logró <strong>visibilidad total y en tiempo real de activos inmovilizados</strong>, reduciendo el riesgo tecnológico heredado.</p>
           </div>
-          <div class="test-card-v2 reveal">
-            <div class="test-stars">★★★★★</div>
-            <p class="test-quote">Teníamos el 30% de nuestro inventario inmovilizado sin saberlo. Con OpenCORE
-              <strong>liberamos capital que reinvertimos en crecimiento.</strong> El ROI fue visible en menos de 8
-              meses.
-            </p>
-            <div class="test-meta">
-              <div class="test-avatar">👩‍💼</div>
-              <div>
-                <div class="test-name">Carmen Herrera</div>
-                <div class="test-role">Directora de Supply Chain</div>
-              </div>
-              <span class="test-company-badge">Distribución</span>
+          <div class="test-card-v2 impact-card reveal">
+            <div class="impact-label">
+              <span class="impact-dot"></span>
+              <span class="test-company-badge">Cadena de Suministro</span>
             </div>
+            <p class="test-quote">Identificación y liberación de un <strong>30% de capital atrapado en inventario ineficiente</strong>. La integración de sistemas legacy permitió reinvertir recursos en expansión operativa.</p>
           </div>
-          <div class="test-card-v2 reveal">
-            <div class="test-stars">★★★★★</div>
-            <p class="test-quote">Nuestros sistemas legacy llevaban 12 años sin integrarse. OpenCORE entregó
-              <strong>arquitectura escalable y datos en tiempo real</strong> que transformaron cómo tomamos decisiones.
-            </p>
-            <div class="test-meta">
-              <div class="test-avatar">👨‍💻</div>
-              <div>
-                <div class="test-name">Patricio Morales</div>
-                <div class="test-role">CTO — Tecnología y Sistemas</div>
-              </div>
-              <span class="test-company-badge">Industrial</span>
+          <div class="test-card-v2 impact-card reveal">
+            <div class="impact-label">
+              <span class="impact-dot"></span>
+              <span class="test-company-badge">Manufactura Industrial</span>
             </div>
+            <p class="test-quote">Modernización de infraestructura con <strong>12 años de obsolescencia</strong>. Implementación de arquitectura escalable que unificó los silos de datos y habilitó decisiones basadas en telemetría en tiempo real.</p>
           </div>
-          <div class="test-card-v2 reveal">
-            <div class="test-stars">★★★★★</div>
-            <p class="test-quote">Redujimos los quiebres de stock en un <strong>65% en 4 meses.</strong> Lo que antes
-              era una crisis semanal ahora es un proceso predecible y completamente automatizado.</p>
-            <div class="test-meta">
-              <div class="test-avatar">👩‍🔬</div>
-              <div>
-                <div class="test-name">Andrea Campos</div>
-                <div class="test-role">Jefa de Logística y Abastecimiento</div>
-              </div>
-              <span class="test-company-badge">Automotriz</span>
+          <div class="test-card-v2 impact-card reveal">
+            <div class="impact-label">
+              <span class="impact-dot"></span>
+              <span class="test-company-badge">Logística Automotriz</span>
             </div>
+            <p class="test-quote">Reducción de quiebres de stock críticos en un <strong>65% durante el primer semestre</strong>. Transformación de una crisis logística semanal en un proceso automatizado y predecible.</p>
           </div>
         </div>
 
