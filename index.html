@@ -1082,6 +1082,66 @@
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 28px 64px rgba(0,0,0,.65), 0 0 0 1px rgba(0,194,255,.06);
+      transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+      cursor: default;
+    }
+
+    .who-terminal:hover {
+      transform: translateY(-4px) scale(1.012);
+      box-shadow: 0 40px 90px rgba(0,0,0,.75),
+                  0 0 0 1px rgba(0,194,255,.28),
+                  0 0 40px rgba(0,194,255,.09);
+    }
+
+    .who-terminal:hover .wt-bar {
+      background: rgba(0,194,255,.08);
+      border-bottom-color: rgba(0,194,255,.2);
+    }
+
+    .who-terminal:hover .wt-dot { opacity: 1; }
+
+    /* Replay hint badge */
+    .wt-replay {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: .58rem;
+      font-family: var(--mono);
+      color: rgba(0,194,255,.22);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 4px;
+      letter-spacing: .06em;
+      transition: color .2s, background .2s;
+      z-index: 5;
+    }
+
+    .wt-replay:hover {
+      color: rgba(0,194,255,.9);
+      background: rgba(0,194,255,.08);
+    }
+
+    /* Line hover highlight */
+    .wt-line.show:not(.wt-blank):not(.wt-cur):hover {
+      background: rgba(0,194,255,.05);
+      border-radius: 3px;
+      margin: 0 -6px;
+      padding: 0 6px;
+      text-shadow: 0 0 14px currentColor;
+    }
+
+    /* Flash on replay */
+    @keyframes wtFlash {
+      0%   { opacity: 1; }
+      30%  { opacity: 0; }
+      60%  { opacity: .5; }
+      100% { opacity: 1; }
+    }
+
+    .who-terminal.replaying .wt-body {
+      animation: wtFlash .35s ease forwards;
     }
 
     .who-terminal::after {
@@ -6457,10 +6517,25 @@
           { t: '$',                                       c: 'wt-cur'  },
         ];
 
-        var started = false;
-        var tObs = new IntersectionObserver(function(entries) {
-          if (!entries[0].isIntersecting || started) return;
-          started = true;
+        /* Replay button */
+        var replayBtn = document.createElement('button');
+        replayBtn.className = 'wt-replay';
+        replayBtn.textContent = '↺ replay';
+        replayBtn.setAttribute('aria-label', 'Reiniciar animación');
+        whoTerm.appendChild(replayBtn);
+
+        var timers = [];
+
+        function runAnimation() {
+          /* Clear timers */
+          timers.forEach(clearTimeout);
+          timers = [];
+
+          /* Flash + clear */
+          whoTerm.classList.add('replaying');
+          setTimeout(function () { whoTerm.classList.remove('replaying'); }, 360);
+          wtBody.innerHTML = '';
+
           var delay = 200;
           lines.forEach(function(line) {
             var span = document.createElement('span');
@@ -6468,7 +6543,8 @@
             span.textContent = line.t;
             wtBody.appendChild(span);
             var d = delay;
-            setTimeout(function() { span.classList.add('show'); }, d);
+            var t = setTimeout(function() { span.classList.add('show'); }, d);
+            timers.push(t);
             delay += line.c === 'wt-blank' ? 80
                    : line.c === 'wt-cmd'   ? 450
                    : line.c === 'wt-info'  ? 350
@@ -6476,6 +6552,35 @@
                    : line.c === 'wt-head'  ? 200
                    : 170;
           });
+        }
+
+        replayBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          runAnimation();
+        });
+
+        /* Tilt on mousemove */
+        whoTerm.addEventListener('mousemove', function(e) {
+          var rect = whoTerm.getBoundingClientRect();
+          var cx = rect.left + rect.width  / 2;
+          var cy = rect.top  + rect.height / 2;
+          var rx = ((e.clientY - cy) / (rect.height / 2)) * 4;
+          var ry = ((e.clientX - cx) / (rect.width  / 2)) * -4;
+          whoTerm.style.transform = 'translateY(-4px) scale(1.012) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+          whoTerm.style.transition = 'box-shadow .35s ease';
+        });
+
+        whoTerm.addEventListener('mouseleave', function() {
+          whoTerm.style.transform = '';
+          whoTerm.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1), box-shadow .35s ease';
+        });
+
+        /* First run via IntersectionObserver */
+        var started = false;
+        var tObs = new IntersectionObserver(function(entries) {
+          if (!entries[0].isIntersecting || started) return;
+          started = true;
+          runAnimation();
           tObs.disconnect();
         }, { threshold: 0.25 });
         tObs.observe(whoTerm);
