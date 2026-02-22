@@ -339,15 +339,15 @@
       right: 0;
       z-index: 10000;
       padding: 0 28px;
-      background: rgba(242, 248, 255, .82);
+      background: rgba(242,248,255,.85);
       backdrop-filter: blur(20px) saturate(160%);
       border-bottom: 1px solid var(--bd);
       transition: background .3s, box-shadow .3s
     }
 
     .navbar.scrolled {
-      background: rgba(242, 248, 255, .97);
-      box-shadow: 0 1px 40px rgba(0, 100, 180, .1)
+      background: rgba(242,248,255,.97);
+      box-shadow: 0 1px 28px rgba(0,100,180,.1)
     }
 
     .nav-inner {
@@ -380,7 +380,7 @@
     }
 
     .logo-text {
-      background: linear-gradient(90deg, #07192e, var(--text2));
+      background: linear-gradient(90deg, #071525, #1a3550);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -486,7 +486,7 @@
       flex-direction: column;
       justify-content: flex-start;
       padding: 72px 24px 40px;
-      background: #f2f8ff;
+      background: #f0f7ff;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       animation: menuFadeIn .2s ease both;
@@ -507,7 +507,7 @@
       position: absolute;
       top: 0; left: 0; bottom: 0;
       width: 2px;
-      background: linear-gradient(180deg, transparent, rgba(0,194,255,.6) 40%, rgba(99,102,241,.4) 70%, transparent);
+      background: linear-gradient(180deg, transparent, rgba(0,119,187,.25) 40%, rgba(67,56,202,.15) 70%, transparent);
       pointer-events: none;
     }
 
@@ -530,7 +530,7 @@
     .mob-menu a:active,
     .mob-menu a:hover {
       color: #fff;
-      background: rgba(0, 194, 255, .1);
+      background: rgba(0,119,187,.1);
       border-color: rgba(0, 194, 255, .3);
       transform: translateX(4px);
     }
@@ -561,7 +561,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255,255,255,.08);
+      background: rgba(0,100,180,.06);
       border: 1px solid rgba(255,255,255,.15);
       color: rgba(255,255,255,.8);
       font-size: 1.1rem;
@@ -574,7 +574,7 @@
 
     .mob-menu-close:hover,
     .mob-menu-close:active {
-      background: rgba(0,194,255,.2);
+      background: rgba(0,119,187,.15);
       color: #fff;
       border-color: rgba(0,194,255,.4);
     }
@@ -679,7 +679,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(235, 246, 255, 0.92);
+      background: rgba(235,246,255,0.9);
       /* Darken base background */
     }
 
@@ -3086,7 +3086,7 @@
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(242, 248, 255, 0.98);
+      background: rgba(240,247,255,0.98);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -3242,7 +3242,7 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(242, 248, 255, .98);
+      background: rgba(240,247,255,.98);
       backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
@@ -3291,7 +3291,7 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      background: rgba(255, 255, 255, .06);
+      background: rgba(0,100,180,.06);
       border: 1px solid var(--bd);
       color: var(--text2);
       width: 36px;
@@ -3306,7 +3306,7 @@
     }
 
     .sched-close:hover {
-      background: rgba(255, 255, 255, .12);
+      background: rgba(0,100,180,.12);
       color: #fff;
     }
 
@@ -4292,123 +4292,6 @@
         transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
       }
     }
-  
-    /* ═══════════════════════════════════
-       OPENCORE LIGHT — FULL OVERRIDES
-    ═══════════════════════════════════ */
-    body { background: var(--bg); color: var(--text); }
-    .orb  { opacity: .18; filter: blur(160px); }
-
-    /* 25+ número: negro con glow azul sutil */
-    .who-big-num {
-      color: #07192e !important;
-      text-shadow: 0 0 40px rgba(0,100,180,.18), 0 0 80px rgba(0,100,180,.1) !important;
-    }
-    .who-big-num:hover {
-      text-shadow: 0 0 60px rgba(0,119,187,.45), 0 0 120px rgba(0,119,187,.22) !important;
-      transform: scale(1.04);
-    }
-    .who-big-num span { color: var(--cyan) !important; }
-
-    /* Navbar */
-    .navbar { border-bottom: 1px solid var(--bd2); }
-    .nav-link { color: var(--text2) !important; }
-    .nav-link:hover, .nav-link.active { color: var(--cyan) !important; }
-    .logo-sub { color: var(--text3) !important; }
-    .btn-cta  { background: var(--cyan) !important; color: #fff !important; }
-    .btn-cta:hover { background: var(--cyan-l) !important; }
-    .mob-menu { border-left: 1px solid var(--bd2); }
-    .mob-menu a { color: var(--text2) !important; }
-    .mob-menu a:hover { color: var(--cyan) !important; }
-    .mob-menu-close { color: var(--text3) !important; }
-    .ham-line { background: var(--text2) !important; }
-
-    /* Headings globales */
-    .sec-title, h2, h3, h4, h5 { color: var(--text) !important; }
-    .sec-tag    { color: var(--cyan) !important; }
-    .sec-sub    { color: var(--text2) !important; }
-    .hero h1    { color: var(--text) !important; }
-    .hero-sub   { color: var(--text2) !important; }
-    .hero-eyebrow { color: var(--cyan) !important; }
-    .stat-num   { color: var(--text) !important; }
-    .stat-lbl   { color: var(--text3) !important; }
-    .grad { background: linear-gradient(135deg, var(--cyan) 0%, #4338ca 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .btn-ghost  { color: var(--text2) !important; border-color: var(--bd2) !important; }
-    .btn-ghost:hover { color: var(--cyan) !important; border-color: var(--cyan) !important; }
-    .tl-name    { color: var(--text2) !important; }
-
-    /* Cards & surfaces */
-    .svc-card  { background: #ffffff !important; border: 1px solid var(--bd2) !important; box-shadow: 0 4px 24px rgba(0,100,180,.07) !important; }
-    .svc-card:hover { border-color: var(--cyan) !important; box-shadow: 0 12px 40px rgba(0,100,180,.13) !important; }
-    .svc-card h3, .svc-title { color: var(--text) !important; }
-    .svc-desc  { color: var(--text2) !important; }
-    .svc-tag   { color: var(--cyan) !important; background: var(--cyan-d) !important; }
-    .step { background: #ffffff !important; border: 1px solid var(--bd2) !important; border-top: 2px solid var(--cyan) !important; box-shadow: 0 4px 20px rgba(0,100,180,.06) !important; }
-    .step:hover { border-color: var(--cyan) !important; box-shadow: 0 12px 36px rgba(0,100,180,.12) !important; }
-    .step h4   { color: var(--text) !important; }
-    .step p    { color: var(--text2) !important; }
-    .step-num-bg { color: rgba(0,100,180,.05) !important; }
-    .cc { background: #ffffff !important; border: 1px solid var(--bd2) !important; box-shadow: 0 4px 20px rgba(0,100,180,.06) !important; }
-    .cc:hover  { border-color: var(--cyan) !important; box-shadow: 0 16px 44px rgba(0,100,180,.13) !important; }
-    .cc h3, .cc-title { color: var(--text) !important; }
-    .cc-tag    { color: var(--cyan) !important; background: var(--cyan-d) !important; }
-    .cc-text, .cc-desc { color: var(--text2) !important; }
-    .test-card, .test-card-v2, .tl { background: #ffffff !important; border: 1px solid var(--bd2) !important; box-shadow: 0 4px 20px rgba(0,100,180,.06) !important; }
-    .test-card:hover, .test-card-v2:hover { box-shadow: 0 16px 44px rgba(0,100,180,.12) !important; }
-    .test-name, .tname { color: var(--text) !important; }
-    .test-role, .trole { color: var(--text3) !important; }
-    .test-text, .ttext { color: var(--text2) !important; }
-    .test-stars { color: #e8a000 !important; }
-    .impact-item { background: #ffffff !important; border: 1px solid var(--bd2) !important; }
-    .impact-label { color: var(--text) !important; }
-    .impact-sub   { color: var(--text2) !important; }
-    .vs-card { background: #ffffff !important; border-color: var(--bd2) !important; }
-    .vs-card h4, .vs-card p, .vs-list li { color: var(--text) !important; }
-    .cp { background: #ffffff !important; border-color: var(--bd2) !important; }
-    .cp-title, .cp h4 { color: var(--text) !important; }
-    .cp-desc { color: var(--text2) !important; }
-
-    /* Who section */
-    .who-sec { background: linear-gradient(135deg, rgba(0,119,187,.04) 0%, transparent 55%, rgba(67,56,202,.03) 100%) !important; }
-    .who-big-label { color: var(--text) !important; }
-    .who-desc      { color: var(--text2) !important; }
-    .who-brand     { color: rgba(7,25,46,.3) !important; }
-    .who-stat      { background: #ffffff !important; }
-    .ws-lbl        { color: var(--text3) !important; }
-
-    /* Forms */
-    .calc-inputs, .calc-result { background: #ffffff !important; border-color: var(--bd2) !important; }
-    .calc-inputs h3 { color: var(--text) !important; }
-    .fg input, .fg textarea, .fg select { background: #ffffff !important; color: var(--text) !important; border-color: var(--bd2) !important; }
-    .fg label { color: var(--text2) !important; }
-    .fg input::placeholder, .fg textarea::placeholder { color: var(--text3) !important; }
-    .contact-left h2 { color: var(--text) !important; }
-    .contact-left p  { color: var(--text2) !important; }
-
-    /* Scheduling / modal */
-    .sched-modal { background: #ffffff !important; border-color: var(--bd2) !important; }
-    .sched-modal h3  { color: var(--text) !important; }
-    .sched-close     { color: var(--text3) !important; }
-    .slot-time       { color: var(--text) !important; }
-    .slot-btn        { background: var(--cyan) !important; color: #fff !important; }
-
-    /* Stack / tech */
-    .ti { background: #ffffff !important; border: 1px solid var(--bd2) !important; color: var(--text2) !important; }
-    .ti:hover { border-color: var(--cyan) !important; color: var(--cyan) !important; }
-
-    /* Footer */
-    footer { background: var(--bg2) !important; border-top: 1px solid var(--bd2) !important; }
-    .ft-copy, .ft-link, .ft-legal-links a { color: var(--text3) !important; }
-    .ft-link:hover, .ft-legal-links a:hover { color: var(--cyan) !important; }
-
-    /* Stats / misc */
-    .si-label { color: var(--text2) !important; }
-    .float-cta-btn { background: var(--cyan) !important; }
-    ::-webkit-scrollbar-track { background: var(--bg2) !important; }
-    ::-webkit-scrollbar-thumb { background: rgba(0,100,180,.3) !important; }
-    ::selection { background: rgba(0,119,187,.15) !important; color: var(--text) !important; }
-
   </style>
 </head>
 
