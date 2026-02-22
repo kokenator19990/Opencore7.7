@@ -3453,6 +3453,86 @@
     /* ================================================
        LEAD MAGNETS
     ================================================ */
+
+    /* E-E-A-T strip */
+    .eeat-strip {
+      background: rgba(0, 194, 255, .04);
+      border-top: 1px solid rgba(0, 194, 255, .12);
+      border-bottom: 1px solid rgba(0, 194, 255, .12);
+      padding: 14px 0;
+    }
+    .eeat-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .9rem;
+      color: var(--text2);
+      justify-content: center;
+      text-align: center;
+    }
+    .eeat-inner strong { color: var(--cyan-l); }
+
+    /* Modelos de Colaboración */
+    .colab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .colab-card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--bd);
+      border-radius: var(--rl);
+      padding: 36px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .colab-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--indigo-l));
+    }
+    .colab-card:hover {
+      border-color: var(--bd2);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.35);
+    }
+    .colab-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(0,194,255,.07);
+      border: 1px solid rgba(0,194,255,.18);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .colab-icon svg {
+      width: 26px; height: 26px;
+      stroke: var(--cyan); fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .colab-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .colab-desc {
+      font-size: .9rem;
+      color: var(--text3);
+      line-height: 1.7;
+    }
+    @media(max-width:768px) {
+      .colab-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
     .leadmag-section {
       padding: 80px 0;
       border-bottom: 1px solid var(--bd);
@@ -3845,8 +3925,7 @@
           <div class="mob-scanline"></div>
         </div>
 
-        <h1>Protegemos su operación e incrementamos la <span class="grad">rentabilidad mediante ingeniería</span> de
-          modernización estratégica.</h1>
+        <h1>Consultoría y Software de Gestión Logística: <span class="grad">Protegemos su operación</span> y rentabilidad.</h1>
 
         <p class="hero-lead">Cada día sin control de inventario es <strong style="color:var(--text)">capital
             inmovilizado</strong>. Cada sistema desconectado es una fuga de rentabilidad. OpenCORE elimina la deuda
@@ -3881,6 +3960,18 @@
         </div>
       </div>
     </section>
+
+    <!-- ========================================================
+     E-E-A-T AUTHORITY STRIP
+======================================================== -->
+    <div class="eeat-strip">
+      <div class="container">
+        <div class="eeat-inner">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan);flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Proyectos críticos liderados exclusivamente por <strong>Arquitectos de Software Senior</strong>. Sin intermediarios — comunicación técnica directa con quien ejecuta.</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ========================================================
      MARQUEE
@@ -4094,10 +4185,7 @@
             </h2>
           </div>
           <div class="ch-right reveal">
-            <p>La obsolescencia tecnológica no es solo un problema de TI — <strong>es una fuga de capital
-                constante.</strong> OpenCORE no vende software: protegemos su continuidad operacional, eliminamos
-              capital inmovilizado en inventario y reducimos el riesgo tecnológico que destruye su rentabilidad cada
-              día.</p>
+            <p>La obsolescencia tecnológica es una fuga constante en su balance financiero. OpenCORE no es una consultora tradicional lenta; ofrecemos <strong>ingeniería estructural ágil</strong>. Conectamos la arquitectura de software con su estrategia de negocios para eliminar el capital inmovilizado y optimizar sus costos operativos, sin detener su producción.</p>
             <div class="cp-list">
               <div class="cp">
                 <div class="cp-ico">🛡️</div>
@@ -4737,28 +4825,28 @@
               <span class="impact-dot"></span>
               <span class="test-company-badge">Sector Minero &amp; Maquinaria</span>
             </div>
-            <p class="test-quote">Migración de sistema core sin detener la producción operativa. Se logró <strong>visibilidad total y en tiempo real de activos inmovilizados</strong>, reduciendo el riesgo tecnológico heredado.</p>
+            <p class="test-quote">Migración de sistema core logístico en caliente. <strong>Visibilidad total de activos</strong>, mitigando riesgos operativos críticos sin interrumpir la producción.</p>
           </div>
           <div class="test-card-v2 impact-card reveal">
             <div class="impact-label">
               <span class="impact-dot"></span>
               <span class="test-company-badge">Cadena de Suministro</span>
             </div>
-            <p class="test-quote">Identificación y liberación de un <strong>30% de capital atrapado en inventario ineficiente</strong>. La integración de sistemas legacy permitió reinvertir recursos en expansión operativa.</p>
+            <p class="test-quote">Identificación y liberación de un <strong>30% de capital atrapado</strong> en inventario ineficiente, reinvertido en expansión operativa.</p>
           </div>
           <div class="test-card-v2 impact-card reveal">
             <div class="impact-label">
               <span class="impact-dot"></span>
               <span class="test-company-badge">Manufactura Industrial</span>
             </div>
-            <p class="test-quote">Modernización de infraestructura con <strong>12 años de obsolescencia</strong>. Implementación de arquitectura escalable que unificó los silos de datos y habilitó decisiones basadas en telemetría en tiempo real.</p>
+            <p class="test-quote"><strong>Arquitectura escalable</strong> que unificó silos de datos, habilitando decisiones basadas en telemetría en tiempo real sobre infraestructura con 12 años de deuda técnica.</p>
           </div>
           <div class="test-card-v2 impact-card reveal">
             <div class="impact-label">
               <span class="impact-dot"></span>
               <span class="test-company-badge">Logística Automotriz</span>
             </div>
-            <p class="test-quote">Reducción de quiebres de stock críticos en un <strong>65% durante el primer semestre</strong>. Transformación de una crisis logística semanal en un proceso automatizado y predecible.</p>
+            <p class="test-quote">Reducción de quiebres de stock en un <strong>65%</strong>. Transformación de crisis manuales semanales a procesos <strong>completamente automatizados y predecibles</strong>.</p>
           </div>
         </div>
 
@@ -4890,6 +4978,42 @@
               <button class="lm-btn" onclick="captureLead('guia','lm2')">Obtener →</button>
             </div>
             <div class="lm-disclaimer">🔒 Sin spam. Solo contenido de valor. Sin compromiso.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+     MODELOS DE COLABORACIÓN
+======================================================== -->
+    <section style="padding:100px 0; border-top:1px solid var(--bd);">
+      <div class="container">
+        <div class="sec-hdr reveal">
+          <div class="sec-tag">Cómo trabajamos contigo</div>
+          <h2 class="sec-title">Modelos de<br><span class="grad">Colaboración</span></h2>
+          <p class="sec-sub">Elegimos el modelo que se adapta a su contexto operativo, sin burocracia ni capas intermedias.</p>
+        </div>
+        <div class="colab-grid">
+          <div class="colab-card reveal">
+            <div class="colab-icon">
+              <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="19" cy="7" r="2"/><path d="M23 21v-1a3 3 0 0 0-3-3h-1"/></svg>
+            </div>
+            <div class="colab-title">Células Ágiles</div>
+            <p class="colab-desc">Equipos dedicados de alto rendimiento integrados directamente a su operación. Velocidad de startup con rigor enterprise.</p>
+          </div>
+          <div class="colab-card reveal">
+            <div class="colab-icon">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="colab-title">Proyectos Llave en Mano</div>
+            <p class="colab-desc">Desde el diseño de la arquitectura hasta el despliegue en producción. Entregamos sistemas que funcionan, con responsabilidad total sobre el resultado.</p>
+          </div>
+          <div class="colab-card reveal">
+            <div class="colab-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="colab-title">Consultoría Estratégica</div>
+            <p class="colab-desc">Auditoría de deuda técnica y roadmap de modernización legacy. Visibilidad total de su riesgo tecnológico antes de invertir un peso.</p>
           </div>
         </div>
       </div>
@@ -5136,7 +5260,7 @@
 ======================================================== -->
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-  <script>
+  <script defer>
     (function () {
       'use strict';
 
