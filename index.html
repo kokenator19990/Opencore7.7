@@ -4623,7 +4623,7 @@
         <div class="who-left reveal">
           <div class="who-tag">Quiénes Somos</div>
           <div class="who-big-num">25<span>+</span></div>
-          <div class="who-big-label">años transformando<br>operaciones enterprise</div>
+          <div class="who-big-label">Años transformando<br>operaciones enterprise</div>
           <p class="who-desc">OpenCORE es una consultora de ingeniería de software especializada en modernización de sistemas críticos, integración ERP y automatización logística. Trabajamos exclusivamente con empresas de gran escala en Chile y Latinoamérica, liderados por arquitectos senior — sin intermediarios.</p>
           <div class="who-brand">
             <div class="who-brand-dot"></div>
@@ -6493,6 +6493,20 @@
           }, 60);
         }
       }
+
+      /* ── WHO BIG NUM — pulse on click/touch ── */
+      (function () {
+        var el = document.querySelector('.who-big-num');
+        if (!el) return;
+        function pulse() {
+          el.classList.remove('num-pulse');
+          void el.offsetWidth;
+          el.classList.add('num-pulse');
+        }
+        el.addEventListener('click',       pulse);
+        el.addEventListener('touchstart',  pulse, { passive: true });
+        el.addEventListener('animationend', function() { el.classList.remove('num-pulse'); });
+      })();
 
       /* ── WHO TERMINAL ANIMATION ── */
       (function () {
