@@ -551,6 +551,55 @@
       .sec-hdr {
         margin-bottom: 40px !important;
       }
+
+      /* ---- MOBILE PERFORMANCE ---- */
+
+      /* Orbs: reducir blur 130px→50px, ralentizar, ocultar los menores */
+      .orb {
+        filter: blur(50px) !important;
+        will-change: transform;
+      }
+      .o1, .o2 {
+        animation-duration: 40s !important;
+      }
+      .o3, .o4 {
+        display: none;
+      }
+
+      /* Navbar/menú: reducir backdrop-filter */
+      .navbar {
+        backdrop-filter: blur(8px) saturate(120%);
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+      }
+      .mob-menu {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      /* Deshabilitar animaciones de repaint continuo */
+      .ti {
+        animation: none !important;
+      }
+      .ti::before {
+        animation: none !important;
+        display: none !important;
+      }
+
+      /* will-change en canvas */
+      .global-canvas {
+        will-change: transform;
+      }
+
+      /* Sin 3D transforms en tarjetas (touch no los usa) */
+      .svc-card,
+      .cc,
+      .test-card {
+        transition: background .2s, border-color .2s !important;
+      }
+      .btn-primary:hover,
+      .btn-secondary:hover {
+        transform: none !important;
+      }
     }
 
     /* Desktop: ensure mob-logo-center and spacer are hidden */
@@ -5024,13 +5073,6 @@
       const navbar = qs('#navbar');
       window.addEventListener('scroll', () => {
         navbar.classList.toggle('scrolled', scrollY > 30);
-        // Fade out mobile centered logo on scroll
-        const mobLogo = document.querySelector('.mob-logo-center');
-        if (mobLogo) {
-          const fade = Math.max(0, 1 - scrollY / (window.innerHeight * 0.6));
-          mobLogo.style.opacity = fade;
-          mobLogo.style.pointerEvents = fade < 0.05 ? 'none' : 'none';
-        }
       }, { passive: true });
 
       /* ================================================
@@ -5053,19 +5095,26 @@
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
 
+        // Mobile: config reducida para mejor FPS
+        const PARTICLE_COUNT = isMob ? 18 : 50;
+        const CONNECT_DIST = isMob ? 100 : 130;
+        const LINE_SHADOW = isMob ? 6 : 18;
+        const NODE_SHADOW = isMob ? 10 : 25;
+        const MOUSE_DIST = isMob ? 0 : 220;
+
         const initCanvas = () => {
           width = canvas.width = window.innerWidth;
           height = canvas.height = window.innerHeight;
         };
         initCanvas();
-        window.addEventListener('resize', initCanvas);
+        window.addEventListener('resize', initCanvas, { passive: true });
 
         class Particle {
           constructor() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.7;
-            this.vy = (Math.random() - 0.5) * 0.7;
+            this.vx = (Math.random() - 0.5) * (isMob ? 0.4 : 0.7);
+            this.vy = (Math.random() - 0.5) * (isMob ? 0.4 : 0.7);
             this.radius = Math.random() * 2.5 + 1;
             this.isCyan = Math.random() > 0.5;
             this.color = this.isCyan ? 'rgba(0, 194, 255, 0.95)' : 'rgba(99, 102, 241, 0.95)';
@@ -5083,45 +5132,60 @@
             const pulse = 0.7 + 0.3 * Math.sin(this.pulsePhase);
             const r = this.radius * pulse;
 
-            // Outer aura
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, r * 4, 0, Math.PI * 2);
-            const aura = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 4);
-            aura.addColorStop(0, this.isCyan ? 'rgba(0,194,255,0.18)' : 'rgba(99,102,241,0.18)');
-            aura.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = aura;
-            ctx.fill();
+            if (!isMob) {
+              // Outer aura — solo desktop (costosa)
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, r * 4, 0, Math.PI * 2);
+              const aura = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 4);
+              aura.addColorStop(0, this.isCyan ? 'rgba(0,194,255,0.18)' : 'rgba(99,102,241,0.18)');
+              aura.addColorStop(1, 'rgba(0,0,0,0)');
+              ctx.fillStyle = aura;
+              ctx.fill();
+            }
 
             // Core node
-            ctx.shadowBlur = 25;
+            ctx.shadowBlur = NODE_SHADOW;
             ctx.shadowColor = this.glowColor;
             ctx.beginPath();
             ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
             ctx.fill();
 
-            // Bright center
-            ctx.shadowBlur = 8;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, r * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
+            if (!isMob) {
+              // Bright center — solo desktop
+              ctx.shadowBlur = 8;
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, r * 0.4, 0, Math.PI * 2);
+              ctx.fillStyle = '#ffffff';
+              ctx.fill();
+            }
             ctx.shadowBlur = 0;
           }
         }
 
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
 
+        // Mouse interaction — solo desktop
         let mouseX = -1000, mouseY = -1000;
-        document.addEventListener('mousemove', e => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-        });
-        document.addEventListener('mouseleave', () => {
-          mouseX = -1000; mouseY = -1000;
-        });
+        if (!isMob) {
+          document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+          });
+          document.addEventListener('mouseleave', () => {
+            mouseX = -1000; mouseY = -1000;
+          });
+        }
 
-        const drawSynapses = () => {
+        // Mobile: throttle a ~30fps usando timestamp
+        let lastFrame = 0;
+        const FRAME_MS = isMob ? 33 : 0;
+
+        const drawSynapses = (ts) => {
+          requestAnimationFrame(drawSynapses);
+          if (isMob && ts - lastFrame < FRAME_MS) return;
+          lastFrame = ts;
+
           ctx.clearRect(0, 0, width, height);
 
           for (let i = 0; i < particles.length; i++) {
@@ -5132,10 +5196,9 @@
               const dx = particles[i].x - particles[j].x;
               const dy = particles[i].y - particles[j].y;
               const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 130) {
-                const alpha = (1 - dist / 130);
-                // Glow pass
-                ctx.shadowBlur = 18;
+              if (dist < CONNECT_DIST) {
+                const alpha = (1 - dist / CONNECT_DIST);
+                ctx.shadowBlur = LINE_SHADOW;
                 ctx.shadowColor = '#00C2FF';
                 ctx.beginPath();
                 ctx.moveTo(particles[i].x, particles[i].y);
@@ -5147,32 +5210,31 @@
               }
             }
 
-            // Pull towards mouse (Electric shock effect)
-            const mdx = particles[i].x - mouseX;
-            const mdy = particles[i].y - mouseY;
-            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-            if (mdist < 220) {
-              const mAlpha = (1 - mdist / 220);
-              ctx.shadowBlur = 30;
-              ctx.shadowColor = '#6366F1';
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(mouseX, mouseY);
-              ctx.strokeStyle = `rgba(99, 102, 241, ${mAlpha * 0.95})`;
-              ctx.lineWidth = mAlpha * 2.2 + 0.5;
-              ctx.stroke();
-              ctx.shadowBlur = 0;
-
-              // Slight magnetic pull
-              particles[i].x -= mdx * 0.02;
-              particles[i].y -= mdy * 0.02;
+            // Pull towards mouse — solo desktop
+            if (!isMob) {
+              const mdx = particles[i].x - mouseX;
+              const mdy = particles[i].y - mouseY;
+              const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+              if (mdist < MOUSE_DIST) {
+                const mAlpha = (1 - mdist / MOUSE_DIST);
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = '#6366F1';
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(mouseX, mouseY);
+                ctx.strokeStyle = `rgba(99, 102, 241, ${mAlpha * 0.95})`;
+                ctx.lineWidth = mAlpha * 2.2 + 0.5;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+                particles[i].x -= mdx * 0.02;
+                particles[i].y -= mdy * 0.02;
+              }
             }
 
             particles[i].draw();
           }
-          requestAnimationFrame(drawSynapses);
         };
-        drawSynapses();
+        requestAnimationFrame(drawSynapses);
       }
 
       /* ================================================
@@ -5238,9 +5300,18 @@
       ================================================ */
       const secs = qsa('section[id]');
       const navAs = qsa('.nav-links a');
+      // Cache offsetTop — evita forced layout en cada scroll
+      let secOffsets = [];
+      const cacheOffsets = () => {
+        secOffsets = Array.from(secs).map(s => ({ id: s.id, top: s.offsetTop }));
+      };
+      cacheOffsets();
+      window.addEventListener('resize', cacheOffsets, { passive: true });
       window.addEventListener('scroll', () => {
         let cur = '';
-        secs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
+        for (let i = 0; i < secOffsets.length; i++) {
+          if (scrollY >= secOffsets[i].top - 140) cur = secOffsets[i].id;
+        }
         navAs.forEach(a => {
           const active = a.getAttribute('href') === '#' + cur;
           a.style.color = active ? 'var(--text)' : '';
