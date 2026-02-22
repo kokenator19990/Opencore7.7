@@ -510,130 +510,12 @@
         display: none;
       }
 
-      .hero-bg::after {
-        background: rgba(6, 9, 18, 0.82);
-      }
-
-      /* --- MOBILE: Canvas fully visible for neon effect --- */
-      .global-canvas {
-        opacity: 1;
-      }
-
       section {
         padding: 70px 0 !important;
       }
 
       .sec-hdr {
         margin-bottom: 40px !important;
-      }
-
-      /* --- MOBILE HERO: Full-screen canvas + centered logo first viewport --- */
-      .hero {
-        min-height: 200vh !important;
-        padding: 0 !important;
-        display: block !important;
-        align-items: unset !important;
-      }
-
-      .hero .container {
-        display: flex;
-        flex-direction: column;
-        min-height: 200vh;
-      }
-
-      /* Badge and mob-hero-visual: hidden in first viewport, part of flow below */
-      .hero .badge {
-        order: 2;
-        margin-top: 0;
-        margin-bottom: 20px;
-        animation: none;
-      }
-
-      .hero .mob-hero-visual {
-        display: none !important; /* replaced by canvas fullscreen */
-      }
-
-      /* Hero text block pushed below first 100vh */
-      .hero h1,
-      .hero .hero-lead,
-      .hero .cta-microcopy,
-      .hero .hero-ctas,
-      .hero .hero-stats,
-      .hero .badge {
-        order: 2;
-      }
-
-      .hero h1 {
-        margin-top: 0;
-        padding: 0 4px;
-        font-size: clamp(1.9rem, 7vw, 2.8rem) !important;
-      }
-
-      /* Spacer that pushes text below the fold */
-      .mob-hero-spacer {
-        display: block;
-        order: 1;
-        height: 100vh;
-        flex-shrink: 0;
-      }
-
-      .hero .container > * {
-        position: relative;
-        z-index: 3;
-      }
-
-      /* Hero text content wrapper */
-      .hero-text-block {
-        order: 2;
-        padding: 60px 0 80px;
-      }
-
-      /* --- MOBILE CENTERED LOGO --- */
-      .mob-logo-center {
-        display: flex !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        pointer-events: none;
-        z-index: 10;
-        gap: 16px;
-      }
-
-      .mob-logo-center .mob-logo-text {
-        font-family: var(--mono);
-        font-size: 2.2rem;
-        font-weight: 700;
-        letter-spacing: 0.18em;
-        background: linear-gradient(90deg, #fff, var(--text2));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: none;
-        filter: drop-shadow(0 0 18px rgba(0, 194, 255, 0.7));
-      }
-
-      .mob-logo-center .mob-logo-sub {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.22em;
-        color: var(--cyan);
-        text-transform: uppercase;
-        opacity: 0.8;
-      }
-
-      .mob-logo-center .mob-logo-hex {
-        width: 42px;
-        height: 42px;
-        filter: drop-shadow(0 0 16px var(--cyan));
-      }
-
-      section.tech {
-        display: none;
       }
     }
 
@@ -2337,14 +2219,6 @@
         padding: 130px 0 80px
       }
 
-      .hero-bg {
-        opacity: 0;
-      }
-
-      .hero-bg::after {
-        background: rgba(6, 9, 18, 0.99);
-      }
-
       .hero-stats,
       .exp-strip,
       .tech {
@@ -2352,7 +2226,7 @@
       }
 
       .global-canvas {
-        opacity: 0.15;
+        opacity: 0.45;
       }
 
       .hero-stats {
