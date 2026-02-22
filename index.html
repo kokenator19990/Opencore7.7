@@ -337,7 +337,7 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
+      z-index: 1002;
       padding: 0 28px;
       background: rgba(6, 9, 18, .65);
       backdrop-filter: blur(20px) saturate(160%);
@@ -477,56 +477,84 @@
     .mob-menu {
       display: none;
       position: fixed;
-      top: 70px;
+      top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: 1001;
       flex-direction: column;
-      gap: 0;
-      padding: 20px 20px 40px;
-      background: rgba(6, 9, 18, .97);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-top: 1px solid var(--bd);
+      justify-content: center;
+      padding: 90px 28px 40px;
+      background: linear-gradient(160deg,
+        rgba(4, 8, 22, 0.93) 0%,
+        rgba(0, 18, 38, 0.91) 60%,
+        rgba(4, 8, 22, 0.93) 100%);
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
       overflow-y: auto;
+      animation: menuFadeIn .22s ease both;
+    }
+
+    @keyframes menuFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .mob-menu.open {
-      display: flex
+      display: flex;
+    }
+
+    /* Línea decorativa cyan en el borde izquierdo del overlay */
+    .mob-menu::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(0,194,255,.6) 40%, rgba(99,102,241,.4) 70%, transparent);
+      pointer-events: none;
     }
 
     .mob-menu a {
-      padding: 16px 20px;
-      border-radius: var(--r);
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--text2);
-      border-bottom: 1px solid rgba(255, 255, 255, .04);
-      transition: all .2s;
+      padding: 15px 18px;
+      border-radius: 10px;
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .75);
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .07);
+      margin-bottom: 8px;
+      transition: all .18s;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      letter-spacing: .01em;
     }
 
-    .mob-menu a:first-child {
-      border-top: 1px solid rgba(255, 255, 255, .04);
-    }
-
-    .mob-menu a:hover,
-    .mob-menu a.active {
-      color: var(--text);
-      background: rgba(0, 194, 255, .07);
-      padding-left: 26px;
+    .mob-menu a:active,
+    .mob-menu a:hover {
+      color: #fff;
+      background: rgba(0, 194, 255, .1);
+      border-color: rgba(0, 194, 255, .3);
+      transform: translateX(4px);
     }
 
     .mob-menu .btn-nav {
-      margin-top: 24px;
+      margin-top: 16px;
       justify-content: center;
       width: 100%;
       padding: 16px 20px;
       font-size: 1rem;
-      border-radius: var(--r);
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue-l));
+      color: var(--bg);
+      border: none;
+      font-weight: 800;
+      box-shadow: 0 4px 24px rgba(0,194,255,.3);
+    }
+
+    .mob-menu .btn-nav:hover {
+      box-shadow: 0 6px 32px rgba(0,194,255,.5);
+      transform: translateY(-1px);
     }
 
     @media(max-width:768px) {
@@ -572,11 +600,6 @@
         backdrop-filter: blur(8px) saturate(120%);
         -webkit-backdrop-filter: blur(8px) saturate(120%);
       }
-      .mob-menu {
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-      }
-
       /* Deshabilitar animaciones de repaint continuo */
       .ti {
         animation: none !important;
