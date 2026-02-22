@@ -398,6 +398,7 @@
       font-size: 1.05rem;
       font-weight: 500;
       color: var(--text2);
+      position: relative;
       transition: color .2s, background .2s
     }
 
@@ -405,6 +406,18 @@
     .nav-links a.active {
       color: var(--text);
       background: rgba(0, 194, 255, .07)
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
     }
 
     .btn-nav {
@@ -462,13 +475,20 @@
 
     .mob-menu {
       display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
       flex-direction: column;
-      gap: 4px;
-      padding: 16px 20px 20px;
-      border-bottom: 1px solid var(--bd);
-      background: rgba(6, 9, 18, .75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      gap: 0;
+      padding: 20px 20px 40px;
+      background: rgba(6, 9, 18, .97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid var(--bd);
+      overflow-y: auto;
     }
 
     .mob-menu.open {
@@ -476,22 +496,36 @@
     }
 
     .mob-menu a {
-      padding: 12px 16px;
+      padding: 16px 20px;
       border-radius: var(--r);
-      font-size: .95rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: var(--text2);
-      transition: all .2s
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .mob-menu a:hover {
+    .mob-menu a:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .04);
+    }
+
+    .mob-menu a:hover,
+    .mob-menu a.active {
       color: var(--text);
-      background: rgba(0, 194, 255, .06)
+      background: rgba(0, 194, 255, .07);
+      padding-left: 26px;
     }
 
     .mob-menu .btn-nav {
-      margin-top: 8px;
-      justify-content: center
+      margin-top: 24px;
+      justify-content: center;
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1rem;
+      border-radius: var(--r);
     }
 
     @media(max-width:768px) {
@@ -505,9 +539,9 @@
         display: flex
       }
 
-      /* --- MOBILE: Hide navbar logo --- */
-      .navbar .logo {
-        display: none;
+      .navbar .logo img {
+        height: 36px;
+        width: auto;
       }
 
       section {
