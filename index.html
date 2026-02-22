@@ -393,13 +393,14 @@
     }
 
     .nav-links a {
-      padding: 8px 15px;
+      padding: 8px 11px;
       border-radius: var(--r);
-      font-size: 1.05rem;
+      font-size: .92rem;
       font-weight: 500;
       color: var(--text2);
       position: relative;
-      transition: color .2s, background .2s
+      transition: color .2s, background .2s;
+      white-space: nowrap;
     }
 
     .nav-links a:hover,
@@ -480,7 +481,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 999;
+      z-index: 1001;
       flex-direction: column;
       gap: 0;
       padding: 20px 20px 40px;
@@ -3555,23 +3556,25 @@
         </a>
         <div class="nav-links">
           <a href="#inicio">Inicio</a>
-          <a href="#quienes-somos">Quiénes Somos</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#clientes">Clientes</a>
-          <a href="#contacto">Contacto</a>
+          <a href="#servicios">Soluciones</a>
+          <a href="#calculadora">Calculadora</a>
+          <a href="#como-trabajamos">Metodología</a>
+          <a href="#clientes">Casos de Éxito</a>
+          <a href="#stack">Stack</a>
         </div>
-        <a href="#contacto" class="btn-nav" onclick="openSched(event)">🔍 Diagnóstico gratuito</a>
+        <a href="#contacto" class="btn-nav" onclick="openSched(event)">Agendar Diagnóstico</a>
         <button class="ham" id="ham" aria-label="Menú" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
       <div class="mob-menu" id="mob-menu">
         <a href="#inicio">Inicio</a>
-        <a href="#quienes-somos">Quiénes Somos</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#clientes">Clientes</a>
-        <a href="#contacto">Contacto</a>
-        <a href="#contacto" class="btn-nav" onclick="openSched(event)">🔍 Diagnóstico gratuito</a>
+        <a href="#servicios">Soluciones Enterprise</a>
+        <a href="#calculadora">Calculadora de Ineficiencia</a>
+        <a href="#como-trabajamos">Cómo Trabajamos</a>
+        <a href="#clientes">Casos de Éxito</a>
+        <a href="#stack">Stack Tecnológico</a>
+        <a href="#contacto" class="btn-nav" onclick="openSched(event)">Agendar Diagnóstico</a>
       </div>
     </nav>
 
@@ -4307,7 +4310,7 @@
     <!-- ========================================================
      PROCESO
 ======================================================== -->
-    <section class="process">
+    <section class="process" id="como-trabajamos">
       <div class="container">
         <div class="sec-hdr reveal">
           <div class="sec-tag">Metodología</div>
@@ -4341,7 +4344,7 @@
     <!-- ========================================================
      TECH STACK
 ======================================================== -->
-    <section class="tech">
+    <section class="tech" id="stack">
       <div class="container">
         <div class="sec-hdr reveal">
           <div class="sec-tag">Stack tecnológico</div>
