@@ -1090,6 +1090,80 @@
     }
 
     /* ================================================
+       STAGGER REVEAL — MOBILE
+    ================================================ */
+    @media (max-width: 768px) {
+      .stagger-kids > *:nth-child(1) { transition-delay: 0ms }
+      .stagger-kids > *:nth-child(2) { transition-delay: 85ms }
+      .stagger-kids > *:nth-child(3) { transition-delay: 170ms }
+      .stagger-kids > *:nth-child(4) { transition-delay: 255ms }
+      .stagger-kids > *:nth-child(5) { transition-delay: 340ms }
+      .stagger-kids > *:nth-child(6) { transition-delay: 425ms }
+    }
+
+    /* ================================================
+       FLOATING CTA — MOBILE
+    ================================================ */
+    .float-cta {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .float-cta {
+        display: flex;
+        position: fixed;
+        bottom: 22px;
+        right: 14px;
+        z-index: 8500;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        transform: translateY(18px);
+        pointer-events: none;
+        transition: opacity .35s ease, transform .35s ease;
+      }
+
+      .float-cta.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+      }
+
+      .float-cta-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--cyan);
+        color: #021020;
+        border: none;
+        padding: 13px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: .83rem;
+        letter-spacing: .02em;
+        cursor: pointer;
+        box-shadow: 0 4px 22px rgba(0, 194, 255, .45);
+        white-space: nowrap;
+      }
+
+      .float-cta-x {
+        background: rgba(255, 255, 255, .08);
+        border: 1px solid rgba(255, 255, 255, .18);
+        color: rgba(255, 255, 255, .7);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: .7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background .2s;
+      }
+    }
+
+    /* ================================================
    CHALLENGE
 ================================================ */
     .challenge {
@@ -3925,7 +3999,7 @@
           <div class="mob-scanline"></div>
         </div>
 
-        <h1>Consultoría y Software de Gestión Logística: <span class="grad">Protegemos su operación</span> y rentabilidad.</h1>
+        <h1>Consultoría y Software de Gestión Logística: <span class="grad" id="hero-tw">Protegemos su operación</span> y rentabilidad.</h1>
 
         <p class="hero-lead">Cada día sin control de inventario es <strong style="color:var(--text)">capital
             inmovilizado</strong>. Cada sistema desconectado es una fuga de rentabilidad. OpenCORE elimina la deuda
@@ -4342,7 +4416,7 @@
           <p class="sec-sub">Cuatro áreas de expertise diseñadas para resolver ineficiencias críticas en la cadena de
             suministro e infraestructura tecnológica.</p>
         </div>
-        <div class="svc-grid">
+        <div class="svc-grid stagger-kids">
 
           <div class="svc-card c-c reveal">
             <span class="svc-n">01</span>
@@ -4867,7 +4941,7 @@
         </div>
 
         <!-- Market stats in smaller format -->
-        <div class="stat-impact-grid">
+        <div class="stat-impact-grid stagger-kids">
           <div class="si-card reveal">
             <div class="si-icon">
               <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none" style="fill:var(--cyan)"/></svg>
@@ -5009,7 +5083,7 @@
           <h2 class="sec-title">Modelos de<br><span class="grad">Colaboración</span></h2>
           <p class="sec-sub">Elegimos el modelo que se adapta a su contexto operativo, sin burocracia ni capas intermedias.</p>
         </div>
-        <div class="colab-grid">
+        <div class="colab-grid stagger-kids">
           <div class="colab-card reveal">
             <div class="colab-icon">
               <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="19" cy="7" r="2"/><path d="M23 21v-1a3 3 0 0 0-3-3h-1"/></svg>
@@ -5275,6 +5349,15 @@
      JAVASCRIPT
 ======================================================== -->
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <!-- FLOATING CTA MOBILE -->
+  <div class="float-cta" id="floatCta">
+    <button class="float-cta-btn" onclick="openSched(event)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Agendar Diagnóstico
+    </button>
+    <button class="float-cta-x" id="floatCtaX" aria-label="Cerrar">✕</button>
+  </div>
+
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script defer>
     (function () {
@@ -5838,6 +5921,60 @@
         document.querySelectorAll('section').forEach(function (sec) {
           glowObs.observe(sec);
         });
+      }
+
+      /* ================================================
+         STAGGER REVEAL — MOBILE ONLY
+      ================================================ */
+      if (isMob) {
+        const staggerParents = qsa('.stagger-kids');
+        if (staggerParents.length) {
+          const sObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              [...entry.target.children].forEach((child, i) => {
+                setTimeout(() => child.classList.add('in'), i * 85);
+              });
+              sObs.unobserve(entry.target);
+            });
+          }, { threshold: 0.05 });
+          staggerParents.forEach(el => sObs.observe(el));
+        }
+      }
+
+      /* ================================================
+         FLOATING CTA — MOBILE ONLY
+      ================================================ */
+      if (isMob) {
+        const floatCta = qs('#floatCta');
+        const floatCtaX = qs('#floatCtaX');
+        if (floatCta && floatCtaX) {
+          let dismissed = false;
+          window.addEventListener('scroll', () => {
+            if (dismissed) return;
+            floatCta.classList.toggle('show', window.scrollY > 420);
+          }, { passive: true });
+          floatCtaX.addEventListener('click', () => {
+            dismissed = true;
+            floatCta.classList.remove('show');
+          });
+        }
+      }
+
+      /* ================================================
+         TYPEWRITER EN H1 — MOBILE ONLY
+      ================================================ */
+      if (isMob) {
+        const twEl = qs('#hero-tw');
+        if (twEl) {
+          const full = twEl.textContent;
+          twEl.textContent = '';
+          let idx = 0;
+          const tw = setInterval(() => {
+            twEl.textContent += full[idx++];
+            if (idx >= full.length) clearInterval(tw);
+          }, 60);
+        }
       }
 
     })();
