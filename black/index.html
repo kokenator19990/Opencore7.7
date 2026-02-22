@@ -346,8 +346,8 @@
     }
 
     .navbar.scrolled {
-      background: rgba(0, 0, 0, .92);
-      box-shadow: 0 1px 40px rgba(0, 0, 0, .5)
+      background: rgba(0, 0, 0, .95);
+      box-shadow: 0 1px 40px rgba(0, 229, 255, .06)
     }
 
     .nav-inner {
@@ -486,7 +486,7 @@
       flex-direction: column;
       justify-content: flex-start;
       padding: 72px 24px 40px;
-      background: #05091a;
+      background: #000000;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       animation: menuFadeIn .2s ease both;
@@ -679,7 +679,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.93);
+      background: rgba(0, 0, 0, 0.94);
       /* Darken base background */
     }
 
@@ -2579,7 +2579,7 @@
     .fg input,
     .fg textarea,
     .fg select {
-      background: #0d1829;
+      background: #0a0a0a;
       border: none;
       border-bottom: 1.5px solid rgba(0, 194, 255, .18);
       border-radius: 0;
@@ -2611,7 +2611,7 @@
     }
 
     .fg select option {
-      background: #0d1829
+      background: #0a0a0a
     }
 
     .fline {
@@ -3086,7 +3086,7 @@
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(0, 0, 0, 0.97);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -3242,7 +3242,7 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0, 0, 0, .95);
+      background: rgba(0, 0, 0, .97);
       backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
@@ -4292,6 +4292,115 @@
         transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
       }
     }
+  
+    /* ════════════════════════════════════════
+       OPENCORE BLACK — FULL THEME OVERRIDES
+    ════════════════════════════════════════ */
+
+    body { background: #000; }
+
+    /* Orbs más intensos en negro puro */
+    .orb { opacity: .55; filter: blur(130px); }
+
+    /* ── NAVBAR ── */
+    .navbar { border-bottom: 1px solid rgba(0,229,255,.07); }
+
+    /* ── SERVICIOS ── */
+    .svc-card {
+      background: rgba(14,14,14,.9) !important;
+      border-color: rgba(0,229,255,.12) !important;
+    }
+    .svc-card:hover {
+      border-color: rgba(0,229,255,.35) !important;
+      box-shadow: 0 24px 60px rgba(0,0,0,.8), 0 0 0 1px rgba(0,229,255,.2) !important;
+    }
+
+    /* ── PROCESS ── */
+    .step {
+      background: rgba(14,14,14,.85) !important;
+      border-color: rgba(0,229,255,.1) !important;
+      border-top-color: rgba(0,229,255,.4) !important;
+    }
+    .step:hover {
+      border-color: rgba(0,229,255,.28) !important;
+      box-shadow: 0 20px 44px rgba(0,0,0,.9), 0 0 24px rgba(0,229,255,.06) !important;
+    }
+
+    /* ── CASES ── */
+    .cc {
+      background: rgba(14,14,14,.9) !important;
+      border-color: rgba(0,229,255,.1) !important;
+    }
+    .cc:hover {
+      border-color: rgba(0,229,255,.3) !important;
+      box-shadow: 0 20px 50px rgba(0,0,0,.8) !important;
+    }
+
+    /* ── TESTIMONIOS ── */
+    .test-card, .test-card-v2, .tl {
+      background: rgba(14,14,14,.85) !important;
+      border-color: rgba(0,229,255,.1) !important;
+    }
+    .test-card:hover, .test-card-v2:hover {
+      border-color: rgba(0,229,255,.28) !important;
+      box-shadow: 0 20px 50px rgba(0,0,0,.85) !important;
+    }
+
+    /* ── IMPACT ── */
+    .impact-item {
+      background: rgba(14,14,14,.85) !important;
+      border-color: rgba(0,229,255,.1) !important;
+    }
+
+    /* ── WHO ── */
+    .who-stat { background: #000 !important; }
+
+    /* ── FORMS ── */
+    .fg input, .fg textarea, .fg select {
+      background: #0a0a0a !important;
+      border-color: rgba(0,229,255,.16) !important;
+      color: #fff !important;
+    }
+    .fg input:focus, .fg textarea:focus {
+      border-color: rgba(0,229,255,.4) !important;
+      box-shadow: 0 0 0 3px rgba(0,229,255,.07) !important;
+    }
+
+    /* ── SCHEDULING ── */
+    .sched-modal {
+      background: #0a0a0a !important;
+      border-color: rgba(0,229,255,.18) !important;
+    }
+
+    /* ── TECH STACK ── */
+    .ti {
+      background: rgba(14,14,14,.8) !important;
+      border-color: rgba(0,229,255,.12) !important;
+    }
+    .ti:hover {
+      border-color: var(--cyan) !important;
+      box-shadow: 0 0 16px rgba(0,229,255,.12) !important;
+    }
+
+    /* ── CP (comparativo) ── */
+    .cp {
+      background: rgba(14,14,14,.85) !important;
+      border-color: rgba(0,229,255,.1) !important;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #000 !important; border-top: 1px solid rgba(0,229,255,.08) !important; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar-track { background: #000 !important; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,229,255,.3) !important; }
+
+    /* Selection neon */
+    ::selection { background: rgba(0,229,255,.18) !important; color: #fff !important; }
+
+    /* Glow más intenso en cursor y stat terminal */
+    .wt-stat { text-shadow: 0 0 20px rgba(0,229,255,.6); }
+
   </style>
 </head>
 
