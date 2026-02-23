@@ -815,99 +815,79 @@
       transform: translateY(-2px)
     }
 
-    /* ── V2 HERO SPLIT LAYOUT ─────────────────────────── */
-    .hero-inner {
-      display: flex;
-      align-items: center;
-      gap: 52px;
-      width: 100%;
-    }
-
-    .hero-content {
-      flex: 0 0 56%;
-      max-width: 56%;
-    }
-
-    .hero-inner .hero-lead {
-      max-width: 100%;
-    }
-
+    /* ── V2 HERO FLOATING PERSON ───────────────────────── */
     .hero-photo-wrap {
-      flex: 1;
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      height: 490px;
-      animation: fadeUp .9s .35s both;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 44%;
+      max-width: 620px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      /* Fade all edges — zero hard borders */
+      -webkit-mask-image: radial-gradient(
+        ellipse 80% 88% at 68% 55%,
+        black 30%,
+        rgba(0,0,0,0.7) 55%,
+        transparent 78%
+      );
+      mask-image: radial-gradient(
+        ellipse 80% 88% at 68% 55%,
+        black 30%,
+        rgba(0,0,0,0.7) 55%,
+        transparent 78%
+      );
+      animation: heroPhotoIn 1.2s .4s both;
+    }
+
+    @keyframes heroPhotoIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
 
     .hero-photo-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 18%;
-      filter: brightness(0.85) saturate(0.7) contrast(1.05);
+      object-position: center 12%;
+      filter: brightness(0.82) saturate(0.65) contrast(1.08);
+      display: block;
     }
 
-    /* Blend left edge into dark bg */
+    /* Subtle cyan tint overlay */
+    .hero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0,194,255,0.06) 0%,
+        transparent 50%
+      );
+      mix-blend-mode: color;
+      pointer-events: none;
+    }
+
+    /* Subtle ambient glow behind the person */
     .hero-photo-wrap::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        100deg,
-        rgba(6,9,18,1) 0%,
-        rgba(6,9,18,0.55) 26%,
-        transparent 52%
+      background: radial-gradient(
+        ellipse 60% 70% at 65% 50%,
+        rgba(0,194,255,0.07) 0%,
+        transparent 70%
       );
-      z-index: 1;
-    }
-
-    /* Cyan glow border */
-    .hero-photo-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      border: 1px solid rgba(0,194,255,0.22);
-      box-shadow:
-        0 0 55px rgba(0,194,255,0.1),
-        inset 0 0 28px rgba(0,194,255,0.04);
-      z-index: 2;
+      z-index: 3;
       pointer-events: none;
     }
 
-    .hero-photo-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 55%;
-      background: linear-gradient(to top, rgba(6,9,18,0.65) 0%, transparent 100%);
-      z-index: 1;
-    }
-
-    @media (max-width: 1100px) {
-      .hero-content {
-        flex: 0 0 60%;
-        max-width: 60%;
-      }
-      .hero-photo-wrap {
-        height: 430px;
-      }
+    @media (max-width: 1024px) {
+      .hero-photo-wrap { width: 42%; opacity: .6; }
     }
 
     @media (max-width: 768px) {
-      .hero-inner {
-        flex-direction: column;
-      }
-      .hero-content {
-        flex: none;
-        max-width: 100%;
-      }
-      .hero-photo-wrap {
-        display: none;
-      }
+      .hero-photo-wrap { display: none; }
     }
     /* ─────────────────────────────────────────────────── */
 
@@ -4469,8 +4449,6 @@
       <div class="hero-bg"></div>
       <div class="hero-glow"></div>
       <div class="container">
-        <div class="hero-inner">
-        <div class="hero-content">
         <!-- MOBILE: Spacer to push content below first viewport -->
         <div class="mob-hero-spacer"></div>
 
@@ -4580,14 +4558,12 @@
             <div class="stat-lbl">Eficiencia Operativa</div>
           </div>
         </div>
-        </div><!-- /.hero-content -->
+      </div>
 
-        <div class="hero-photo-wrap" aria-hidden="true">
-          <img src="img/hero-reunion.jpg" alt="" loading="eager" />
-          <div class="hero-photo-overlay"></div>
-        </div>
-
-        </div><!-- /.hero-inner -->
+      <!-- Floating person — blends into dark bg with mask -->
+      <div class="hero-photo-wrap" aria-hidden="true">
+        <img src="img/hero-reunion.jpg" alt="" loading="eager" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80';this.onerror=null;" />
+        <div class="hero-photo-overlay"></div>
       </div>
     </section>
 
