@@ -4057,46 +4057,8 @@
       .colab-grid { grid-template-columns: 1fr; gap: 16px; }
     }
 
-    .leadmag-section {
-      padding: 80px 0;
-      border-bottom: 1px solid var(--bd);
-    }
 
-    .leadmag-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
 
-    .leadmag-card {
-      background: rgba(0, 194, 255, .025);
-      border: 1px solid var(--bd);
-      border-radius: var(--rl);
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: all .35s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .leadmag-card::after {
-      content: '';
-      position: absolute;
-      bottom: -60px;
-      right: -60px;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(0, 194, 255, .08), transparent 70%);
-      pointer-events: none;
-    }
-
-    .leadmag-card:hover {
-      border-color: var(--bd2);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
-    }
 
     .lm-tag {
       display: inline-flex;
@@ -4116,19 +4078,7 @@
       font-size: 2.2rem;
     }
 
-    .leadmag-card h3 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -.02em;
-    }
 
-    .leadmag-card>p {
-      font-size: .95rem;
-      color: var(--text2);
-      line-height: 1.75;
-      flex: 1;
-    }
 
     .lm-form {
       display: flex;
@@ -4182,9 +4132,6 @@
     }
 
     @media(max-width:768px) {
-      .leadmag-grid {
-        grid-template-columns: 1fr;
-      }
 
       .lm-form {
         flex-direction: column;
@@ -4287,10 +4234,6 @@
       .svc-card,
       .cc,
       .test-card-v2,
-      .leadmag-card,
-      .calc-metric {
-        transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
-      }
     }
   </style>
 </head>
@@ -5551,44 +5494,7 @@
       </div>
     </section>
 
-    <!-- ============================================================
-     LEAD MAGNETS — MICRO-CONVERSIONES
-    ============================================================ -->
-    <section class="leadmag-section">
-      <div class="container">
-        <div class="sec-hdr reveal">
-          <div class="sec-tag">Recursos Gratuitos</div>
-          <h2 class="sec-title">Descubra el costo real<br><span class="grad">de su deuda tecnológica.</span></h2>
-          <p class="sec-sub">Herramientas de diagnóstico sin costo para líderes operacionales y financieros.</p>
-        </div>
-        <div class="leadmag-grid">
-          <div class="leadmag-card reveal">
-            <div class="lm-tag">✓ Descarga inmediata</div>
-            <div class="lm-ico">📋</div>
-            <h3>Evaluación gratuita: ¿Cuánto dinero pierde su sistema actual?</h3>
-            <p>Metodología de 15 puntos para identificar fugas de capital operativo en su infraestructura. Diseñado para
-              CFOs y Gerentes de Operaciones.</p>
-            <div class="lm-form">
-              <input type="email" placeholder="Email corporativo" id="lm1">
-              <button class="lm-btn" onclick="captureLead('evaluacion','lm1')">Obtener →</button>
-            </div>
-            <div class="lm-disclaimer">🔒 Sin spam. Solo su evaluación. Sin compromiso.</div>
-          </div>
-          <div class="leadmag-card reveal">
-            <div class="lm-tag">✓ Guía técnica</div>
-            <div class="lm-ico">📊</div>
-            <h3>Guía técnica: Cómo medir el costo real de su deuda tecnológica</h3>
-            <p>Framework con métricas concretas para cuantificar el impacto financiero de sistemas legacy. Incluye
-              plantilla de cálculo y benchmarks del sector industrial chileno.</p>
-            <div class="lm-form">
-              <input type="email" placeholder="Email corporativo" id="lm2">
-              <button class="lm-btn" onclick="captureLead('guia','lm2')">Obtener →</button>
-            </div>
-            <div class="lm-disclaimer">🔒 Sin spam. Solo contenido de valor. Sin compromiso.</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- ========================================================
      MODELOS DE COLABORACIÓN
@@ -6396,18 +6302,7 @@
 
       /* ================================================
          LEAD MAGNET CAPTURE
-      ================================================ */
-      window.captureLead = function (type, inputId) {
-        var email = (qs('#' + inputId)?.value || '').trim();
-        if (!email || !email.includes('@')) { alert('Por favor ingrese un email corporativo válido.'); return; }
-        var title = type === 'evaluacion' ? 'Evaluación de Pérdidas Operativas' : 'Guía de Deuda Tecnológica';
-        var overlay = document.createElement('div');
-        overlay.className = 'form-success-overlay';
-        overlay.innerHTML = '<div class="success-box"><div class="success-ico">📬</div><h3>¡En camino!</h3><p>Su <strong>' + title + '</strong> será enviada a <strong>' + email + '</strong> en los próximos minutos.</p><button onclick="this.closest(\'.form-success-overlay\').remove();document.body.style.overflow=\'\'" style="padding:12px 28px;border-radius:var(--r);background:linear-gradient(135deg,var(--cyan),var(--blue-l));color:var(--bg);font-weight:800;border:none;cursor:pointer;font-family:var(--font)">Entendido</button></div>';
-        document.body.appendChild(overlay);
-        setTimeout(function () { overlay.classList.add('in'); }, 10);
-        if (qs('#' + inputId)) qs('#' + inputId).value = '';
-      };
+      ================================================ */;
 
       /* ================================================
          FLOATING WIDGET SCROLL VISIBILITY
