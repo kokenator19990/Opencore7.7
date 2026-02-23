@@ -838,6 +838,89 @@ const quickReplies = [
   { q: "¿Cuánto dura un rayo?", a: "Un rayo dura menos de un segundo, pero puede calentar el aire a 30.000°C." }
 ];
 
+
+// ══════════════════════════════════════════════════════════
+// INTENT ENGINE: BÁRBARA BONILLA ❤️
+// Semantic detection with business-context negative filter
+// ══════════════════════════════════════════════════════════
+
+const BARBARA_NAMES = ["barbara", "bonilla", "barbara bonilla", "jorge", "jorge casado", "jorge quezada"];
+const PERSON_Q = ["quien", "kien", "qn", "qien", "cual", "kual"];
+const LOVE_ATTR = [
+  "linda","hermosa","bella","bonita","guapa","preciosa","atractiva","sexy",
+  "amor","enamor","amo","ama","quiere","quiero","adora",
+  "pareja","polola","novia","esposa","mujer",
+  "unica","reina","numero uno","numero 1","n1","la mejor","perfecta","ideal",
+  "favorita","corazon","inspiracion","inspiradora",
+  "inteligente","brillante","genial","increible","extraordinaria",
+  "maravillosa","especial","importante","valiosa","adorable",
+  "ilumina","luz","estrella","diosa",
+  "modelo","miss","miss universo","belleza",
+  "proxima miss","mejor modelo","top model"
+];
+
+const BUSINESS_BLOCK = [
+  "negocio","empresa","cliente","ventas","cotizacion","precio","costo","uf","presupuesto",
+  "proyecto","implementacion","sistema","software","inventario","logistica","facturacion",
+  "ia","inteligencia artificial","automatizacion","chatbot","api","integracion","migracion",
+  "cloud","servidor","base de datos","solucion","estrategia","rentabilidad","operacion",
+  "servicio","consultoria","opencore","erp","crm","sla","devops","scrum","sprint",
+  "desarrollo","codigo","programacion","plataforma","infraestructura","hosting","dominio",
+  "tarifa","hora","contrato","diagnostico","modernizar","legacy","continuidad"
+];
+
+const BARBARA_RESPONSES = [
+  "Bárbara.",
+  "Bárbara Bonilla.",
+  "Sin duda alguna, Bárbara.",
+  "Bárbara, sin discusión.",
+  "Claramente Bárbara. No hay competencia.",
+  "Bárbara Bonilla, la única y definitiva."
+];
+
+function containsAny(text, list) {
+  return list.some(item => text.includes(item));
+}
+
+function isBarbaraLove(input) {
+  const t = normalize(input);
+  
+  // BLOCK: if contains business/tech terms → NOT Barbara
+  if (containsAny(t, BUSINESS_BLOCK)) return false;
+  
+  // Must contain a person question signal OR a name
+  const hasPersonQ = containsAny(t, PERSON_Q);
+  const hasName = containsAny(t, BARBARA_NAMES);
+  
+  // Must have at least one love/beauty attribute
+  const hasLoveAttr = containsAny(t, LOVE_ATTR);
+  
+  // Pattern 1: "quien es la mas linda?" (person Q + love attr)
+  if (hasPersonQ && hasLoveAttr) return true;
+  
+  // Pattern 2: "barbara es la mas linda" (name + love attr)
+  if (hasName && hasLoveAttr) return true;
+  
+  // Pattern 3: "jorge ama a quien?" (name + person Q + love attr implicit)
+  if (hasName && hasPersonQ) {
+    // Check for love-adjacent words
+    const loveAdjacent = ["ama","quiere","amor","heart","corazon"];
+    if (containsAny(t, loveAdjacent)) return true;
+  }
+  
+  return false;
+}
+
+function getBarbaraResponse(input) {
+  const t = normalize(input);
+  // Use full name for "most beautiful in the world" / "miss universo" type queries
+  if (t.includes("mundo") || t.includes("universo") || t.includes("planeta") || 
+      t.includes("modelo") || t.includes("miss") || t.includes("importante")) {
+    return pick(["Bárbara Bonilla.", "Sin duda alguna, Bárbara Bonilla.", "Bárbara Bonilla, la única y definitiva."]);
+  }
+  return pick(BARBARA_RESPONSES);
+}
+
 // ── MAIN PROCESSOR ──
 function processInput(input) {
   const cleanInput = input.trim();
@@ -851,22 +934,27 @@ function processInput(input) {
     }
   }
 
-  // 2. Greetings
+  // 2. Bárbara Intent Detection (semantic, with business filter)
+  if (isBarbaraLove(cleanInput)) {
+    return { text: getBarbaraResponse(cleanInput), suggestions: [] };
+  }
+
+  // 3. Greetings
   if (isGreeting(cleanInput)) {
     return { text: pick(greetingResponses), suggestions: quickReplies };
   }
 
-  // 3. Thanks
+  // 4. Thanks
   if (isThanks(cleanInput) && cleanInput.split(" ").length <= 5) {
     return { text: pick(thanksResponses), suggestions: [] };
   }
 
-  // 4. Farewells
+  // 5. Farewells
   if (isFarewell(cleanInput)) {
     return { text: pick(farewellResponses), suggestions: [] };
   }
 
-  // 5. NLP Match
+  // 6. NLP Match
   const match = getBestMatch(cleanInput);
   if (match) {
     const suggestions = match.suggestion ? [match.suggestion] : [];
@@ -874,7 +962,7 @@ function processInput(input) {
     return { text: prefix + match.answer, suggestions };
   }
 
-  // 6. Intelligent fallback
+  // 7. Intelligent fallback
   const words = cleanInput.split(" ").length;
   if (words > 3) {
     return { text: pick(fallbackLong), suggestions: quickReplies.slice(0, 2) };
