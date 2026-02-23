@@ -1589,7 +1589,6 @@
       gap: 8px;
       padding: 14px 18px;
       opacity: .5;
-      filter: grayscale(100%);
       transition: opacity .4s ease, filter .4s ease, transform .4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: default;
       position: relative
@@ -1607,7 +1606,6 @@
 
     .tl:hover {
       opacity: 1;
-      filter: grayscale(0%);
       transform: translateY(-2px);
     }
 
@@ -1717,8 +1715,8 @@
       .float-cta {
         display: flex;
         position: fixed;
-        bottom: 80px;
-        /* Evita solapamiento con footer/form */
+        bottom: 110px;
+        /* Evita solapamiento con footer/form y whatsapp */
         right: 14px;
         z-index: 8500;
         align-items: center;
@@ -3349,12 +3347,23 @@
       background: rgba(0, 194, 255, 0.05);
       border-color: var(--cyan);
       transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 194, 255, 0.1);
+    }
+
+    .ind-card:hover .ind-ico svg {
+      transform: scale(1.15) translateY(-3px);
+      filter: drop-shadow(0 0 15px currentColor);
     }
 
     .ind-ico {
       font-size: 2rem;
-      margin-bottom: 16px;
-      display: block;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .ind-ico svg {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .ind-card h4 {
@@ -4477,14 +4486,15 @@
       color: #fff;
       white-space: nowrap;
       letter-spacing: .04em;
-      filter: grayscale(100%) opacity(70%);
-      transition: filter .25s ease, border-color .25s, background .25s;
+      opacity: .75;
+      transition: border-color .25s, background .25s, opacity .25s, transform .25s;
       cursor: default;
     }
 
     .tm-item:hover {
       border-color: var(--bd2);
-      filter: grayscale(0%) opacity(100%);
+      opacity: 1;
+      transform: translateY(-2px);
       background: rgba(255, 255, 255, .05);
     }
 
@@ -5251,19 +5261,55 @@
         </div>
         <div class="ind-grid reveal">
           <div class="ind-card">
-            <span class="ind-ico">🚜</span>
+            <span class="ind-ico">
+              <svg viewBox="0 0 24 24" fill="none"
+                style="color: #eab308; width: 48px; height: 48px; filter: drop-shadow(0 0 8px rgba(234,179,8,0.5));"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 15h12M15 15l2-5h5V8h-3l-2.5 5M12 15v4m-6-4v4" />
+                <circle cx="6" cy="15" r="3" />
+                <circle cx="18" cy="15" r="3" />
+                <path d="M9 15h6" />
+              </svg>
+            </span>
             <h4>Minería & Maquinaria</h4>
           </div>
           <div class="ind-card">
-            <span class="ind-ico">🚗</span>
+            <span class="ind-ico">
+              <svg viewBox="0 0 24 24" fill="none"
+                style="color: #00C2FF; width: 48px; height: 48px; filter: drop-shadow(0 0 8px rgba(0,194,255,0.5));"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="10" width="18" height="7" rx="2" />
+                <path d="M5 10l2-4h10l2 4" />
+                <circle cx="7" cy="17" r="2" />
+                <circle cx="17" cy="17" r="2" />
+              </svg>
+            </span>
             <h4>Sector Automotriz</h4>
           </div>
           <div class="ind-card">
-            <span class="ind-ico">🏢</span>
+            <span class="ind-ico">
+              <svg viewBox="0 0 24 24" fill="none"
+                style="color: #ec4899; width: 48px; height: 48px; filter: drop-shadow(0 0 8px rgba(236,72,153,0.5));"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" />
+                <path d="M9 22v-4h6v4" />
+                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M8 10h.01M8 14h.01M16 10h.01M16 14h.01" />
+              </svg>
+            </span>
             <h4>Retail Técnico</h4>
           </div>
           <div class="ind-card">
-            <span class="ind-ico">📦</span>
+            <span class="ind-ico">
+              <svg viewBox="0 0 24 24" fill="none"
+                style="color: #10b981; width: 48px; height: 48px; filter: drop-shadow(0 0 8px rgba(16,185,129,0.5));"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                <line x1="12" y1="22.08" x2="12" y2="12" />
+                <line x1="7.5" y1="4.21" x2="16.5" y2="9.4" />
+              </svg>
+            </span>
             <h4>Distribución Industrial</h4>
           </div>
         </div>
