@@ -66,6 +66,18 @@
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet" />
   <style>
+    /* Ocultamiento dinámico para optimizar largo en Móvil */
+    @media (max-width: 768px) {
+
+      .process,
+      .tech,
+      .who-visual,
+      .stat-impact-grid,
+      #modelos {
+        display: none !important;
+      }
+    }
+
     /* ================================================
    RESET & VARIABLES
 ================================================ */
@@ -4533,9 +4545,6 @@
         }
       }
 
-      .svc-card,
-      .cc,
-      .test-card-v2,
     }
   </style>
 </head>
@@ -5954,7 +5963,7 @@
     <!-- ========================================================
      MODELOS DE COLABORACIÓN
 ======================================================== -->
-    <section style="padding:100px 0; border-top:1px solid var(--bd);">
+    <section id="modelos" style="padding:100px 0; border-top:1px solid var(--bd);">
       <div class="container">
         <div class="sec-hdr reveal">
           <div class="sec-tag">Cómo trabajamos contigo</div>
