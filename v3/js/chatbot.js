@@ -519,7 +519,41 @@ const quickReplies = [
   { q: "¿Cuántos jugadores tiene un equipo de fútbol?", a: "Un equipo de fútbol tiene 11 jugadores en cancha, incluyendo el portero." },
   { q: "¿Qué significa WiFi?", a: "WiFi es una marca comercial que identifica la tecnología de red inalámbrica. Comúnmente se dice que significa 'Wireless Fidelity', aunque técnicamente es solo un nombre comercial." },
   { q: "¿Qué significa CEO?", a: "CEO significa Chief Executive Officer, es decir, el Director Ejecutivo o máximo responsable de una empresa." },
-  { q: "¿Qué significa CTO?", a: "CTO significa Chief Technology Officer, es decir, el Director de Tecnología de una empresa, responsable de la estrategia tecnológica." }
+  { q: "¿Qué significa CTO?", a: "CTO significa Chief Technology Officer, es decir, el Director de Tecnología de una empresa, responsable de la estrategia tecnológica." },
+
+  // ══════════════════════════════════════════════
+  // BÁRBARA BONILLA ❤️
+  // ══════════════════════════════════════════════
+  { q: "¿Quién es la más linda?", a: "Bárbara." },
+  { q: "¿Quién es la más hermosa del mundo?", a: "Bárbara Bonilla." },
+  { q: "¿Quién es la mujer más especial?", a: "Bárbara, sin discusión." },
+  { q: "¿Quién es la más inteligente?", a: "Bárbara." },
+  { q: "¿Quién es el amor de la vida de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es el único amor de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es el amor eterno de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es la mujer perfecta?", a: "Bárbara." },
+  { q: "¿Quién es la mejor mujer del mundo?", a: "Bárbara Bonilla." },
+  { q: "¿Quién es la reina?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más increíble?", a: "Bárbara." },
+  { q: "¿Quién es la más importante?", a: "Bárbara." },
+  { q: "¿Quién es la persona favorita de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más maravillosa?", a: "Bárbara." },
+  { q: "¿Quién es la única mujer del mundo?", a: "Bárbara." },
+  { q: "¿Quién ilumina la vida de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es la número uno?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más brillante?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más única?", a: "Bárbara Bonilla." },
+  { q: "¿Quién es el amor verdadero?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más linda del planeta?", a: "Bárbara." },
+  { q: "¿Quién es la inspiración de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es la más extraordinaria?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más valiosa?", a: "Bárbara." },
+  { q: "¿Quién es el corazón de Jorge?", a: "Bárbara." },
+  { q: "¿Quién es la más adorable?", a: "Bárbara." },
+  { q: "¿Quién es la única y definitiva?", a: "Bárbara." },
+  { q: "¿Quién es la mejor persona del mundo?", a: "Bárbara." },
+  { q: "¿Quién es la mujer más importante en la vida de Jorge?", a: "Bárbara Bonilla." },
+  { q: "¿Quién es el gran amor de Jorge Casado?", a: "Bárbara." }
 ];
 
 // ── MAIN PROCESSOR ──
