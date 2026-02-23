@@ -42,14 +42,17 @@
   height: 28px;
   transition: transform 0.3s;
 }
+
 .oc-chat-trigger.active svg {
   transform: rotate(90deg) scale(0);
 }
+
 .oc-chat-trigger .close-icon {
   position: absolute;
   transform: rotate(-90deg) scale(0);
   transition: transform 0.3s;
 }
+
 .oc-chat-trigger.active .close-icon {
   transform: rotate(0deg) scale(1);
 }
@@ -65,7 +68,7 @@
   max-height: calc(100vh - 130px);
   background: var(--chat-bg);
   border: 1px solid var(--chat-border);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 40px rgba(0,194,255,0.05);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 194, 255, 0.05);
   border-radius: 16px;
   z-index: 9998;
   display: flex;
@@ -90,7 +93,7 @@
 /* --- HEADER --- */
 .oc-chat-header {
   padding: 20px;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   border-bottom: 1px solid var(--chat-border);
   display: flex;
   align-items: center;
@@ -131,6 +134,7 @@
   align-items: center;
   gap: 4px;
 }
+
 .oc-chat-title span::before {
   content: '';
   width: 6px;
@@ -149,9 +153,19 @@
   flex-direction: column;
   gap: 16px;
 }
-.oc-chat-body::-webkit-scrollbar { width: 6px; }
-.oc-chat-body::-webkit-scrollbar-track { background: transparent; }
-.oc-chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+.oc-chat-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.oc-chat-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.oc-chat-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
 
 .oc-msg {
   max-width: 85%;
@@ -168,7 +182,7 @@
   align-self: flex-start;
   background: var(--chat-bot-bg);
   color: var(--chat-text);
-  border: 1px solid rgba(0,194,255,0.1);
+  border: 1px solid rgba(0, 194, 255, 0.1);
   border-bottom-left-radius: 2px;
 }
 
@@ -181,7 +195,10 @@
 }
 
 @keyframes slideUp {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- TYPING INDICATOR --- */
@@ -192,6 +209,7 @@
   align-items: center;
   height: 24px;
 }
+
 .oc-dot {
   width: 6px;
   height: 6px;
@@ -199,28 +217,48 @@
   border-radius: 50%;
   animation: blink 1.4s infinite both;
 }
-.oc-dot:nth-child(1) { animation-delay: 0s; }
-.oc-dot:nth-child(2) { animation-delay: 0.2s; }
-.oc-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.oc-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.oc-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.oc-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes blink {
-  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
-  40% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px var(--chat-accent); }
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 8px var(--chat-accent);
+  }
 }
 
 /* --- FOOTER (INPUT) --- */
 .oc-chat-footer {
   padding: 15px;
   border-top: 1px solid var(--chat-border);
-  background: rgba(255,255,255,0.01);
+  background: rgba(255, 255, 255, 0.01);
   display: flex;
   gap: 10px;
 }
 
 .oc-chat-input {
   flex: 1;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 12px 18px;
   color: #fff;
@@ -229,10 +267,12 @@
   outline: none;
   transition: border-color 0.3s;
 }
+
 .oc-chat-input:focus {
   border-color: var(--chat-accent);
-  box-shadow: 0 0 10px rgba(0,194,255,0.1);
+  box-shadow: 0 0 10px rgba(0, 194, 255, 0.1);
 }
+
 .oc-chat-input::placeholder {
   color: var(--chat-sub);
 }
@@ -250,14 +290,31 @@
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
 }
+
 .oc-chat-send:hover {
   transform: scale(1.05);
   background: #00a3d9;
 }
-.oc-chat-send svg { width: 18px; height: 18px; }
+
+.oc-chat-send svg {
+  width: 18px;
+  height: 18px;
+}
 
 /* --- MOBILE SPECIFIC --- */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .oc-chat-trigger {
+    bottom: 230px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .oc-chat-trigger svg {
+    width: 22px;
+    height: 22px;
+  }
+
   .oc-chat-window {
     top: auto;
     bottom: 0px;
