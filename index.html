@@ -6754,4 +6754,18 @@
       document.body.style.overflow = 'hidden';
     }
     function closeLegalModalDirect() {
-      docum
+      document.getElementById('legalModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function closeLegalModal(e) {
+      if (e.target === document.getElementById('legalModal')) {
+        closeLegalModalDirect();
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLegalModalDirect();
+    });
+  </script>
+
+</body>
+</html>
