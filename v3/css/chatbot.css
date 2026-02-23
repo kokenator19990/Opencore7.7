@@ -57,6 +57,51 @@
   transform: rotate(0deg) scale(1);
 }
 
+/* --- CHAT LABEL (DESKTOP) --- */
+.oc-chat-label {
+  position: absolute;
+  right: 75px;
+  /* Offset to the left of the button */
+  background: var(--chat-accent);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 194, 255, 0.4);
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.oc-chat-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  border-width: 6px 0 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--chat-accent);
+}
+
+.oc-chat-trigger:hover .oc-chat-label {
+  transform: translateX(-5px);
+}
+
+.oc-chat-trigger.active .oc-chat-label {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@media (max-width: 768px) {
+  .oc-chat-label {
+    display: none;
+  }
+}
+
 /* --- CHAT WINDOW --- */
 .oc-chat-window {
   position: fixed;
@@ -64,8 +109,8 @@
   right: 30px;
   width: 380px;
   max-width: calc(100vw - 40px);
-  height: 600px;
-  max-height: calc(100vh - 130px);
+  height: 500px;
+  max-height: calc(100vh - 180px);
   background: var(--chat-bg);
   border: 1px solid var(--chat-border);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 194, 255, 0.05);

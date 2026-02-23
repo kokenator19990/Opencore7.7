@@ -121,9 +121,16 @@ function normalize(str) {
   return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/gi, ' ').trim();
 }
 
+
+const stopWords = new Set(["el","la","los","las","un","una","unos","unas","y","o","pero","si","no","en","por","para","con","de","del","a","al","que","cual","quien","como","donde","cuando","porque","es","son","ser","estar","tener","hacer","poder","decir","ir","ver","dar","saber","querer","llegar","pasar","deber","poner","parecer","quedar","creer","hablar","llevar","dejar","seguir","encontrar","llamar","venir","pensar","salir","volver","tomar","conocer","vivir","sentir","tratar","mirar","contar","empezar","esperar","buscar","existir","entrar","trabajar","escribir","perder","producir","ocurrir","entender","pedir","recibir","recordar","terminar","permitir","aparecer","conseguir","comenzar","servir","sacar","necesitar","mantener","resultar","leer","caer","cambiar","presentar","crear","abrir","considerar","oir","acabar","convertir","ganar","formar","traer","partir","morir","aceptar","realizar","suponer","comprender","lograr","explicar","preguntar","tocar","reconocer","estudiar","alcanzar","nacer","dirigir","correr","utilizar","pagar","ayudar","gustar","jugar","escuchar","cumplir","ofrecer","descubrir","levantar","intentar"]);
+
 function tokenize(str) {
-  return normalize(str).split(/\s+/).filter(w => w.length > 2);
+  // Enhanced Tokenizer with stopwords
+  return normalize(str).split(/\s+/)
+    .filter(w => w.length > 2)
+    .filter(w => !stopWords.has(w));
 }
+
 
 // Calculate similarity score between input tokens and question tokens
 function getBestMatch(inputStr) {
