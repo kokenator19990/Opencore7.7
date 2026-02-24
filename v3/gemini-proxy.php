@@ -15,7 +15,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 // ── CONFIGURATION ──
 $GEMINI_API_KEY = 'AIzaSyBBfTiinKLzv17e-2zzQN00gYLUKpBHSQc'; // Gemini API Key
-$MODEL = 'gemini-2.0-flash'; // Fast, free tier
+$MODEL = 'gemini-1.5-flash'; // Free tier compatible model
 
 // ── SYSTEM PROMPT ──
 $SYSTEM_PROMPT = <<<EOT
@@ -123,8 +123,16 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $curlError = curl_error($ch);
 curl_close($ch);
 
-if ($httpCode !== 200 || !$response) {
-    echo json_encode(['response' => "Error de conexión con IA (HTTP $httpCode): $curlError"]);
+if (!$response || $httpCode === 0) {
+    echo json_encode(['response' => 'No pude conectarme con el asistente IA. Por favor escríbenos directamente a contacto@opencore.cl']);
+    exit;
+}
+if ($httpCode === 429) {
+    echo json_encode(['response' => 'Estoy recibiendo muchas consultas en este momento. Por favor intenta en unos segundos, o contáctanos directo a contacto@opencore.cl']);
+    exit;
+}
+if ($httpCode !== 200) {
+    echo json_encode(['response' => 'El asistente IA no está disponible temporalmente. Puedes contactarnos directamente: contacto@opencore.cl o +569 4958 7198']);
     exit;
 }
 
