@@ -16,7 +16,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 // ── CONFIGURATION ──
 require_once 'config.php';
 $GEMINI_API_KEY = GEMINI_API_KEY; // Loaded securely from config.php
-$MODEL = 'gemini-1.5-flash'; // Free tier compatible model
+$MODEL = 'gemini-2.5-flash'; // Latest available model
 
 // ── SYSTEM PROMPT ──
 $SYSTEM_PROMPT = <<<EOT
