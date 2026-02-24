@@ -115,13 +115,16 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestBody));
 curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$curlError = curl_error($ch);
 curl_close($ch);
 
 if ($httpCode !== 200 || !$response) {
-    echo json_encode(['response' => 'Lo siento, no pude procesar tu consulta. Intenta de nuevo o contáctanos directo a contacto@opencore.cl']);
+    echo json_encode(['response' => "Error de conexión con IA (HTTP $httpCode): $curlError"]);
     exit;
 }
 

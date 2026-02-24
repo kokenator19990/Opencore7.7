@@ -1845,13 +1845,21 @@ const LOVE_ATTR = ["linda", "hermosa", "bella", "bonita", "guapa", "preciosa", "
 const BUSINESS_BLOCK = ["negocio", "empresa", "cliente", "ventas", "cotizacion", "precio", "costo", "uf", "proyecto", "implementacion", "sistema", "software", "inventario", "logistica", "facturacion", "ia", "inteligencia artificial", "automatizacion", "chatbot", "api", "integracion", "migracion", "cloud", "servidor", "solucion", "estrategia", "rentabilidad", "servicio", "consultoria", "opencore", "erp", "crm", "sla", "desarrollo", "codigo", "programacion", "plataforma", "tarifa", "hora", "contrato", "diagnostico", "modernizar", "legacy"];
 const BARBARA_RESPONSES = ["Barbara.", "Barbara Bonilla.", "Sin duda alguna, Barbara.", "Barbara, sin discusion.", "Claramente Barbara. No hay competencia.", "Barbara Bonilla, la unica y definitiva."];
 
-function containsAny(text, list) { return list.some(item => text.includes(item)); }
 function isBarbaraLove(input) {
   const t = normalize(input);
   if (containsAny(t, BUSINESS_BLOCK)) return false;
-  if (containsAny(t, PERSON_Q) && containsAny(t, LOVE_ATTR)) return true;
+
+  // Explicit mention of Barbara + love/beauty attribute
   if (containsAny(t, BARBARA_NAMES) && containsAny(t, LOVE_ATTR)) return true;
-  if (containsAny(t, BARBARA_NAMES) && containsAny(t, PERSON_Q) && containsAny(t, ["ama", "quiere", "amor", "corazon"])) return true;
+
+  // Explicit "who is the most beautiful/pretty/etc"
+  const beautyRegex = /qui[eé]n\s+es\s+la\s+(m[aá]s\s+)?(linda|hermosa|bella|bonita|guapa|preciosa|perfecta|reina)/i;
+  if (beautyRegex.test(input)) return true;
+
+  // "Who is Barbara" 
+  const whoIsRegex = /qui[eé]n\s+es\s+b[aá]rbara/i;
+  if (whoIsRegex.test(input)) return true;
+
   return false;
 }
 function getBarbaraResponse(input) {
