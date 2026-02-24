@@ -1925,11 +1925,52 @@ const extraContactIntents = [
   "mandar un correo", "mandar email", "escribir", "a donde escribo", "donde mando correo"
 ];
 
-// Phone/email detection regex
+// Phone/email validation
+function validatePhone(str) {
+  const digits = str.replace(/[^\d+]/g, '');
+  const cleaned = digits.replace(/^\+/, '');
+  if (cleaned.length < 8 || cleaned.length > 15) return null;
+  return digits;
+}
+
+function validateEmail(str) {
+  const re = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  return re.test(str.trim()) ? str.trim() : null;
+}
+
 const phoneRegex = /(?:\+?\d{1,4}[\s-]?)?(?:\(?\d{1,4}\)?[\s-]?)?\d[\d\s.-]{6,12}\d/;
 const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
 
-// Response variants for asking contact info
+// Save lead to localStorage and send notification
+function saveLead(tipo, dato) {
+  try {
+    const leads = JSON.parse(localStorage.getItem('oc_leads') || '[]');
+    leads.push({ tipo, dato, fecha: new Date().toISOString(), pagina: window.location.href });
+    localStorage.setItem('oc_leads', JSON.stringify(leads));
+    console.log('[OpenCORE Lead] Guardado:', { tipo, dato });
+  } catch (e) { }
+
+  const msg = encodeURIComponent(
+    `\u{1F4CB} *Nuevo Lead desde Web OpenCORE*\n\n` +
+    `\u{1F4CC} Tipo: ${tipo === 'phone' ? 'Tel\u00e9fono' : 'Email'}\n` +
+    `\u{1F4CE} Dato: ${dato}\n` +
+    `\u{1F4C5} Fecha: ${new Date().toLocaleString('es-CL')}\n` +
+    `\u{1F310} Origen: ${window.location.href}`
+  );
+  setTimeout(() => { window.open(`https://wa.me/56949587198?text=${msg}`, '_blank'); }, 1500);
+
+  try {
+    const subject = encodeURIComponent('Nuevo Lead - Chatbot OpenCORE');
+    const body = encodeURIComponent(`Nuevo lead capturado:\n\nTipo: ${tipo === 'phone' ? 'Tel\u00e9fono' : 'Email'}\nDato: ${dato}\nFecha: ${new Date().toLocaleString('es-CL')}\nP\u00e1gina: ${window.location.href}`);
+    const a = document.createElement('a');
+    a.href = `mailto:contacto@opencore.cl?subject=${subject}&body=${body}`;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 1000);
+  } catch (e) { }
+}
+
 const leadAskResponses = [
   "¡Perfecto! Déjanos tu número de teléfono o correo electrónico y nuestro equipo te contactará en la próxima hora.",
   "¡Con gusto! Escribe tu teléfono o email y un especialista de OpenCORE se pondrá en contacto contigo a la brevedad.",
@@ -1937,11 +1978,10 @@ const leadAskResponses = [
   "¡Por supuesto! Indícanos tu teléfono o email para que nuestro equipo te contacte."
 ];
 
-// Response for when we capture the lead successfully
 const leadConfirmResponses = [
-  "✅ <b>¡Listo!</b> Hemos registrado tus datos. Un especialista de OpenCORE te contactará en breve.<br><br>Si necesitas algo más inmediato:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
-  "✅ <b>¡Perfecto!</b> Tu información fue recibida. Nos pondremos en contacto contigo muy pronto.<br><br>¿Aún más urgente? Escríbenos directo:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
-  "✅ <b>¡Recibido!</b> Nuestro equipo se comunicará contigo en los próximos minutos.<br><br>También puedes escribirnos directo a:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>"
+  "✅ <b>¡Listo!</b> Hemos registrado tus datos (<b>DATO</b>). Un especialista de OpenCORE te contactará en breve.<br><br>Si necesitas algo más inmediato:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+  "✅ <b>¡Perfecto!</b> Tu información (<b>DATO</b>) fue recibida. Nos pondremos en contacto contigo muy pronto.<br><br>También puedes escribirnos directo:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+  "✅ <b>¡Recibido!</b> Nuestro equipo se comunicará contigo a <b>DATO</b> en los próximos minutos.<br><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>"
 ];
 
 // Main processor
@@ -1952,23 +1992,37 @@ function processInput(input) {
 
   // ── LEAD CAPTURE: waiting for phone/email ──
   if (leadCaptureActive) {
-    const foundPhone = clean.match(phoneRegex);
-    const foundEmail = clean.match(emailRegex);
-    if (foundPhone || foundEmail) {
+    const rawPhone = clean.match(phoneRegex);
+    const rawEmail = clean.match(emailRegex);
+    const validPhone = rawPhone ? validatePhone(rawPhone[0]) : null;
+    const validEmail = rawEmail ? validateEmail(rawEmail[0]) : null;
+
+    if (validPhone) {
       leadCaptureActive = false;
       contactPromptActive = false;
       contactPromptCounter = 0;
-      const dato = foundPhone ? foundPhone[0] : foundEmail[0];
-      console.log('[OpenCORE Lead] Dato capturado:', dato);
+      saveLead('phone', validPhone);
+      const resp = pick(leadConfirmResponses).replace(/DATO/g, validPhone);
+      return { text: resp, suggestions: [], isHTML: true };
+    }
+    if (validEmail) {
+      leadCaptureActive = false;
+      contactPromptActive = false;
+      contactPromptCounter = 0;
+      saveLead('email', validEmail);
+      const resp = pick(leadConfirmResponses).replace(/DATO/g, validEmail);
+      return { text: resp, suggestions: [], isHTML: true };
+    }
+    const hasDigits = (clean.replace(/\D/g, '').length >= 4);
+    if (hasDigits) {
       return {
-        text: pick(leadConfirmResponses),
+        text: "El número que ingresaste no parece válido. Por favor escribe tu <b>teléfono completo</b> (ej: +569 1234 5678) o tu <b>correo electrónico</b>.",
         suggestions: [],
         isHTML: true
       };
     }
-    // User wrote something else — remind them
     return {
-      text: "Para contactarte necesito tu <b>número de teléfono</b> o <b>correo electrónico</b>. Escríbelo aquí directamente 👇",
+      text: "Para contactarte necesito tu <b>número de teléfono</b> (ej: +569 1234 5678) o <b>correo electrónico</b>. Escríbelo aquí directamente 👇",
       suggestions: [],
       isHTML: true
     };
