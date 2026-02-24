@@ -6497,13 +6497,13 @@
 
         document.addEventListener('mousemove', e => {
           mx = e.clientX; my = e.clientY;
-          if (dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
-          if (aura) { aura.style.left = mx + 'px'; aura.style.top = my + 'px'; }
+          if (dot) { dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`; }
+          if (aura) { aura.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`; }
         });
 
         (function lerpRing() {
           rx += (mx - rx) * .13; ry += (my - ry) * .13;
-          if (ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
+          if (ring) { ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`; }
           requestAnimationFrame(lerpRing);
         })();
 

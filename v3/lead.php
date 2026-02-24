@@ -15,8 +15,8 @@ if (!$data || !isset($data['tipo']) || !isset($data['dato'])) {
 }
 
 $tipo = strip_tags($data['tipo']);
-$dato = strip_tags($data['dato']);
-$origen = isset($data['pagina']) ? strip_tags($data['pagina']) : 'Desconocido';
+$dato = htmlspecialchars(strip_tags($data['dato']), ENT_QUOTES, 'UTF-8');
+$origen = htmlspecialchars(strip_tags(isset($data['pagina']) ? $data['pagina'] : 'Desconocido'), ENT_QUOTES, 'UTF-8');
 $fecha = date('d-m-Y H:i:s');
 
 $to = 'contacto@opencore.cl';

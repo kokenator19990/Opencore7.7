@@ -2065,8 +2065,11 @@ function processInput(input) {
   }
   for (const item of precomputedDB) {
     const qn = item.normalized;
+    // FIX: Prefix match (norm starts with qn) only fires when Q&A is ≥50% of input length.
+    // Prevents short Q&As like "pero dime" from capturing unrelated long queries.
     if (qn.length > 4 && norm.length > 4 &&
-      (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
+      ((norm.startsWith(qn) && qn.length >= norm.length * 0.5) ||
+       (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }

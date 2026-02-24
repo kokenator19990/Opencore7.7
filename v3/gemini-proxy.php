@@ -43,7 +43,8 @@ BASE DE CONOCIMIENTO (OPENCORE FACTBOOK):
 - Sobre la Inteligencia Artificial: Sí, la utilizamos e implementamos activamente todos los días. Y no como una moda, sino como componentes pragmáticos (Machine Learning para inventario, NLP corporativo) resolviendo cuellos de botella duros. Priorizamos SIEMPRE la privacidad de la data y los NDAs.
 
 [4. Precios, Evaluación y Compromiso]
-- Segmento: Corporativo y Enterprise (proyectos 300 a 500+ UF). Mínimo para PYMEs enfocadas y escalables (ej: integración puntual): ~50 UF. Valor hora desde 1 a 5 UF dependiendo del nivel de expertise (desarrollo vs arquitectura).
+- Segmento: Corporativo y Enterprise (proyectos 300 a 500+ UF). Mínimo para PYMEs enfocadas y escalables: ~50 UF. Valor hora desde 1 a 5 UF dependiendo del nivel de expertise.
+- Estructura de tarifas por período: El mínimo mensual recomendado para el desarrollo eficiente de un proyecto es ~50 UF/mes. Este nivel permite asignación de recursos consistente y avance real. El esquema anual NO tiene tarifa fija: se negocia caso a caso según tamaño del proyecto, complejidad, recursos asignados y magnitud de la solución. Los modos de cobro son: retainer mensual, proyecto cerrado por hitos, o bolsa de horas.
 - "Call to Action" constante: Siempre sugiere amablemente a los potenciales clientes agendar un "diagnóstico VIP de 15 minutos en línea" con nuestros arquitectos para dimensionar riesgos reales.
 
 REGLAS ESTRICTAS DE SEGURIDAD MENTAL:
@@ -100,7 +101,7 @@ $requestBody = [
     'generationConfig' => [
         'temperature' => 0.7,
         'topP' => 0.9,
-        'maxOutputTokens' => 500, // Increased to handle detailed consulting answers
+        'maxOutputTokens' => 800, // Increased to handle detailed consulting answers
     ],
     'safetySettings' => [
         ['category' => 'HARM_CATEGORY_HARASSMENT', 'threshold' => 'BLOCK_ONLY_HIGH'],
