@@ -1979,14 +1979,14 @@ function getBestMatch(inputStr) {
     else if (!secondBest || score > (secondBest.score || 0)) secondBest = { ...item, score };
   }
   let threshold;
-  if (inputTokens.length <= 2) threshold = 3.2;
-  else if (inputTokens.length <= 4) threshold = 2.5;
-  else threshold = 2.0;
+  if (inputTokens.length <= 2) threshold = 2.0; // Lowered from 3.2
+  else if (inputTokens.length <= 4) threshold = 1.6; // Lowered from 2.5
+  else threshold = 1.2; // Lowered from 2.0
   if (bestScore < threshold) return null;
-  if (inputTokens.length < 3 && bestScore < 2.8) return null;
+  if (inputTokens.length < 3 && bestScore < 1.8) return null; // Lowered from 2.8
   return {
     answer: bestMatch.a,
-    confidence: Math.min(bestScore / 4.5, 1),
+    confidence: Math.min(bestScore / 3.0, 1), // Lowered divisor to increase perceived confidence
     suggestion: (secondBest && secondBest.score >= threshold * 0.75) ? secondBest.q : null
   };
 }
@@ -2569,29 +2569,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatHistory = [];
 
   // Async Gemini AI fallback
-  async function askGemini(userMsg) {
-    try {
-      const res = await fetch('gemini-proxy.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMsg,
-          history: chatHistory.slice(-6)
-        })
-      });
-      const data = await res.json();
-      return data.response || 'No pude procesar tu consulta. Int\u00e9ntalo de nuevo.';
-    } catch (e) {
-      console.error('[OpenCORE AI] Error:', e);
-      return 'Disculpa, hubo un error de conexi\u00f3n. Puedes contactarnos directo a contacto@opencore.cl';
-    }
-  }
-
+  
   let isSending = false;
   function handleSend() {
     const txt = input.value.trim();
     if (!txt || isSending) return;
-    if (isRateLimited()) { appendBotMsg("Estas enviando mensajes muy rapido. Espera un momento.", false); return; }
+    if (isRateLimited()) { appendBotMsg("Estás enviando mensajes muy rápido. Espera un momento.", false); return; }
     const initQR = document.getElementById("ocQuickInit");
     if (initQR) initQR.remove();
     appendUserMsg(txt);
@@ -2602,21 +2585,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // Track user message in history
     chatHistory.push({ role: 'user', text: txt });
 
-    const delay = 600 + Math.random() * 900;
-    setTimeout(async () => {
+    const delay = 400 + Math.random() * 500; // Faster localized response
+    setTimeout(() => {
       const result = processInput(txt);
 
+      removeTyping();
+      let responseText = result.text;
+      
+      // If AI needed but we are offline, force local fallback
       if (result.aiNeeded) {
-        // No regex match — ask Gemini AI
-        const aiResponse = await askGemini(txt);
-        removeTyping();
-        appendBotMsg(aiResponse, false);
-        chatHistory.push({ role: 'assistant', text: aiResponse });
-      } else {
-        removeTyping();
-        appendBotMsg(result.text, result.isHTML || false);
-        if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
-        chatHistory.push({ role: 'assistant', text: result.text });
+         responseText = "Para consultas tan específicas, te recomiendo una evaluación directa. Puedes escribirnos a contacto@opencore.cl o agendar una sesión de 15 minutos con nuestros arquitectos.";
+      }
+
+      const msgEl = appendBotMsg(responseText, result.isHTML || false);
+      if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
+      chatHistory.push({ role: 'assistant', text: responseText });
+      
+      // Speak in voice mode
+      if (voiceModeActive) {
+        const plain = msgEl.textContent || msgEl.innerText;
+        speakText(plain);
       }
       isSending = false;
     }, delay);
