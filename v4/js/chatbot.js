@@ -24,14 +24,14 @@ const qnaDB = [
 
   // ═══ OPENCORE OFICIAL: SERVICIOS (11-20) ═══
   { q: "¿Pueden desarrollar un sistema desde cero?", a: "Sí. Diseñamos arquitectura completa cuando es la solución más eficiente y sostenible." },
-  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos." },
-  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos." },
+  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver?" },
+  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos. ¿Qué problemática exacta enfrenta en su operación?" },
   { q: "¿Hacen apps móviles básicas?", a: "Solo si forman parte de una solución empresarial integrada. No desarrollamos apps aisladas sin arquitectura estratégica." },
   { q: "¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
   { q: "¿Trabajan con bases de datos grandes?", a: "Sí. Hemos trabajado con bases de datos de alto volumen y entornos críticos." },
-  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización." },
+  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización. ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir?" },
   { q: "¿Hacen auditoría tecnológica?", a: "Sí. Podemos auditar arquitectura, seguridad y rendimiento sin obligación de desarrollo posterior." },
-  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente." },
+  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente. Cuéntenos, ¿cuál es su problema operativo principal actual?" },
   { q: "¿Integran inteligencia artificial?", a: "Sí, cuando aporta valor real y no compromete estabilidad ni seguridad." },
 
   // ═══ OPENCORE OFICIAL: PRECIOS (21-30) ═══
@@ -1688,7 +1688,7 @@ const qnaDB = [
   { q: "Hola, ¿qué ofrecen exactamente?", a: "Ofrecemos consultoría tecnológica especializada en arquitectura empresarial, modernización de sistemas legacy, integración ERP y automatización estructural de procesos. Nuestro enfoque no es vender software estándar, sino diseñar soluciones sostenibles alineadas con la operación real de cada organización." },
   { q: "Hola, ¿qué servicios me pueden vender?", a: "Más que vender servicios aislados, estructuramos intervenciones tecnológicas orientadas a resolver problemas de fondo: integración de plataformas, reducción de deuda técnica, optimización de bases de datos y estabilización de sistemas críticos." },
   { q: "Hola, quiero contratar sus servicios, ¿cómo funciona?", a: "El proceso comienza con un levantamiento técnico para comprender su arquitectura actual, nivel de madurez tecnológica y objetivos estratégicos. A partir de ello definimos alcance, modalidad contractual y plan de ejecución progresiva." },
-  { q: "Hola, ¿qué tipo de proyectos desarrollan?", a: "Desarrollamos proyectos de modernización tecnológica, migraciones estructurales, integración entre sistemas heterogéneos y automatización empresarial. También intervenimos en rescate de proyectos con desviaciones técnicas o estructurales." },
+  { q: "Hola, ¿qué tipo de proyectos desarrollan?", a: "Desarrollamos proyectos de modernización tecnológica, migraciones estructurales, integración de sistemas y automatización empresarial. ¿Qué desafío tecnológico específico buscan resolver en su empresa?" },
   { q: "Hola, ¿pueden desarrollar una aplicación desde cero?", a: "Sí, siempre que exista una definición clara de objetivos funcionales y arquitectura futura. Diseñamos la solución desde la base considerando escalabilidad, seguridad, integración y sostenibilidad a largo plazo." },
   { q: "Hola, ¿qué precios manejan?", a: "Los valores dependen directamente de la especificidad, complejidad y extensión del proyecto. Contamos con modalidad mensual desde 30 UF para servicios continuos, mientras que proyectos estructurales se valorizan según evaluación técnica formal." },
   { q: "Hola, tengo una empresa pequeña, ¿pueden trabajar conmigo?", a: "Sí, evaluamos proyectos de PYMEs cuando existe una necesidad tecnológica estructural clara. En estos casos proponemos fases progresivas que permitan escalar de manera controlada." },
