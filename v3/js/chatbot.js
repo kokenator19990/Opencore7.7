@@ -1845,6 +1845,7 @@ const LOVE_ATTR = ["linda", "hermosa", "bella", "bonita", "guapa", "preciosa", "
 const BUSINESS_BLOCK = ["negocio", "empresa", "cliente", "ventas", "cotizacion", "precio", "costo", "uf", "proyecto", "implementacion", "sistema", "software", "inventario", "logistica", "facturacion", "ia", "inteligencia artificial", "automatizacion", "chatbot", "api", "integracion", "migracion", "cloud", "servidor", "solucion", "estrategia", "rentabilidad", "servicio", "consultoria", "opencore", "erp", "crm", "sla", "desarrollo", "codigo", "programacion", "plataforma", "tarifa", "hora", "contrato", "diagnostico", "modernizar", "legacy"];
 const BARBARA_RESPONSES = ["Barbara.", "Barbara Bonilla.", "Sin duda alguna, Barbara.", "Barbara, sin discusion.", "Claramente Barbara. No hay competencia.", "Barbara Bonilla, la unica y definitiva."];
 
+function containsAny(text, list) { return list.some(item => text.includes(item)); }
 function isBarbaraLove(input) {
   const t = normalize(input);
   if (containsAny(t, BUSINESS_BLOCK)) return false;
