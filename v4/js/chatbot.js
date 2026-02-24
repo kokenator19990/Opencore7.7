@@ -1931,23 +1931,29 @@ function processInput(input) {
 // DOM injection
 document.addEventListener("DOMContentLoaded", () => {
   const chatHTML = `
-    <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
+        <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
       <div class="oc-chat-label">Habla con OpenCORE AI</div>
-      <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05"></path><path d="M12 22.08V12"></path>
       </svg>
       <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
     </div>
     <div class="oc-chat-window" id="ocChatWindow" role="dialog" aria-label="Chat OpenCORE">
-      <div class="oc-chat-header">
-        <div class="oc-chat-avatar">OC</div>
+            <div class="oc-chat-header">
+        <div class="oc-chat-avatar" style="background: transparent; border: none; overflow: visible;">
+           <img src="img/logo-white.png" alt="OC" style="width: 28px; height: 28px; filter: drop-shadow(0 0 8px var(--cyan-g)); object-fit: contain;" />
+        </div>
         <div>
-          <div class="oc-chat-name">OpenCORE AI</div>
+          <div class="oc-chat-name" style="display:flex; align-items:center;">OpenCORE AI</div>
           <div class="oc-chat-status"><span class="oc-status-dot"></span>En linea</div>
         </div>
-        <button class="oc-chat-close" id="ocChatClose" aria-label="Cerrar chat">&times;</button>
+        <button class="oc-chat-close" id="ocChatClose" aria-label="Cerrar chat" style="border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:4px;">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+             <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+           </svg>
+        </button>
       </div>
       <div class="oc-chat-body" id="ocChatBody">
         <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
@@ -1971,10 +1977,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="oc-qr" data-q="Solo hacen migraciones?">Sobre migraciones</button>
         </div>
       </div>
-      <div class="oc-chat-footer">
-        <input type="text" id="ocChatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="400" aria-label="Mensaje" />
-        <button id="ocChatSend" aria-label="Enviar mensaje">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <div class="oc-chat-footer">
+        <input type="text" id="ocChatInput" class="oc-chat-input" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="400" aria-label="Mensaje" />
+        <button id="ocChatSend" class="oc-chat-send" aria-label="Enviar mensaje">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
             <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
         </button>
