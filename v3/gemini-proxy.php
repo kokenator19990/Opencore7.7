@@ -14,7 +14,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // ── CONFIGURATION ──
-$GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // ← PASTE YOUR KEY HERE
+$GEMINI_API_KEY = 'AIzaSyBBfTiinKLzv17e-2zzQN00gYLUKpBHSQc'; // Gemini API Key
 $MODEL = 'gemini-2.0-flash'; // Fast, free tier
 
 // ── SYSTEM PROMPT ──
