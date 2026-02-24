@@ -2075,6 +2075,22 @@ function processInput(input) {
   // ── "QUIERO QUE ME CONTACTEN" (callback request) ──
   if (wantCallbackRegex.test(clean) || wantCallbackPhrases.some(p => ln.includes(p))) {
     contactPromptCounter++;
+    // Check if phone or email is ALREADY in the same message
+    const inlinePhone = clean.match(phoneRegex);
+    const inlineEmail = clean.match(emailRegex);
+    const inlineValidPhone = inlinePhone ? validatePhone(inlinePhone[0]) : null;
+    const inlineValidEmail = inlineEmail ? validateEmail(inlineEmail[0]) : null;
+    if (inlineValidPhone) {
+      saveLead('phone', inlineValidPhone);
+      const resp = pick(leadConfirmResponses).replace(/DATO/g, inlineValidPhone);
+      return { text: resp, suggestions: [], isHTML: true };
+    }
+    if (inlineValidEmail) {
+      saveLead('email', inlineValidEmail);
+      const resp = pick(leadConfirmResponses).replace(/DATO/g, inlineValidEmail);
+      return { text: resp, suggestions: [], isHTML: true };
+    }
+    // No data found in message — ask for it
     leadCaptureActive = true;
     return {
       text: pick(leadAskResponses),
