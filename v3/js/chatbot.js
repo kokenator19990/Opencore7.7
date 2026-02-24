@@ -2107,7 +2107,7 @@ function getBarbaraResponse(input) {
 
 // CTA
 const LEAD_GEN_TRIGGERS = ["precio", "costo", "cobran", "implementacion", "auditoria", "error", "critico", "migracion", "cotizar", "cotizacion", "uf", "presupuesto", "tarifa", "contrato", "servicio", "soporte"];
-const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="https://calendly.com/opencore-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
+const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="#formulario-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
 function shouldAppendCTA(input) {
   const n = normalize(input);
   const triggered = LEAD_GEN_TRIGGERS.some(t => n.includes(t));
@@ -2322,7 +2322,7 @@ function processInput(input) {
   if (contactRegex.test(clean) || extraContactIntents.some(i => ln.includes(i)) || (ln === 'llamame') || (ln === 'llamame a mi')) {
     contactPromptCounter++;
     return {
-      text: "¡Excelente! Puedes contactarnos directamente: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Agendar Diagnóstico VIP (15 min)</a>.<br><br>¿O prefieres que <b>nosotros te contactemos</b>? Escribe tu teléfono o email aquí.",
+      text: "¡Excelente! Puedes contactarnos directamente: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Ir al Formulario de Diagnóstico</a>.<br><br>¿O prefieres que <b>nosotros te contactemos</b>? Escribe tu teléfono o email aquí.",
       suggestions: ["Quiero que me llamen"],
       isHTML: true
     };
