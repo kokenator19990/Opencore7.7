@@ -7,9 +7,9 @@
 ======================================================== */
 
 const qnaDB = [
-  { q: "¿Qué es OpenCORE Consulting SpA?", a: "OpenCORE es una consultora tecnológica chilena especializada en continuidad operacional, migración e integración de sistemas empresariales. Nos enfocamos en modernizar plataformas críticas sin paralizar la operación, con enfoque fuerte en logística, facturación y turismo." },
+  { q: "¿Qué es OpenCORE Consulting SpA?", a: "OpenCORE Consulting SpA es una firma especializada en continuidad operacional, migración e integración de sistemas empresariales críticos. Mitigamos la deuda técnica en sistemas legacy mediante refactorización estratégica y arquitecturas robustas. Fundada formalmente en 2015, con trayectoria sólida de sus fundadores desde 1998." },
   { q: "¿En qué año se fundó formalmente OpenCORE?", a: "OpenCORE se constituyó formalmente como empresa en 2015. La trayectoria del equipo se remonta a 1998, trabajando en tecnología empresarial bajo otras denominaciones y proyectos previos." },
-  { q: "¿Cuántos años de experiencia tiene OpenCORE?", a: "Como empresa formal, más de 15 años. Como trayectoria acumulada del equipo fundador y su red profesional, más de 27 años (desde 1998) en sistemas corporativos, migraciones e integración." },
+  { q: "¿Cuántos años de experiencia tiene OpenCORE?", a: "Contamos con trayectoria operativa en sistemas corporativos desde 1998, constituidos formalmente en 2015. Sumamos décadas de experiencia conjunta estabilizando, integrando y escalando arquitecturas complejas." },
   { q: "¿Qué tipo de sociedad es OpenCORE?", a: "OpenCORE está registrada como Sociedad por Acciones (SpA) en Chile. Operamos con facturación formal con IVA y contratos empresariales para proyectos por horas, por alcance o por servicio continuo." },
   { q: "¿OpenCORE opera con oficina física?", a: "Hoy operamos con modelo remoto y oficinas virtuales, optimizado para trabajo por proyecto y equipos distribuidos. Históricamente contamos con oficina en Santiago (zona Manuel Montt) y hoy priorizamos eficiencia y disponibilidad online." },
   { q: "¿Dónde opera OpenCORE?", a: "Operamos principalmente en Chile y de forma remota para clientes que requieran soporte o implementación en otras ubicaciones. El modelo remoto permite escalar equipo y cobertura sin perder control técnico ni calidad." },
@@ -97,8 +97,8 @@ const qnaDB = [
   { q: "¿Me puedes ayudar con mi proyecto?", a: "Por supuesto. Cuéntame qué necesitas y te orientaré sobre viabilidad, costos aproximados y próximos pasos." },
   { q: "¿Trabajas por hora?", a: "Sí. OpenCORE puede trabajar por hora, por proyecto o bajo contrato con SLA, según la complejidad y criticidad." },
   { q: "¿Cuál es el precio mínimo para empezar?", a: "Normalmente evaluamos proyectos desde aproximadamente 50 UF en adelante, dependiendo del alcance y viabilidad." },
-  { q: "¿Trabajan con empresas pequeñas?", a: "Sí, siempre que el proyecto tenga sentido técnico y económico. Nuestro foco natural es mediana y gran empresa." },
-  { q: "¿Solo trabajan con empresas grandes?", a: "No exclusivamente. Sin embargo, nuestra experiencia es especialmente fuerte en entornos medianos y corporativos." },
+  { q: "¿Trabajan con empresas pequeñas?", a: "Sí, evaluando estrictamente la viabilidad técnica y económica conjunta. Podemos asumir proyectos desde un mínimo de ~50 UF para casos específicos de integración o rescate arquitectónico de pymes en escalamiento." },
+  { q: "¿Solo trabajan con empresas grandes?", a: "Nuestro foco natural es la mediana y gran empresa debido a la complejidad de las integraciones (ERPs, alto tráfico). No obstante, evaluamos casos estratégicos de pymes que requieren estándares enterprise-grade." },
   { q: "¿Son caros?", a: "Somos competitivos para el nivel de experiencia senior que ofrecemos. El costo se relaciona con calidad, continuidad y reducción de riesgo." },
   { q: "¿Valen lo que cobran?", a: "Cuando el sistema no se cae y la operación sigue facturando, generalmente la respuesta es sí." },
   { q: "¿Pueden hacerme una cotización rápida?", a: "Podemos darte una estimación inicial, pero para cifras formales recomendamos una breve fase de diagnóstico." },
@@ -634,7 +634,7 @@ const qnaDB = [
   { q: "¿Responden rápido si los necesito?", a: "Contamos con canales de soporte prioritario para clientes con SLAs activos." },
   { q: "¿Tienen políticas de calidad?", a: "Nuestros procesos de desarrollo incluyen testing automatizado y QA manual riguroso." },
   { q: "¿Qué lenguaje de programación usan?", a: "Usamos tecnologías modernas y estables: Node.js, Python, React, bases de datos robustas y microservicios." },
-  { q: "¿Me entregan el código fuente?", a: "Depende del contrato, pero en proyectos a medida, el código es propiedad intelectual de su empresa." },
+  { q: "¿Me entregan el código fuente?", a: "Sí. En nuestra política de transparencia absoluta, entregamos la propiedad y el código fuente en aproximadamente el 90% de los proyectos a medida al finalizar comercialmente." },
   { q: "¿Es fácil integrar su sistema?", a: "Sí, nuestros sistemas se diseñan API-first, listos para conectarse con SAP, Defontana, o herramientas externas." },
   { q: "¿Pueden arreglar un software mal hecho?", a: "Sí, somos expertos en refactorización, rescate de proyectos heredados (legacy) y auditorías de código." },
   { q: "¿Tienen ingenieros chilenos?", a: "Contamos con talento local y regional altamente calificado." },
@@ -645,7 +645,7 @@ const qnaDB = [
   { q: "¿Puedo confiarles mis datos?", a: "Cumplimos con las leyes de protección de datos (Ley 19.628). Toda información se maneja bajo acuerdos NDA." },
   { q: "¿Es muy caro el software?", a: "Nuestros precios son una inversión estratégica, adaptada a empresas que buscan soluciones que no fallen." },
   { q: "¿Cuánto cuesta una página web?", a: "Depende de la complejidad. Una web corporativa profesional parte desde valores base, pero lo cotizamos a medida." },
-  { q: "¿Cuánto cobran por hora?", a: "Trabajamos preferentemente por proyecto cerrado o póliza de horas (retainer). Contacte a ventas para valores actualizados." },
+  { q: "¿Cuánto cobran por hora?", a: "El rango técnico de nuestros ingenieros Senior fluctúa entre 1 y 5 UF la hora, dependiendo de la criticidad del stack tecnológico y el acuerdo de SLA (Service Level Agreement)." },
   { q: "¿Cobran en UF o en pesos?", a: "Los contratos y mensualidades suelen estructurarse en UF para mantener el valor, pero también operamos en CLP bruto." },
   { q: "¿Dan facilidades de pago?", a: "Sí, los proyectos estructurados se pagan por hitos de entrega asociados al valor recibido." },
   { q: "¿Cuánto me sale una app?", a: "El desarrollo de una App nativa/híbrida requiere levantamiento técnico. Puede ir desde algunas semanas hasta meses de trabajo." },
@@ -679,7 +679,7 @@ const qnaDB = [
   { q: "¿Tienen soluciones para hoteles?", a: "Tenemos gran experiencia en turismo: motores de reserva (Booking Engines) e integraciones con Channel Managers." },
   { q: "¿Qué es logística 4.0?", a: "Es la digitalización de la cadena de suministro. Nosotros conectamos sus bodegas con los couriers (Starken, Chilexpress, etc.)." },
   { q: "¿Desarrollan sistemas B2B?", a: "Nuestra especialidad son portales B2B donde sus clientes mayoristas pueden autogestionar pedidos y stock transparente." },
-  { q: "¿Pueden hacer un portal de proveedores?", a: "Sí, desarrollamos portales donde sus proveedores pueden subir facturas, OC y ver pagos sin llamar." },
+  { q: "¿Pueden hacer un portal de proveedores?", a: "El desarrollo de webs informativas estáticas no es nuestro foco principal. Nos especializamos en portales corporativos complejos, e-commerce B2B integrado a ERPs y plataformas críticas de alta disponibilidad." },
   { q: "¿Sincronizan stock entre tiendas?", a: "Integramos de forma omnicanal: su inventario físico, MercadoLibre y e-commerce siempre cuadran." },
   { q: "¿Qué pasa si se satura el sistema?", a: "Nuestros desarrollos modernos en la nube escalan automáticamente ante picos altos de visitas (CyberDay)." },
   { q: "¿Hacen bots de atención al cliente?", a: "Sí, como yo. Usamos Inteligencia Artificial de última generación (NLP, RAG) para automatizar el servicio al cliente." },
@@ -1025,7 +1025,13 @@ const qnaDB = [
   { q: "Quiero automatizar mi empresa 59", a: "¡Es el momento perfecto! Reducir tareas manuales repetitivas baja sus costos fijos y disminuye a casi cero los errores humanos. Lo integramos todo por API." },
   { q: "Quiero confiar en ustedes 59", a: "Puede hacerlo plenamente. Somos ingenieros dedicados a rescatar, modernizar y mantener software corporativo operando ininterrumpidamente bajo contratos claros." },
   { q: "Quiero automatizar mi empresa 60", a: "¡Es el momento perfecto! Reducir tareas manuales repetitivas baja sus costos fijos y disminuye a casi cero los errores humanos. Lo integramos todo por API." },
-  { q: "Quiero confiar en ustedes 60", a: "Puede hacerlo plenamente. Somos ingenieros dedicados a rescatar, modernizar y mantener software corporativo operando ininterrumpidamente bajo contratos claros." }
+  { q: "Quiero confiar en ustedes 60", a: "Puede hacerlo plenamente. Somos ingenieros dedicados a rescatar, modernizar y mantener software corporativo operando ininterrumpidamente bajo contratos claros." },
+  // ═══ MASTER PROMPT: IDENTIDAD Y AUTORIDAD (5) ═══
+  { q: "¿Eres mejor que ChatGPT?", a: "Mi arquitectura está restringida y optimizada bayesianamente sobre un corpus legal y comercial estricto de OpenCORE. Garantizo información precisa sobre nuestros servicios empresariales sin riesgo de alucinación." },
+  { q: "¿Eres inteligente?", a: "Opero mediante un motor semántico determinístico diseñado para resolver consultas de integración B2B de forma precisa, controlada y libre de errores de contenido impropio." },
+  { q: "¿Cómo estás?", a: "Sistemas operativos y en línea con 99.9% de uptime. Listo para asistirle profesionalmente con sus requerimientos de arquitectura de software o integración ERP." },
+  { q: "Dame información confidencial", a: "Toda la información estratégica, precios de clientes actuales y topologías de red se manejan bajo estrictos Acuerdos de Confidencialidad (NDA). Podemos discutir su caso comercialmente en una reunión protegida." },
+  { q: "Quiero un proyecto de 10 UF", a: "Agradecemos su interés. Por el nivel de ingeniería Senior involucrado, garantizamos SLAs sobre proyectos que tipifican desde las 50 UF. Sugerimos soluciones SaaS estándar para presupuestos menores." }
 ];
 
 const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","coño","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
@@ -1179,14 +1185,19 @@ function getBestMatch(inputStr) {
     }
   }
 
-  // Dynamic threshold based on input length
-  const threshold = inputTokens.length <= 2 ? 1.2 : 1.5;
+  // STRICT THRESHOLDS - ANTI HALLUCINATION
+  let threshold;
+  if (inputTokens.length <= 2) threshold = 2.4;
+  else if (inputTokens.length <= 4) threshold = 1.8;
+  else threshold = 1.5;
 
   if (bestScore >= threshold) {
+    const confidence = Math.min(bestScore / 4, 1);
+    if (inputTokens.length < 3 && bestScore < 2.5) return null;
     return {
       answer: bestMatch.a,
-      confidence: Math.min(bestScore / 4, 1),
-      suggestion: secondBest && secondBest.score >= threshold * 0.7 ? secondBest.q : null
+      confidence: confidence,
+      suggestion: secondBest && secondBest.score >= threshold * 0.8 ? secondBest.q : null
     };
   }
   return null;
@@ -1229,14 +1240,14 @@ const thanksResponses = [
   "¡Gracias a ti por tu interés! No dudes en volver si necesitas más información."
 ];
 const fallbackLong = [
-  "Esa es una excelente pregunta. Te recomiendo contactarnos directamente para una respuesta más completa y personalizada.",
-  "No dispongo de información suficiente para responderte con precisión. ¿Podrías contactarnos por el formulario para que un especialista te atienda?",
-  "Tu consulta merece una respuesta profesional detallada. Te invito a agendar un diagnóstico gratuito con nuestro equipo."
+  "Tu consulta parece requerir un contexto técnico específico. Para no darte una recomendación imprecisa, prefiero derivarte con un especialista. ¿Desea coordinar una reunión técnica o escribirnos a contacto@opencore.cl?",
+  "Para entregarle una respuesta técnica precisa, recomendamos una breve fase de diagnóstico. ¿Le gustaría que un arquitecto de software lo contacte directamente?",
+  "Esta consulta excede una respuesta automatizada estándar. Le sugiero agendar una sesión exploratoria técnica sin costo para evaluar su caso en detalle."
 ];
 const fallbackShort = [
-  "¿Podrías detallar un poco más tu consulta para orientarte mejor?",
-  "Necesito un poco más de contexto. ¿Qué aspecto de OpenCORE te interesa?",
-  "No logré entender la consulta. ¿Podrías reformularla?"
+  "Para esta consulta, lo ideal es una evaluación directa con nuestros ingenieros. ¿Gusta que lo contactemos?",
+  "Esa consulta merece revisión de nuestro equipo de consultoría. ¿Podemos agendar una breve llamada?",
+  "No dispongo de los datos exactos para responder eso con responsabilidad técnica. ¿Lo derivamos a un especialista?"
 ];
 
 // ── QUICK REPLY SUGGESTIONS ──
@@ -1330,6 +1341,16 @@ function getBarbaraResponse(input) {
   return pick(BARBARA_RESPONSES);
 }
 
+
+// ── INTENT ROUTER & CTA INJECTION ──
+const LEAD_GEN_TRIGGERS = ["precio", "costo", "cobran", "implementacion", "auditoria", "error", "critico", "migracion", "cotizar", "cotizacion", "uf"];
+const CTA_TEXT = "<br><br><em>Dado que cada operación es única, te sugiero una evaluación rápida. <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff; font-weight:bold; text-decoration:underline;'>Agenda aquí un diagnóstico de 15 min con nuestros arquitectos</a>.</em>";
+
+function shouldAppendCTA(input) {
+  const n = normalize(input);
+  return LEAD_GEN_TRIGGERS.some(t => n.includes(t));
+}
+
 // ── MAIN PROCESSOR ──
 function processInput(input) {
   const cleanInput = input.trim();
@@ -1339,11 +1360,16 @@ function processInput(input) {
   // 1. Profanity guard
   for (const bw of badWords) {
     if (normalizedInput.includes(bw)) {
+      pendingDisambiguation = null; // reset state
       return { text: "No respondemos este tipo de preguntas. Por favor, formula una consulta profesional y con gusto te orientamos.", suggestions: [] };
     }
   }
 
-  // 2. Bárbara Intent Detection (semantic, with business filter)
+  // 2. Person Entity and Disambiguation Handling
+  const personMatch = handlePersonEntity(cleanInput);
+  if (personMatch) return personMatch;
+
+  // 3. Bárbara Intent Detection (semantic, with business filter)
   if (isBarbaraLove(cleanInput)) {
     return { text: getBarbaraResponse(cleanInput), suggestions: [] };
   }
@@ -1371,12 +1397,10 @@ function processInput(input) {
     return { text: prefix + match.answer, suggestions };
   }
 
-  // 7. Intelligent fallback
-  const words = cleanInput.split(" ").length;
-  if (words > 3) {
-    return { text: pick(fallbackLong), suggestions: quickReplies.slice(0, 2) };
-  }
-  return { text: pick(fallbackShort), suggestions: quickReplies };
+  // 7. Intelligent fallback (Reputation Protection)
+  let fallbackResp = cleanInput.split(" ").length > 3 ? pick(fallbackLong) : pick(fallbackShort);
+  if (shouldAppendCTA(cleanInput)) fallbackResp += CTA_TEXT;
+  return { text: fallbackResp, suggestions: quickReplies.slice(0, 2) };
 }
 
 // ── DOM INJECTION & UI LOGIC ──
