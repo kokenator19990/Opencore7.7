@@ -1736,9 +1736,9 @@ function getBestMatch(inputStr) {
     else if (!secondBest || score > (secondBest.score || 0)) secondBest = { ...item, score };
   }
   let threshold;
-  if (inputTokens.length <= 2) threshold = 2.6;
-  else if (inputTokens.length <= 4) threshold = 2.0;
-  else threshold = 1.6;
+  if (inputTokens.length <= 2) threshold = 3.2;
+  else if (inputTokens.length <= 4) threshold = 2.5;
+  else threshold = 2.0;
   if (bestScore < threshold) return null;
   if (inputTokens.length < 3 && bestScore < 2.8) return null;
   return {
@@ -2118,7 +2118,7 @@ function processInput(input) {
 
   // 8. NLP fuzzy match
   const match = getBestMatch(clean);
-  if (match) {
+  if (match && match.confidence >= 0.55) {
     const prefix = match.confidence >= 0.78 ? "" : "Basandome en tu consulta: ";
     let answer = prefix + match.answer;
     if (shouldAppendCTA(clean)) answer += CTA_HTML;
