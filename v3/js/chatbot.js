@@ -1833,7 +1833,7 @@ function handlePersonEntity(input) {
   if (mo) {
     const pn = mo[1].replace(/\?/g, "").trim().toLowerCase();
     if (!["jorge", "quezada", "barbara", "bonilla", "opencore"].some(k => pn.includes(k)) && pn.length > 2)
-      return { text: "No dispongo de esa informacion. Puedo ayudarte con algo relacionado a OpenCORE o tecnologia empresarial?", suggestions: [] };
+      return null; // Let Gemini AI handle unknown person queries
   }
   return null;
 }
