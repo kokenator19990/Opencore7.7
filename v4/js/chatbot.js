@@ -2057,7 +2057,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("ocChatInput");
   const sendBtn = document.getElementById("ocChatSend");
   const closeBtn = document.getElementById("ocChatClose");
+  const modeText = document.getElementById("ocModeText");
+  const modeVoice = document.getElementById("ocModeVoice");
+  const footer = document.querySelector(".oc-chat-footer");
 
+  // ── Toggle Chat ──
   function toggleChat() {
     trigger.classList.toggle("active");
     win.classList.toggle("open");
@@ -2067,6 +2071,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) closeBtn.addEventListener("click", toggleChat);
   trigger.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") toggleChat(); });
 
+  // ── Quick Reply clicks ──
   body.addEventListener("click", e => {
     if (e.target.classList.contains("oc-qr")) {
       const q = e.target.dataset.q;
@@ -2074,7 +2079,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Rate limiter: max 5 messages per 10s
+  // ── Rate Limiter ──
   let msgCount = 0, rateLimitTimer = null;
   function isRateLimited() {
     if (msgCount >= 5) return true;
@@ -2083,6 +2088,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
+  // ── Message Helpers ──
   function appendUserMsg(txt) {
     const d = document.createElement("div");
     d.className = "oc-msg user";
@@ -2090,7 +2096,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.appendChild(d);
     body.scrollTop = body.scrollHeight;
   }
-
   function appendBotMsg(content, isHTML) {
     const d = document.createElement("div");
     d.className = "oc-msg bot";
@@ -2100,7 +2105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.scrollTop = body.scrollHeight;
     return d;
   }
-
   function appendQuickReplies(suggestions) {
     if (!suggestions || !suggestions.length) return;
     const wrap = document.createElement("div");
@@ -2115,7 +2119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.appendChild(wrap);
     body.scrollTop = body.scrollHeight;
   }
-
   function appendTyping() {
     const d = document.createElement("div");
     d.className = "oc-msg bot oc-typing-wrapper";
@@ -2126,9 +2129,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
 
+  // ── Send Handler ──
   let isSending = false;
-  function handleSend() {
-    const txt = input.value.trim();
+  function handleSend(txtOverride) {
+    const txt = (txtOverride || input.value).trim();
     if (!txt || isSending) return;
     if (isRateLimited()) { appendBotMsg("Estas enviando mensajes muy rapido. Espera un momento.", false); return; }
     const initQR = document.getElementById("ocQuickInit");
@@ -2141,12 +2145,178 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       removeTyping();
       const result = processInput(txt);
-      appendBotMsg(result.text, result.isHTML || false);
+      const msgEl = appendBotMsg(result.text, result.isHTML || false);
       if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
       isSending = false;
+      // Speak bot response if in voice mode
+      if (voiceModeActive) {
+        const plain = msgEl.textContent || msgEl.innerText;
+        speakText(plain);
+      }
     }, delay);
   }
 
-  sendBtn.addEventListener("click", handleSend);
+  sendBtn.addEventListener("click", () => handleSend());
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+
+  // ══════════════════════════════════════════════
+  //  VOICE MODE — Web Speech API
+  // ══════════════════════════════════════════════
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let voiceModeActive = false;
+  let recognition = null;
+  let micBtn = null;
+  let vadTimer = null;
+
+  function speakText(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = "es-CL";
+    utt.rate = 1.05;
+    utt.pitch = 1.0;
+    // Prefer a Spanish voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const esVoice = voices.find(v => v.lang.startsWith("es"));
+    if (esVoice) utt.voice = esVoice;
+    window.speechSynthesis.speak(utt);
+  }
+
+  function setMicState(state) {
+    if (!micBtn) return;
+    micBtn.classList.remove("listening", "active");
+    if (state === "listening") {
+      micBtn.classList.add("listening");
+      micBtn.title = "Escuchando…";
+      input.placeholder = "🎙️ Escuchando…";
+    } else if (state === "active") {
+      micBtn.classList.add("active");
+      micBtn.title = "Iniciar dictado";
+      input.placeholder = "Pulsa el ícono de micrófono o escribe…";
+    } else {
+      micBtn.title = "Activar micrófono";
+    }
+  }
+
+  function startRecognition() {
+    if (!SpeechRecognition) {
+      appendBotMsg("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome.", false);
+      return;
+    }
+    if (recognition) { try { recognition.stop(); } catch (e) { } recognition = null; }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "es-CL";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => setMicState("listening");
+
+    recognition.onresult = (event) => {
+      clearTimeout(vadTimer);
+      let interim = "", final = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) final += event.results[i][0].transcript;
+        else interim += event.results[i][0].transcript;
+      }
+      input.value = final || interim;
+      // VAD: auto-submit after 1.4s silence if there's final text
+      if (final) {
+        vadTimer = setTimeout(() => {
+          if (input.value.trim()) handleSend();
+          if (voiceModeActive) setTimeout(startRecognition, 500);
+        }, 1400);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      setMicState("active");
+      if (event.error === "not-allowed" || event.error === "denied") {
+        appendBotMsg("Permisos de micrófono denegados. Habilítalos en tu navegador.", false);
+        exitVoiceMode();
+      }
+    };
+
+    recognition.onend = () => {
+      setMicState("active");
+      // If vadTimer hasn't fired, submit whatever is in the input
+      clearTimeout(vadTimer);
+      if (input.value.trim() && !isSending) {
+        vadTimer = setTimeout(() => {
+          if (input.value.trim()) handleSend();
+          if (voiceModeActive) setTimeout(startRecognition, 500);
+        }, 800);
+      } else if (voiceModeActive) {
+        setTimeout(startRecognition, 500);
+      }
+    };
+
+    try { recognition.start(); } catch (e) { setMicState("active"); }
+  }
+
+  function stopRecognition() {
+    clearTimeout(vadTimer);
+    if (recognition) { try { recognition.stop(); } catch (e) { } recognition = null; }
+    setMicState("idle");
+  }
+
+  function enterVoiceMode() {
+    voiceModeActive = true;
+    // Update mode buttons
+    if (modeText) modeText.classList.remove("oc-mode-active");
+    if (modeVoice) modeVoice.classList.add("oc-mode-active");
+
+    // Hide mode selector
+    const sel = document.getElementById("ocModeSelector");
+    if (sel) sel.style.display = "none";
+
+    // Add mic button to footer if not already there
+    if (!document.getElementById("ocMicBtn")) {
+      micBtn = document.createElement("button");
+      micBtn.id = "ocMicBtn";
+      micBtn.className = "oc-voice-btn";
+      micBtn.setAttribute("aria-label", "Iniciar dictado por voz");
+      micBtn.title = "Iniciar dictado";
+      micBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+      footer.insertBefore(micBtn, sendBtn);
+      micBtn.addEventListener("click", () => {
+        if (recognition) stopRecognition();
+        else startRecognition();
+      });
+    } else {
+      micBtn = document.getElementById("ocMicBtn");
+    }
+
+    setMicState("active");
+    // Start recognition immediately
+    startRecognition();
+    appendBotMsg("🎙️ Modo voz activado. Habla y responderé en voz alta.", false);
+  }
+
+  function exitVoiceMode() {
+    voiceModeActive = false;
+    stopRecognition();
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (modeText) modeText.classList.add("oc-mode-active");
+    if (modeVoice) modeVoice.classList.remove("oc-mode-active");
+    const m = document.getElementById("ocMicBtn");
+    if (m) m.remove();
+    micBtn = null;
+    input.placeholder = "Escribe tu consulta...";
+  }
+
+  // ── Mode Selector Handlers ──
+  if (modeText) {
+    modeText.classList.add("oc-mode-active");
+    modeText.addEventListener("click", () => {
+      if (voiceModeActive) exitVoiceMode();
+      const sel = document.getElementById("ocModeSelector");
+      if (sel) sel.style.display = "none";
+    });
+  }
+  if (modeVoice) {
+    modeVoice.addEventListener("click", () => {
+      if (!voiceModeActive) enterVoiceMode();
+    });
+  }
 });
