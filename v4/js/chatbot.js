@@ -2125,11 +2125,8 @@ function processInput(input) {
     return { text: answer, suggestions: match.suggestion ? [match.suggestion] : [], isHTML: true };
   }
 
-  // 9. Fallback
-  contactPromptActive = true;
-  let fallback = clean.split(" ").length > 3 ? pick(fallbackLong) : pick(fallbackShort);
-  if (shouldAppendCTA(clean)) fallback += CTA_HTML;
-  return { text: fallback, suggestions: quickReplies.slice(0, 2), isHTML: true };
+  // 9. Fallback — escalate to Gemini AI
+  return { text: '', aiNeeded: true, userMessage: clean, suggestions: [], isHTML: false };
 }
 
 // DOM injection
@@ -2273,9 +2270,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
 
   // ── Send Handler ──
+  // Conversation history for Gemini context
+  const chatHistory = [];
+
+  // Async Gemini AI fallback
+  async function askGemini(userMsg) {
+    try {
+      const res = await fetch('gemini-proxy.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMsg,
+          history: chatHistory.slice(-6)
+        })
+      });
+      const data = await res.json();
+      return data.response || 'No pude procesar tu consulta. Int\u00e9ntalo de nuevo.';
+    } catch (e) {
+      console.error('[OpenCORE AI] Error:', e);
+      return 'Disculpa, hubo un error de conexi\u00f3n. Puedes contactarnos directo a contacto@opencore.cl';
+    }
+  }
+
   let isSending = false;
-  function handleSend(txtOverride) {
-    const txt = (txtOverride || input.value).trim();
+  function handleSend() {
+    const txt = input.value.trim();
     if (!txt || isSending) return;
     if (isRateLimited()) { appendBotMsg("Estas enviando mensajes muy rapido. Espera un momento.", false); return; }
     const initQR = document.getElementById("ocQuickInit");
@@ -2284,18 +2303,37 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = "";
     isSending = true;
     appendTyping();
+
+    // Track user message in history
+    chatHistory.push({ role: 'user', text: txt });
+
     const delay = 600 + Math.random() * 900;
-    setTimeout(() => {
-      removeTyping();
+    setTimeout(async () => {
       const result = processInput(txt);
-      const msgEl = appendBotMsg(result.text, result.isHTML || false);
-      if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
-      isSending = false;
-      // Speak bot response if in voice mode
-      if (voiceModeActive) {
-        const plain = msgEl.textContent || msgEl.innerText;
-        speakText(plain);
+
+      if (result.aiNeeded) {
+        // No regex match — ask Gemini AI
+        const aiResponse = await askGemini(txt);
+        removeTyping();
+        const msgEl = appendBotMsg(aiResponse, false);
+        chatHistory.push({ role: 'assistant', text: aiResponse });
+        // Speak in voice mode
+        if (voiceModeActive) {
+          const plain = msgEl.textContent || msgEl.innerText;
+          speakText(plain);
+        }
+      } else {
+        removeTyping();
+        const msgEl = appendBotMsg(result.text, result.isHTML || false);
+        if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
+        chatHistory.push({ role: 'assistant', text: result.text });
+        // Speak in voice mode
+        if (voiceModeActive) {
+          const plain = msgEl.textContent || msgEl.innerText;
+          speakText(plain);
+        }
       }
+      isSending = false;
     }, delay);
   }
 
