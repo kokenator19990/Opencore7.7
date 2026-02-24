@@ -1,0 +1,388 @@
+﻿diff --git a/v3/js/chatbot.js b/v4/js/chatbot.js
+index f95792e..876d075 100644
+--- a/v3/js/chatbot.js
++++ b/v4/js/chatbot.js
+@@ -1,6 +1,6 @@
+ /* ========================================================
+-   CHATBOT V3 PRO - OPENCORE NLP ENGINE
+-   Versi├│n: 3.5 | Build: 2026-02-23
++   CHATBOT V4 VOICE - OPENCORE NLP ENGINE
++   Versi├│n: 4.0 | Build: 2026-02-23
+    Features: Levenshtein, N-gram, Stopwords, Quick Replies,
+              Sentiment Guard, Person Entity Handler,
+              Barbara Intent Engine, CTA Lead Gen,
+@@ -1936,13 +1936,10 @@ const extraContactIntents = [
+ 
+ // Phone/email validation
+ function validatePhone(str) {
+-  // Strip everything except digits and +
+   const digits = str.replace(/[^\d+]/g, '');
+-  // Chilean mobile: +569XXXXXXXX (12 digits) or 9XXXXXXXX (9 digits) or 569XXXXXXXX (11)
+-  // Also accept international formats with 8+ digits
+   const cleaned = digits.replace(/^\+/, '');
+   if (cleaned.length < 8 || cleaned.length > 15) return null;
+-  return digits; // valid
++  return digits;
+ }
+ 
+ function validateEmail(str) {
+@@ -1955,19 +1952,12 @@ const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
+ 
+ // Save lead to localStorage and send notification
+ function saveLead(tipo, dato) {
+-  // 1. Save to localStorage as backup
+   try {
+     const leads = JSON.parse(localStorage.getItem('oc_leads') || '[]');
+-    const lead = {
+-      tipo: tipo, // 'phone' or 'email'
+-      dato: dato,
+-      fecha: new Date().toISOString(),
+-      pagina: window.location.href
+-    };
+-    leads.push(lead);
++    leads.push({ tipo, dato, fecha: new Date().toISOString(), pagina: window.location.href });
+     localStorage.setItem('oc_leads', JSON.stringify(leads));
+-    console.log('[OpenCORE Lead] Guardado localmente:', lead);
+-  } catch (e) { console.warn('localStorage no disponible'); }
++    console.log('[OpenCORE Lead] Guardado localmente:', { tipo, dato });
++  } catch (e) { }
+ 
+   // 2. Send silently to backend (cPanel PHP)
+   try {
+@@ -1980,15 +1970,10 @@ function saveLead(tipo, dato) {
+         pagina: window.location.href
+       })
+     })
+-      .then(response => response.json())
+-      .then(data => console.log('[OpenCORE Lead] Notificaci├│n enviada', data))
+       .catch(error => console.error('[OpenCORE Lead] Error env├¡o:', error));
+-  } catch (e) {
+-    console.error('Fetch no soportado');
+-  }
++  } catch (e) { }
+ }
+ 
+-// Response variants for asking contact info
+ const leadAskResponses = [
+   "┬íPerfecto! D├®janos tu n├║mero de tel├®fono o correo electr├│nico y nuestro equipo te contactar├í en la pr├│xima hora.",
+   "┬íCon gusto! Escribe tu tel├®fono o email y un especialista de OpenCORE se pondr├í en contacto contigo a la brevedad.",
+@@ -1996,7 +1981,6 @@ const leadAskResponses = [
+   "┬íPor supuesto! Ind├¡canos tu tel├®fono o email para que nuestro equipo te contacte."
+ ];
+ 
+-// Response for when we capture the lead successfully
+ const leadConfirmResponses = [
+   "Ô£à <b>┬íListo!</b> Hemos registrado tus datos (<b>DATO</b>). Un especialista de OpenCORE te contactar├í en breve.<br><br>Si necesitas algo m├ís inmediato:<br>­ƒô▒ <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+   "Ô£à <b>┬íPerfecto!</b> Tu informaci├│n (<b>DATO</b>) fue recibida. Nos pondremos en contacto contigo muy pronto.<br><br>Tambi├®n puedes escribirnos directo:<br>­ƒô▒ <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+@@ -2011,7 +1995,6 @@ function processInput(input) {
+ 
+   // ÔöÇÔöÇ LEAD CAPTURE: waiting for phone/email ÔöÇÔöÇ
+   if (leadCaptureActive) {
+-    // Try to find phone or email
+     const rawPhone = clean.match(phoneRegex);
+     const rawEmail = clean.match(emailRegex);
+     const validPhone = rawPhone ? validatePhone(rawPhone[0]) : null;
+@@ -2033,7 +2016,6 @@ function processInput(input) {
+       const resp = pick(leadConfirmResponses).replace(/DATO/g, validEmail);
+       return { text: resp, suggestions: [], isHTML: true };
+     }
+-    // Check if they typed something that LOOKS like a phone but is invalid
+     const hasDigits = (clean.replace(/\D/g, '').length >= 4);
+     if (hasDigits) {
+       return {
+@@ -2042,7 +2024,6 @@ function processInput(input) {
+         isHTML: true
+       };
+     }
+-    // User wrote something else entirely
+     return {
+       text: "Para contactarte necesito tu <b>n├║mero de tel├®fono</b> (ej: +569 1234 5678) o <b>correo electr├│nico</b>. Escr├¡belo aqu├¡ directamente ­ƒæç",
+       suggestions: [],
+@@ -2085,7 +2066,7 @@ function processInput(input) {
+       const resp = pick(leadConfirmResponses).replace(/DATO/g, inlineValidEmail);
+       return { text: resp, suggestions: [], isHTML: true };
+     }
+-    // No data found in message ÔÇö ask for it
++    // No data in message ÔÇö ask for it
+     leadCaptureActive = true;
+     return {
+       text: pick(leadAskResponses),
+@@ -2186,6 +2167,19 @@ document.addEventListener("DOMContentLoaded", () => {
+       </div>
+       <div class="oc-chat-body" id="ocChatBody">
+         <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
++        <div class="oc-mode-selector" id="ocModeSelector">
++          <p class="oc-mode-label">┬┐C├│mo prefieres interactuar?</p>
++          <div class="oc-mode-buttons">
++            <button class="oc-mode-btn" id="ocModeText" data-mode="text">
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
++              <span>Texto</span>
++            </button>
++            <button class="oc-mode-btn" id="ocModeVoice" data-mode="voice">
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
++              <span>Voz</span>
++            </button>
++          </div>
++        </div>
+         <div class="oc-quick-replies" id="ocQuickInit">
+           <button class="oc-qr" data-q="Que servicios ofrece OpenCORE?">Servicios disponibles</button>
+           <button class="oc-qr" data-q="Cuanto cobran por hora?">Estructura de tarifas</button>
+@@ -2212,7 +2206,11 @@ document.addEventListener("DOMContentLoaded", () => {
+   const input = document.getElementById("ocChatInput");
+   const sendBtn = document.getElementById("ocChatSend");
+   const closeBtn = document.getElementById("ocChatClose");
++  const modeText = document.getElementById("ocModeText");
++  const modeVoice = document.getElementById("ocModeVoice");
++  const footer = document.querySelector(".oc-chat-footer");
+ 
++  // ÔöÇÔöÇ Toggle Chat ÔöÇÔöÇ
+   function toggleChat() {
+     trigger.classList.toggle("active");
+     win.classList.toggle("open");
+@@ -2222,6 +2220,7 @@ document.addEventListener("DOMContentLoaded", () => {
+   if (closeBtn) closeBtn.addEventListener("click", toggleChat);
+   trigger.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") toggleChat(); });
+ 
++  // ÔöÇÔöÇ Quick Reply clicks ÔöÇÔöÇ
+   body.addEventListener("click", e => {
+     if (e.target.classList.contains("oc-qr")) {
+       const q = e.target.dataset.q;
+@@ -2229,7 +2228,7 @@ document.addEventListener("DOMContentLoaded", () => {
+     }
+   });
+ 
+-  // Rate limiter: max 5 messages per 10s
++  // ÔöÇÔöÇ Rate Limiter ÔöÇÔöÇ
+   let msgCount = 0, rateLimitTimer = null;
+   function isRateLimited() {
+     if (msgCount >= 5) return true;
+@@ -2238,6 +2237,7 @@ document.addEventListener("DOMContentLoaded", () => {
+     return false;
+   }
+ 
++  // ÔöÇÔöÇ Message Helpers ÔöÇÔöÇ
+   function appendUserMsg(txt) {
+     const d = document.createElement("div");
+     d.className = "oc-msg user";
+@@ -2245,7 +2245,6 @@ document.addEventListener("DOMContentLoaded", () => {
+     body.appendChild(d);
+     body.scrollTop = body.scrollHeight;
+   }
+-
+   function appendBotMsg(content, isHTML) {
+     const d = document.createElement("div");
+     d.className = "oc-msg bot";
+@@ -2255,7 +2254,6 @@ document.addEventListener("DOMContentLoaded", () => {
+     body.scrollTop = body.scrollHeight;
+     return d;
+   }
+-
+   function appendQuickReplies(suggestions) {
+     if (!suggestions || !suggestions.length) return;
+     const wrap = document.createElement("div");
+@@ -2270,7 +2268,6 @@ document.addEventListener("DOMContentLoaded", () => {
+     body.appendChild(wrap);
+     body.scrollTop = body.scrollHeight;
+   }
+-
+   function appendTyping() {
+     const d = document.createElement("div");
+     d.className = "oc-msg bot oc-typing-wrapper";
+@@ -2281,6 +2278,7 @@ document.addEventListener("DOMContentLoaded", () => {
+   }
+   function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
+ 
++  // ÔöÇÔöÇ Send Handler ÔöÇÔöÇ
+   // Conversation history for Gemini context
+   const chatHistory = [];
+ 
+@@ -2326,19 +2324,186 @@ document.addEventListener("DOMContentLoaded", () => {
+         // No regex match ÔÇö ask Gemini AI
+         const aiResponse = await askGemini(txt);
+         removeTyping();
+-        appendBotMsg(aiResponse, false);
++        const msgEl = appendBotMsg(aiResponse, false);
+         chatHistory.push({ role: 'assistant', text: aiResponse });
++        // Speak in voice mode
++        if (voiceModeActive) {
++          const plain = msgEl.textContent || msgEl.innerText;
++          speakText(plain);
++        }
+       } else {
+         removeTyping();
+-        appendBotMsg(result.text, result.isHTML || false);
++        const msgEl = appendBotMsg(result.text, result.isHTML || false);
+         if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
+         chatHistory.push({ role: 'assistant', text: result.text });
++        // Speak in voice mode
++        if (voiceModeActive) {
++          const plain = msgEl.textContent || msgEl.innerText;
++          speakText(plain);
++        }
+       }
+       isSending = false;
+     }, delay);
+   }
+ 
+-  sendBtn.addEventListener("click", handleSend);
++  sendBtn.addEventListener("click", () => handleSend());
+   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
++
++  // ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
++  //  VOICE MODE ÔÇö Push-to-talk (manual mic press)
++  // ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
++  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
++  let voiceModeActive = false;
++  let recognition = null;
++  let micBtn = null;
++  let vadTimer = null;
++  let isRecording = false;
++
++  function speakText(text) {
++    if (!window.speechSynthesis) return;
++    window.speechSynthesis.cancel();
++    const utt = new SpeechSynthesisUtterance(text);
++    utt.lang = "es-CL";
++    utt.rate = 1.05;
++    utt.pitch = 1.0;
++    const voices = window.speechSynthesis.getVoices();
++    const esVoice = voices.find(v => v.lang.startsWith("es"));
++    if (esVoice) utt.voice = esVoice;
++    window.speechSynthesis.speak(utt);
++  }
++
++  function setMicState(state) {
++    if (!micBtn) return;
++    micBtn.classList.remove("listening", "active");
++    if (state === "listening") {
++      micBtn.classList.add("listening");
++      input.placeholder = "\uD83C\uDF99\uFE0F Grabando\u2026 pulsa de nuevo para enviar";
++    } else {
++      micBtn.classList.add("active");
++      input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
++    }
++  }
++
++  function startRecording() {
++    if (!SpeechRecognition) {
++      appendBotMsg("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome.", false);
++      return;
++    }
++    if (isRecording) return;
++    if (window.speechSynthesis) window.speechSynthesis.cancel();
++    if (recognition) { try { recognition.abort(); } catch (e) { } recognition = null; }
++
++    recognition = new SpeechRecognition();
++    recognition.lang = "es-CL";
++    recognition.continuous = true;
++    recognition.interimResults = true;
++
++    recognition.onstart = () => {
++      isRecording = true;
++      setMicState("listening");
++    };
++
++    recognition.onresult = (event) => {
++      clearTimeout(vadTimer);
++      let interim = "", final = "";
++      for (let i = event.resultIndex; i < event.results.length; i++) {
++        if (event.results[i].isFinal) final += event.results[i][0].transcript;
++        else interim += event.results[i][0].transcript;
++      }
++      input.value = final || interim;
++      // VAD: auto-stop and send after 1.8s of silence with confirmed speech
++      if (final) {
++        vadTimer = setTimeout(() => {
++          stopRecording(true);
++        }, 1800);
++      }
++    };
++
++    recognition.onerror = (event) => {
++      isRecording = false;
++      setMicState("active");
++      if (event.error === "not-allowed" || event.error === "denied") {
++        appendBotMsg("Permiso de micr\u00F3fono denegado. Habil\u00EDtalo en tu navegador.", false);
++        exitVoiceMode();
++      }
++    };
++
++    recognition.onend = () => {
++      isRecording = false;
++      setMicState("active");
++      // No auto-restart ÔÇö user must press mic again
++    };
++
++    try { recognition.start(); } catch (e) { isRecording = false; setMicState("active"); }
++  }
++
++  function stopRecording(andSend) {
++    clearTimeout(vadTimer);
++    isRecording = false;
++    if (recognition) {
++      try { recognition.stop(); } catch (e) { }
++      recognition = null;
++    }
++    setMicState("active");
++    if (andSend && input.value.trim()) {
++      handleSend();
++    }
++  }
++
++  function enterVoiceMode() {
++    voiceModeActive = true;
++    if (modeText) modeText.classList.remove("oc-mode-active");
++    if (modeVoice) modeVoice.classList.add("oc-mode-active");
++    const sel = document.getElementById("ocModeSelector");
++    if (sel) sel.style.display = "none";
++
++    if (!document.getElementById("ocMicBtn")) {
++      micBtn = document.createElement("button");
++      micBtn.id = "ocMicBtn";
++      micBtn.className = "oc-voice-btn active";
++      micBtn.setAttribute("aria-label", "Grabar mensaje de voz");
++      micBtn.title = "Pulsa para hablar";
++      micBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
++      footer.insertBefore(micBtn, sendBtn);
++      micBtn.addEventListener("click", () => {
++        if (isRecording) stopRecording(true);
++        else startRecording();
++      });
++    } else {
++      micBtn = document.getElementById("ocMicBtn");
++      micBtn.classList.add("active");
++    }
++
++    input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
++    appendBotMsg("\uD83C\uDF99\uFE0F Modo voz activado. Pulsa el micr\u00F3fono para hablar.", false);
++    // Do NOT auto-start ÔÇö wait for user to press mic
++  }
++
++  function exitVoiceMode() {
++    voiceModeActive = false;
++    stopRecording(false);
++    if (window.speechSynthesis) window.speechSynthesis.cancel();
++    if (modeText) modeText.classList.add("oc-mode-active");
++    if (modeVoice) modeVoice.classList.remove("oc-mode-active");
++    const m = document.getElementById("ocMicBtn");
++    if (m) m.remove();
++    micBtn = null;
++    input.placeholder = "Escribe tu consulta...";
++  }
++
++  // ÔöÇÔöÇ Mode Selector Handlers ÔöÇÔöÇ
++  if (modeText) {
++    modeText.classList.add("oc-mode-active");
++    modeText.addEventListener("click", () => {
++      if (voiceModeActive) exitVoiceMode();
++      const sel = document.getElementById("ocModeSelector");
++      if (sel) sel.style.display = "none";
++    });
++  }
++  if (modeVoice) {
++    modeVoice.addEventListener("click", () => {
++      if (!voiceModeActive) enterVoiceMode();
++    });
++  }
+ });
+ 

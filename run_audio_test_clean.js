@@ -24,14 +24,14 @@ const qnaDB = [
 
   // ═══ OPENCORE OFICIAL: SERVICIOS (11-20) ═══
   { q: "¿Pueden desarrollar un sistema desde cero?", a: "Sí. Diseñamos arquitectura completa cuando es la solución más eficiente y sostenible." },
-  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver? ¿Qué desafío tecnológico específico busca resolver?" },
-  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos. ¿Qué problemática exacta enfrenta en su operación? ¿Qué problemática exacta enfrenta en su operación?" },
+  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos." },
+  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos." },
   { q: "¿Hacen apps móviles básicas?", a: "Solo si forman parte de una solución empresarial integrada. No desarrollamos apps aisladas sin arquitectura estratégica." },
   { q: "¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
   { q: "¿Trabajan con bases de datos grandes?", a: "Sí. Hemos trabajado con bases de datos de alto volumen y entornos críticos." },
-  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización. ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir? ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir?" },
+  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización." },
   { q: "¿Hacen auditoría tecnológica?", a: "Sí. Podemos auditar arquitectura, seguridad y rendimiento sin obligación de desarrollo posterior." },
-  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente. Cuéntenos, ¿cuál es su problema operativo principal actual? Cuéntenos, ¿cuál es su problema operativo principal actual?" },
+  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente." },
   { q: "¿Integran inteligencia artificial?", a: "Sí, cuando aporta valor real y no compromete estabilidad ni seguridad." },
 
   // ═══ OPENCORE OFICIAL: PRECIOS (21-30) ═══
@@ -59,13 +59,6 @@ const qnaDB = [
   { q: "¿Tienen permanencia mínima?", a: "Depende de la modalidad. En retainer mensual puede acordarse mínimo de 2 o 3 meses para asegurar continuidad. En proyectos por hitos no hay permanencia mínima más allá del contrato firmado." },
   { q: "¿Entregan el código fuente?", a: "En aproximadamente el 90% de los casos, sí, según contrato." },
 
-
-  // ═══ OPENCORE OFICIAL: FORTALEZAS Y DEBILIDADES ═══
-  { q: "¿Cuáles son sus fortalezas?", a: "Nuestras fortalezas radican en un equipo compuesto por profesionales altamente capacitados técnica y estratégicamente, experiencia probada en mercado B2B, metodologías orientadas a continuidad operacional e integración fluida de IA y herramientas automatizadas para escalar." },
-  { q: "Quiero saber sus fortalezas", a: "Nuestras fortalezas son la alta capacitación de nuestro equipo senior, la especialización en migraciones y arquitectura compleja sin detener operaciones, y nuestra fluidez técnica en lenguajes modernos y heredados." },
-  { q: "Dime las fortalezas de OpenCORE", a: "Nuestras principales fortalezas son: profesionales senior altamente validados en el mercado, experiencia robusta en arquitecturas empresariales, y metodologías sólidas de prevención de riesgos técnicos." },
-  { q: "¿Cuáles son sus debilidades?", a: "Nuestros servicios tienen un enfoque Senior orientado a sistemas críticos y empresariales, por lo que no solemos abordar presupuestos o proyectos micro-pyme tradicionales. Sin embargo, mitigamos esto escalando metodologías con nuevas herramientas de IA y automatización para ser más flexibles." },
-  { q: "Dime las debilidades de OpenCORE", a: "Un desafío constante es que nuestro análisis y arquitectura es de un estándar muy senior, lo que no siempre encaja con presupuestos pequeños. Lo compensamos utilizando IA y optimización de flujos para entregar valor rápido." },
   // ═══ OPENCORE OFICIAL: OPERACIÓN (31-40) ═══
   { q: "¿Qué pasa si el proyecto se atrasa?", a: "Se gestiona bajo marco contractual con mecanismos de replanificación." },
   { q: "¿Qué pasa si el cliente cambia el alcance?", a: "Se formaliza mediante adenda contractual con ajuste de costos y plazos." },
@@ -101,17 +94,6 @@ const qnaDB = [
   { q: "¿Me pueden hacer millonario?", a: "Podemos optimizar sistemas. El modelo de negocio depende de usted." },
   { q: "¿Pueden hacer lo imposible?", a: "Podemos hacer lo técnicamente viable. Lo imposible requiere redefinición estratégica." },
   { q: "¿Son perfectos?", a: "Somos rigurosos. La perfección se busca con método y control." },
-
-  
-  // ═══ OPENCORE OFICIAL: TECNOLOGÍA Y LENGUAJES (CLEVER & B2B) ═══
-  { q: "¿Qué lenguaje manejan?", a: "Trabajamos con un stack robusto enfocado en misión crítica: Python, Go, Java, y C# para backend corporativo, y TypeScript/React para frontend. Todo enfocado en arquitecturas escalables y de alto rendimiento." },
-  { q: "¿Qué código manejan?", a: "Escribimos código robusto. Nuestro equipo domina Python, Go, Java y C#, además de ecosistemas modernos en la nube. Seleccionamos el stack tecnológico según la criticidad de su proceso, no por moda." },
-  { q: "¿Qué lenguajes de programación usan?", a: "Utilizamos Python, Go, Java, C# y TypeScript, soportado por bases de datos de alto rendimiento y arquitectura cloud. Todo orquestado para que su operación nunca se detenga." },
-  { q: "¿Trabajan con Cobol?", a: "Sí. Entendemos que muchos cores financieros y logísticos siguen en COBOL. En OpenCORE nos especializamos en 'envolver' esos sistemas legacy con capas de integración (APIs/microservicios) para conectarlos con plataformas modernas." },
-  { q: "¿Tienen experiencia en Cobol?", a: "Absolutamente. Conocemos la complejidad de interactuar con sistemas Mainframe. Extraemos y modernizamos flujos desde COBOL hacia la nube sin que la continuidad operacional se vea afectada." },
-  { q: "¿Podrían integrar un sistema COBOL con nuevas tecnologías?", a: "Esa es exactamente una de nuestras mayores fortalezas empresariales. Construimos middleware y APIs que hacen que la tecnología moderna (Web, Móvil, IA) se hable fluidamente con su sistema heredado en COBOL." },
-  { q: "¿Cómo harían el proyecto?", a: "Iniciamos de inmediato con un Diagnóstico Técnico en profundidad (Discovery) para descubrir dependencias ocultas. Luego, ejecutamos el proyecto en etapas progresivas, para que vea retornos financieros antes de siquiera apagar un servidor antiguo." },
-  { q: "¿Cómo desarrollarían el sistema?", a: "Aplicamos ingeniería metodológica: dividimos el proyecto en entregables mensuales (sprints) y utilizamos despliegues automatizados (CI/CD) para garantizar que todo avance modularmente sin quebrar nada en su producción diaria." },
 
   // ═══ OPENCORE OFICIAL: PROFUNDAS (61-70) ═══
   { q: "¿Cómo reducen riesgo en migraciones?", a: "Con planificación por etapas, pruebas y planes de reversa." },
@@ -1702,52 +1684,10 @@ const qnaDB = [
   { q: "¿Qué tan rápido pueden entregar una cotización formal?", a: "Una estimación inicial la podemos dar en la primera reunión. Una propuesta técnica formal con desglose de horas y costos requiere diagnóstico previo, típicamente entre 3 y 10 días hábiles según complejidad." }
   ,
 
-  // ═══ RESOLUCIÓN Y EXPERIENCIA (Nuevas) ═══
-  { q: "Hola, ¿qué ofrecen exactamente?", a: "Ofrecemos consultoría tecnológica especializada en arquitectura empresarial, modernización de sistemas legacy, integración ERP y automatización estructural de procesos. Nuestro enfoque no es vender software estándar, sino diseñar soluciones sostenibles alineadas con la operación real de cada organización." },
-  { q: "Hola, ¿qué servicios me pueden vender?", a: "Más que vender servicios aislados, estructuramos intervenciones tecnológicas orientadas a resolver problemas de fondo: integración de plataformas, reducción de deuda técnica, optimización de bases de datos y estabilización de sistemas críticos." },
-  { q: "Hola, quiero contratar sus servicios, ¿cómo funciona?", a: "El proceso comienza con un levantamiento técnico para comprender su arquitectura actual, nivel de madurez tecnológica y objetivos estratégicos. A partir de ello definimos alcance, modalidad contractual y plan de ejecución progresiva." },
-  { q: "Hola, ¿qué tipo de proyectos desarrollan?", a: "Desarrollamos proyectos de modernización tecnológica, migraciones estructurales, integración de sistemas y automatización empresarial. ¿Qué desafío tecnológico específico buscan resolver en su empresa?" },
-  { q: "Hola, ¿pueden desarrollar una aplicación desde cero?", a: "Sí, siempre que exista una definición clara de objetivos funcionales y arquitectura futura. Diseñamos la solución desde la base considerando escalabilidad, seguridad, integración y sostenibilidad a largo plazo." },
-  { q: "Hola, ¿qué precios manejan?", a: "Los valores dependen directamente de la especificidad, complejidad y extensión del proyecto. Contamos con modalidad mensual desde 30 UF para servicios continuos, mientras que proyectos estructurales se valorizan según evaluación técnica formal." },
-  { q: "Hola, tengo una empresa pequeña, ¿pueden trabajar conmigo?", a: "Sí, evaluamos proyectos de PYMEs cuando existe una necesidad tecnológica estructural clara. En estos casos proponemos fases progresivas que permitan escalar de manera controlada." },
-  { q: "Hola, tengo una empresa grande, ¿pueden manejar proyectos complejos?", a: "Nuestra estructura está diseñada precisamente para abordar entornos empresariales complejos. Dimensionamos el equipo y la arquitectura según la criticidad y el alcance del proyecto." },
-  { q: "Hola, ¿son profesionales certificados?", a: "Nuestro equipo está conformado por profesionales con trayectoria comprobada en entornos tecnológicos empresariales. Más allá de certificaciones puntuales, priorizamos experiencia aplicada y resultados sostenibles." },
-  { q: "Hola, ¿cuántas personas trabajan con ustedes?", a: "Contamos con un núcleo estable de entre 5 y 10 profesionales especializados, ampliable hasta 20 o 30 recursos según el tipo de proyecto y nivel de complejidad requerido." },
-  { q: "¿Trabajan con Java?", a: "Sí, trabajamos con Java en proyectos que requieren robustez empresarial y arquitecturas escalables. Evaluamos cada caso según la estructura tecnológica existente del cliente." },
-  { q: "¿Trabajan con Python?", a: "Utilizamos Python cuando el proyecto demanda automatización, procesamiento backend o integración específica. La elección tecnológica siempre responde a criterios estructurales y no a preferencias arbitrarias." },
-  { q: "¿Trabajan con SQL y bases de datos complejas?", a: "Sí, tenemos experiencia en diseño, optimización e integración de bases de datos SQL en entornos empresariales de alta criticidad operativa." },
-  { q: "¿Pueden trabajar con sistemas antiguos como COBOL?", a: "Sí, evaluamos integración y modernización progresiva de sistemas legacy, incluyendo entornos tradicionales que requieren transición controlada." },
-  { q: "¿Pueden integrar múltiples sistemas distintos?", a: "Sí, diseñamos arquitectura interoperable mediante APIs, capas de integración y estandarización de datos, asegurando coherencia operativa." },
-  { q: "¿Hacen mantenimiento mensual?", a: "Sí, ofrecemos modalidad de acompañamiento y soporte estratégico desde 30 UF mensuales, sujeto a evaluación técnica y alcance definido." },
-  { q: "¿Pueden rescatar un proyecto que salió mal?", a: "Sí, analizamos técnicamente el estado actual del sistema, identificamos brechas estructurales y proponemos un plan de estabilización progresivo." },
-  { q: "¿Cuánto tiempo dura un proyecto típico?", a: "Depende del alcance. Integraciones puntuales pueden tardar semanas, mientras que transformaciones estructurales pueden extenderse varios meses bajo planificación formal." },
-  { q: "¿Trabajan en la nube o solo local?", a: "Podemos diseñar arquitecturas cloud, híbridas o on-premise según la infraestructura y estrategia tecnológica del cliente." },
-  { q: "¿Son una empresa pequeña o grande?", a: "Somos una consultora especializada con estructura ejecutiva definida y capacidad escalable. Nuestra fortaleza está en enfoque técnico estructural más que en volumen indiscriminado." },
-  { q: "¿Pueden garantizar resultados?", a: "Garantizamos metodología, supervisión técnica y ejecución profesional. Los resultados dependen también del contexto operativo y compromiso organizacional." },
-  { q: "¿Qué los diferencia de otras consultoras?", a: "Nuestra especialización en modernización estructural y rescate de arquitecturas complejas nos diferencia de proveedores enfocados únicamente en desarrollo superficial." },
-  { q: "¿Trabajan con ERP?", a: "Sí, intervenimos en integración, optimización y modernización de plataformas ERP existentes, asegurando coherencia con procesos financieros y operativos." },
-  { q: "¿Hacen automatización de procesos?", a: "Sí, implementamos automatización administrativa, financiera y operativa cuando genera eficiencia medible y sostenibilidad técnica." },
-  { q: "¿Son flexibles en sus propuestas?", a: "Adaptamos la solución a la necesidad real del cliente, manteniendo estándares técnicos y metodológicos claros." },
-  { q: "¿Pueden trabajar con presupuesto limitado?", a: "Evaluamos alcance y proponemos fases progresivas que permitan avanzar sin comprometer calidad estructural." },
-  { q: "¿Trabajan con integración contable multimoneda?", a: "Sí, diseñamos arquitectura financiera multimoneda e integración contable cuando el entorno empresarial lo requiere." },
-  { q: "¿Manejan microservicios?", a: "Sí, utilizamos arquitectura de microservicios cuando aporta escalabilidad y separación lógica eficiente." },
-  { q: "¿Hacen auditoría tecnológica?", a: "Sí, realizamos diagnóstico estructural para identificar brechas técnicas, riesgos operativos y oportunidades de mejora." },
-  { q: "¿Pueden desarrollar aplicaciones móviles?", a: "Sí, siempre que estén integradas a una arquitectura empresarial robusta y no como solución aislada." },
-  { q: "¿Qué pasa después de terminar el proyecto?", a: "Podemos ofrecer continuidad operacional bajo modalidad mensual o transferencia documentada de conocimiento." },
-  { q: "¿Trabajan bajo contrato formal?", a: "Sí, toda intervención se formaliza contractualmente con alcance, responsabilidades y cronograma definidos." },
-  { q: "¿Son solo desarrolladores o también consultores?", a: "Somos consultoría estratégica con capacidad de ejecución técnica especializada." },
-  { q: "¿Pueden escalar si mi empresa crece?", a: "Diseñamos arquitectura escalable para acompañar crecimiento operativo futuro." },
-  { q: "¿Qué tan seguros son sus desarrollos?", a: "Aplicamos buenas prácticas de seguridad estructural y validación técnica antes de despliegue." },
-  { q: "¿Trabajan con APIs externas?", a: "Sí, diseñamos integración controlada entre sistemas internos y plataformas externas." },
-  { q: "¿Pueden mejorar rendimiento de mi base de datos?", a: "Sí, realizamos optimización estructural, indexación y rediseño lógico cuando es necesario." },
-  { q: "¿Trabajan con proyectos internacionales?", a: "Evaluamos cada caso según alcance técnico y estructura operativa requerida." },
-  { q: "¿Pueden desarrollar dashboards ejecutivos?", a: "Sí, diseñamos reportes estructurados alineados con métricas operativas y financieras." },
-  { q: "¿Son realmente expertos o solo dicen serlo?", a: "Nuestra experiencia se sustenta en años de intervención en sistemas reales y entornos empresariales críticos, no en declaraciones comerciales." },
-
   // ═══ ESCENARIOS COMBINADOS: HOLA + PREGUNTA ═══
   { q: "Hola, ¿En qué sectores son fuertes?", a: "Logística, turismo, facturación y sistemas empresariales con alta criticidad operativa." },
   { q: "Hola, ¿Desde cuándo trabajan en tecnología?", a: "Desde 1998 como trayectoria operativa, formalizados como SpA desde 2015." },
-  { q: "Hola, ¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver?" },
+  { q: "Hola, ¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos." },
   { q: "Hola, ¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
   { q: "Hola, ¿Cuánto cobran por hora?", a: "Entre 1 y 5 UF por hora, dependiendo de complejidad y nivel de especialización requerido." },
   { q: "Hola, ¿Cuánto cuesta un proyecto promedio?", a: "Los proyectos medianos y grandes suelen situarse entre 300 y 500 UF o más." },
@@ -1812,16 +1752,11 @@ const badWords = ["estupido", "imbecil", "tonto", "mierda", "puta", "pene", "cul
 const stopWords = new Set(["el", "la", "los", "las", "un", "una", "unos", "unas", "y", "o", "pero", "si", "no", "en", "por", "para", "con", "de", "del", "a", "al", "que", "cual", "quien", "como", "donde", "cuando", "porque", "es", "son", "ser", "estar", "hay", "fue", "era", "han", "ha", "me", "te", "se", "nos", "le", "lo", "su", "mi", "tu", "mas", "muy", "ya", "tambien", "solo", "otro", "toda", "todo", "todos", "estas", "este", "esta", "eso", "ese", "esos", "cada", "aqui", "ahi", "alla"]);
 
 function normalize(str) {
-  let s = str.toLowerCase()
+  return str.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s]/gi, " ");
-
-  // Detach glued greetings (e.g. "holaque", "buenastardesque")
-  const glued = "(que|q|como|komo|cuanto|cual|kual|cuales|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me|sirven|hacen|desarrollan|venden|son|es|esta|estan)";
-  s = s.replace(new RegExp("^(hola|ola|wena|buenas?)" + glued + "\\b", "ig"), "$1 $2 ");
-  s = s.replace(new RegExp("^(buenas?\\s?tardes|buenas?\\s?noches|buenos?\\s?dias)" + glued + "\\b", "ig"), "$1 $2 ");
-
-  return s.replace(/\s+/g, " ").trim();
+    .replace(/[^\w\s]/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function tokenize(str) {
@@ -1956,17 +1891,7 @@ const greetings = ["hola", "buenas", "ola", "hey", "hi", "hello", "buenos dias",
 const farewells = ["chao", "adios", "bye", "hasta luego", "nos vemos", "hasta pronto", "hasta la vista"];
 const thanks = ["gracias", "agradecido", "agradezco", "te agradezco", "muchas gracias", "mil gracias", "grax", "thx"];
 
-function isGreeting(i) {
-  const n = normalize(i);
-  if (greetings.some(g => n === g)) return true;
-  if (greetings.some(g => n.startsWith(g + " ") || n.endsWith(" " + g))) {
-    const tokens = n.split(/\s+/).filter(w => !stopWords.has(w) && w.length > 1);
-    const greetingsSet = new Set(["hola", "ola", "hello", "hi", "hey", "wena", "buenas", "buenos", "saludos", "dias", "tardes", "noches", "que", "tal", "buen", "dia"]);
-    const contentTokens = tokens.filter(w => !greetingsSet.has(w));
-    return contentTokens.length === 0;
-  }
-  return false;
-}
+function isGreeting(i) { const n = normalize(i); return greetings.some(g => n === g || n.startsWith(g + " ") || n.endsWith(" " + g)); }
 function isFarewell(i) { const n = normalize(i); return farewells.some(f => n === f || n.startsWith(f + " ") || n.endsWith(" " + f)); }
 function isThanks(i) { const n = normalize(i); return thanks.some(t => n.includes(t)); }
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -2085,7 +2010,7 @@ function getBarbaraResponse(input) {
 
 // CTA
 const LEAD_GEN_TRIGGERS = ["precio", "costo", "cobran", "implementacion", "auditoria", "error", "critico", "migracion", "cotizar", "cotizacion", "uf", "presupuesto", "tarifa", "contrato", "servicio", "soporte"];
-const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="#formulario-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
+const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="https://calendly.com/opencore-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
 function shouldAppendCTA(input) {
   const n = normalize(input);
   const triggered = LEAD_GEN_TRIGGERS.some(t => n.includes(t));
@@ -2200,16 +2125,10 @@ const leadConfirmResponses = [
   "✅ <b>¡Recibido!</b> Nuestro equipo se comunicará contigo a <b>DATO</b> en los próximos minutos.<br><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>"
 ];
 
-// ── CONVERSATIONAL MEMORY & ANTI-LOOP ──
-let lastIntent = null;
-let sameIntentCount = 0;
-let fallbackCount = 0;
-
 // Main processor
 function processInput(input) {
   const clean = input.trim();
   const ln = clean.toLowerCase();
-
   if (!clean) return { text: "Escribe tu consulta y con gusto te ayudo.", suggestions: [] };
 
   // ── LEAD CAPTURE: waiting for phone/email ──
@@ -2298,7 +2217,7 @@ function processInput(input) {
   if (contactRegex.test(clean) || extraContactIntents.some(i => ln.includes(i)) || (ln === 'llamame') || (ln === 'llamame a mi')) {
     contactPromptCounter++;
     return {
-      text: "¡Excelente! Puedes contactarnos directamente: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Ir al Formulario de Diagnóstico</a>.<br><br>¿O prefieres que <b>nosotros te contactemos</b>? Escribe tu teléfono o email aquí.",
+      text: "¡Excelente! Puedes contactarnos directamente: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Agendar Diagnóstico VIP (15 min)</a>.<br><br>¿O prefieres que <b>nosotros te contactemos</b>? Escribe tu teléfono o email aquí.",
       suggestions: ["Quiero que me llamen"],
       isHTML: true
     };
@@ -2328,20 +2247,9 @@ function processInput(input) {
   // 6. Farewell
   if (isFarewell(clean)) return { text: pick(farewellResponses), suggestions: [] };
 
-  // 7. Exact match (uses pre-computed normalized)
+  // 7. Exact match (uses pre-computed normalized) — FIX: propagate isHTML when CTA fires
   for (const item of precomputedDB) {
     if (item.normalized === norm) {
-      if (lastIntent === item.q) {
-        sameIntentCount++;
-        if (sameIntentCount >= 2) {
-          sameIntentCount = 0;
-          return { text: "Veo que tienes una inquietud persistente sobre esto. ¿Te parece si agendamos una breve llamada para aclararlo personalmente?", suggestions: ["Quiero que me llamen"], isHTML: false };
-        }
-      } else {
-        lastIntent = item.q;
-        sameIntentCount = 0;
-        fallbackCount = 0; // Reset fallback counter on success
-      }
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }
@@ -2351,7 +2259,7 @@ function processInput(input) {
     if (qn.length > 4 && norm.length > 4 &&
       // FIX: Prefix match only fires when Q&A is >=50% of input length (prevents short Q&As from capturing long queries)
       ((norm.startsWith(qn) && qn.length >= norm.length * 0.5) ||
-        (qn.startsWith(norm) && qn.length <= norm.length * 2.2))) {
+        (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }
@@ -2360,17 +2268,6 @@ function processInput(input) {
   // 8. NLP fuzzy match
   const match = getBestMatch(clean);
   if (match && match.confidence >= 0.55) {
-    if (lastIntent === match.answer) {
-      sameIntentCount++;
-      if (sameIntentCount >= 2) {
-        sameIntentCount = 0;
-        return { text: "Parece que seguimos volviendo al mismo punto. ¿Te gustaría que un especialista de OpenCORE evalúe tu caso en detalle?", suggestions: ["Quiero que me llamen"], isHTML: false };
-      }
-    } else {
-      lastIntent = match.answer;
-      sameIntentCount = 0;
-      fallbackCount = 0; // Reset fallback
-    }
     const prefix = match.confidence >= 0.78 ? "" : "Basandome en tu consulta: ";
     let answer = prefix + match.answer;
     if (shouldAppendCTA(clean)) answer += CTA_HTML;
@@ -2378,451 +2275,32 @@ function processInput(input) {
   }
 
   // 9. Fallback — escalate to Gemini AI
-  fallbackCount++;
-  if (fallbackCount >= 3) {
-    fallbackCount = 0;
-    return { text: "Noto que mi información predeterminada no está resolviendo tu duda principal. Hemos diseñado un formulario diagnóstico de 1 minuto para evaluar casos complejos. <a href='#formulario-diagnostico' style='color:#00c2ff;text-decoration:underline;'>Haz clic aquí para llenarlo</a> y te contactaremos de inmediato.", suggestions: [], isHTML: true, aiNeeded: false };
-  }
   return { text: '', aiNeeded: true, userMessage: clean, suggestions: [], isHTML: false };
 }
 
 // DOM injection
-document.addEventListener("DOMContentLoaded", () => {
-  const chatHTML = `
-    
-    <style>
-      .oc-avatar-container {
-         display: none; /* hidden by default */
-         position: fixed;
-         bottom: 120px;
-         right: 380px; /* To the left of the chat window */
-         width: 180px;
-         height: 180px;
-         border-radius: 50%;
-         background: linear-gradient(135deg, #0f1828, #1c2a42);
-         box-shadow: 0 0 20px rgba(0, 194, 255, 0.15);
-         border: 2px solid rgba(0, 194, 255, 0.3);
-         z-index: 10000;
-         overflow: hidden;
-         transition: opacity 0.4s ease, transform 0.4s ease;
-         opacity: 0;
-         transform: translateY(20px);
-         pointer-events: none;
-      }
-      .oc-avatar-container.show-avatar {
-         display: flex;
-         opacity: 1;
-         transform: translateY(0);
-      }
-      .oc-avatar-container img {
-         width: 100%;
-         height: 100%;
-         object-fit: contain;
-         border-radius: 50%;
-         transform-origin: center bottom;
-         transition: transform 0.15s ease;
-      }
-      .oc-avatar-container.is-speaking {
-         border-color: rgba(0, 194, 255, 0.8);
-         box-shadow: 0 0 30px rgba(0, 194, 255, 0.4);
-      }
-      .oc-avatar-container.is-speaking img {
-         animation: avatarSpeak 0.25s infinite alternate;
-      }
-      @keyframes avatarSpeak {
-         0% { transform: scale(1) translateY(0); }
-         100% { transform: scale(1.03) translateY(-2px); }
-      }
-      @media (max-width: 1024px) {
-         .oc-avatar-container { display: none !important; }
-      }
-    </style>
-    <div id="ocAvatarContainer" class="oc-avatar-container">
-       <img src="img/avatar_empresarial.png" alt="OpenCORE Senior Advisor" id="ocAvatarImg">
-    </div>
 
-    <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
-      <div class="oc-chat-label">Habla con OpenCORE AI</div>
-      <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
-         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-      </svg>
-      <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </div>
-    <div class="oc-chat-window" id="ocChatWindow" role="dialog" aria-label="Chat OpenCORE">
-      <div class="oc-chat-header">
-        <div class="oc-chat-avatar" style="background: transparent; border: none; padding: 0; width: auto; overflow: visible;">
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" style="height: 22px; width: 80px; filter: drop-shadow(0 0 6px rgba(0,194,255,0.4)); object-fit: contain; margin-top:2px;"><defs><linearGradient id="oc-g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00c2ff"/><stop offset="100%" stop-color="#a5b4fc"/></linearGradient></defs><g fill="none" stroke="url(#oc-g)" stroke-width="5"><polygon points="30,10 10,20 10,40 30,50 50,40 50,20"/></g><text x="60" y="39" font-family="Arial,Geneva,sans-serif" font-size="30" font-weight="bold" fill="#fff"><span>OPEN</span><span fill="url(#oc-g)">CORE</span></text></svg>
-        </div>
-        <div>
-          <div class="oc-chat-name" style="display:none;">OpenCORE AI</div>
-          <div class="oc-chat-status" style="margin-left: 6px;"><span class="oc-status-dot"></span>En linea</div>
-        </div>
-        <button class="oc-chat-close" id="ocChatClose" aria-label="Cerrar chat" style="border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:4px;">
-           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
-             <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-           </svg>
-        </button>
-      </div>
-      <div class="oc-chat-body" id="ocChatBody">
-        <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
-        <div class="oc-mode-selector" id="ocModeSelector">
-          <p class="oc-mode-label">¿Cómo prefieres interactuar?</p>
-          <div class="oc-mode-buttons">
-            <button class="oc-mode-btn" id="ocModeText" data-mode="text">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              <span>Texto</span>
-            </button>
-            <button class="oc-mode-btn" id="ocModeVoice" data-mode="voice">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-              <span>Voz</span>
-            </button>
-          </div>
-        </div>
-        <div class="oc-quick-replies" id="ocQuickInit">
-          <button class="oc-qr" data-q="Que servicios ofrece OpenCORE?">Servicios disponibles</button>
-          <button class="oc-qr" data-q="Cuanto cobran por hora?">Estructura de tarifas</button>
-          <button class="oc-qr" data-q="Desde cuando trabajan en tecnologia?">Experiencia y trayectoria</button>
-          <button class="oc-qr" data-q="Solo hacen migraciones?">Sobre migraciones</button>
-        </div>
-      </div>
-      <div class="oc-chat-footer">
-        <input type="text" id="ocChatInput" class="oc-chat-input" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="400" aria-label="Mensaje" />
-        <button id="ocChatSend" class="oc-chat-send" aria-label="Enviar mensaje" style="background:var(--cyan); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:none; color:#fff; cursor:pointer;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" style="transform: translateX(-1px) translateY(1px);">
-            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  `;
 
-  document.body.insertAdjacentHTML("beforeend", chatHTML);
+const queries = [
+    "Hola que ofrecen",
+    "Hola que tienen",
+    "Hola que productos tienen a la venta",
+    "Hola que servicios tienen disponibles",
+    "Hola quiero hacer un proyecto",
+    "Hola me gustaria trabajar con ustedes",
+    "Hola son caros",
+    "Hola que ofrecen que tienen que productos tienen a la venta quiero hacer un proyecto",
+    "hola que servicios tienen disponibles me gustaria saber si son muy caros y ver si puedo hacer algo con ustedes",
+    "hola me gustaria trabajar con ustedes quiero hacer un proyecto super grande que necesito saber que me ofrecen"
+];
 
-  const trigger = document.getElementById("ocChatTrigger");
-  const win = document.getElementById("ocChatWindow");
-  const body = document.getElementById("ocChatBody");
-  const input = document.getElementById("ocChatInput");
-  const sendBtn = document.getElementById("ocChatSend");
-  const closeBtn = document.getElementById("ocChatClose");
-  const modeText = document.getElementById("ocModeText");
-  const modeVoice = document.getElementById("ocModeVoice");
-  const footer = document.querySelector(".oc-chat-footer");
-
-  // ── Toggle Chat ──
-  function toggleChat() {
-    trigger.classList.toggle("active");
-    win.classList.toggle("open");
-    if (win.classList.contains("open")) input.focus();
-  }
-  trigger.addEventListener("click", toggleChat);
-  if (closeBtn) closeBtn.addEventListener("click", toggleChat);
-  trigger.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") toggleChat(); });
-
-  // ── Quick Reply clicks ──
-  body.addEventListener("click", e => {
-    if (e.target.classList.contains("oc-qr")) {
-      const q = e.target.dataset.q;
-      if (q) { input.value = q; handleSend(); }
-    }
-  });
-
-  // ── Rate Limiter ──
-  let msgCount = 0, rateLimitTimer = null;
-  function isRateLimited() {
-    if (msgCount >= 5) return true;
-    msgCount++;
-    if (!rateLimitTimer) rateLimitTimer = setTimeout(() => { msgCount = 0; rateLimitTimer = null; }, 10000);
-    return false;
-  }
-
-  // ── Message Helpers ──
-  function appendUserMsg(txt) {
-    const d = document.createElement("div");
-    d.className = "oc-msg user";
-    d.textContent = txt;
-    body.appendChild(d);
-    body.scrollTop = body.scrollHeight;
-  }
-  function appendBotMsg(content, isHTML) {
-    const d = document.createElement("div");
-    d.className = "oc-msg bot";
-    if (isHTML) d.innerHTML = content;
-    else d.textContent = content;
-    body.appendChild(d);
-    body.scrollTop = body.scrollHeight;
-    return d;
-  }
-  function appendQuickReplies(suggestions) {
-    if (!suggestions || !suggestions.length) return;
-    const wrap = document.createElement("div");
-    wrap.className = "oc-quick-replies";
-    suggestions.forEach(s => {
-      const btn = document.createElement("button");
-      btn.className = "oc-qr";
-      btn.dataset.q = s;
-      btn.textContent = s.length > 35 ? s.substring(0, 32) + "..." : s;
-      wrap.appendChild(btn);
-    });
-    body.appendChild(wrap);
-    body.scrollTop = body.scrollHeight;
-  }
-  function appendTyping() {
-    const d = document.createElement("div");
-    d.className = "oc-msg bot oc-typing-wrapper";
-    d.id = "ocTyping";
-    d.innerHTML = '<div class="oc-typing"><div class="oc-dot"></div><div class="oc-dot"></div><div class="oc-dot"></div></div>';
-    body.appendChild(d);
-    body.scrollTop = body.scrollHeight;
-  }
-  function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
-
-  // ── Send Handler ──
-  // Conversation history for Gemini context
-  const chatHistory = [];
-
-  // Async Gemini AI fallback
-  async function askGemini(userMsg) {
-    try {
-      const res = await fetch('gemini-proxy.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMsg,
-          history: chatHistory.slice(-6)
-        })
-      });
-      const data = await res.json();
-      return data.response || 'No pude procesar tu consulta. Int\u00e9ntalo de nuevo.';
-    } catch (e) {
-      console.error('[OpenCORE AI] Error:', e);
-      return 'Disculpa, hubo un error de conexi\u00f3n. Puedes contactarnos directo a contacto@opencore.cl';
-    }
-  }
-
-  let isSending = false;
-  function handleSend() {
-    const txt = input.value.trim();
-    if (!txt || isSending) return;
-    if (isRateLimited()) { appendBotMsg("Estas enviando mensajes muy rapido. Espera un momento.", false); return; }
-    const initQR = document.getElementById("ocQuickInit");
-    if (initQR) initQR.remove();
-    appendUserMsg(txt);
-    input.value = "";
-    isSending = true;
-    appendTyping();
-
-    // Track user message in history
-    chatHistory.push({ role: 'user', text: txt });
-
-    const delay = 600 + Math.random() * 900;
-    setTimeout(async () => {
-      const result = processInput(txt);
-
-      if (result.aiNeeded) {
-        // No regex match — ask Gemini AI
-        const aiResponse = await askGemini(txt);
-        removeTyping();
-        const msgEl = appendBotMsg(aiResponse, false);
-        chatHistory.push({ role: 'assistant', text: aiResponse });
-        // Speak in voice mode
-        if (voiceModeActive) {
-          const plain = msgEl.textContent || msgEl.innerText;
-          speakText(plain);
-        }
-      } else {
-        removeTyping();
-        const msgEl = appendBotMsg(result.text, result.isHTML || false);
-        if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
-        chatHistory.push({ role: 'assistant', text: result.text });
-        // Speak in voice mode
-        if (voiceModeActive) {
-          const plain = msgEl.textContent || msgEl.innerText;
-          speakText(plain);
-        }
-      }
-      isSending = false;
-    }, delay);
-  }
-
-  sendBtn.addEventListener("click", () => handleSend());
-  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
-
-  // ══════════════════════════════════════════════
-  //  VOICE MODE — Push-to-talk (manual mic press)
-  // ══════════════════════════════════════════════
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let voiceModeActive = false;
-  let recognition = null;
-  let micBtn = null;
-  let vadTimer = null;
-  let isRecording = false;
-
-  function speakText(text) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.lang = "es-CL";
-    utt.rate = 1.05;
-    utt.pitch = 1.0;
-    const voices = window.speechSynthesis.getVoices();
-    const esVoice = voices.find(v => v.lang.startsWith("es"));
-    if (esVoice) utt.voice = esVoice;
-    
-    // Avatar Animation Binding
-    utt.onstart = () => {
-       const av = document.getElementById("ocAvatarContainer");
-       if (av) av.classList.add("is-speaking");
-    };
-    utt.onend = () => {
-       const av = document.getElementById("ocAvatarContainer");
-       if (av) av.classList.remove("is-speaking");
-    };
-    utt.onerror = () => {
-       const av = document.getElementById("ocAvatarContainer");
-       if (av) av.classList.remove("is-speaking");
-    };
-    
-    window.speechSynthesis.speak(utt);
-  }
-
-  function setMicState(state) {
-    if (!micBtn) return;
-    micBtn.classList.remove("listening", "active");
-    if (state === "listening") {
-      micBtn.classList.add("listening");
-      input.placeholder = "\uD83C\uDF99\uFE0F Grabando\u2026 pulsa de nuevo para enviar";
-    } else {
-      micBtn.classList.add("active");
-      input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
-    }
-  }
-
-  function startRecording() {
-    if (!SpeechRecognition) {
-      appendBotMsg("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome.", false);
-      return;
-    }
-    if (isRecording) return;
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
-    if (recognition) { try { recognition.abort(); } catch (e) { } recognition = null; }
-
-    recognition = new SpeechRecognition();
-    recognition.lang = "es-CL";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    recognition.onstart = () => {
-      isRecording = true;
-      setMicState("listening");
-    };
-
-    recognition.onresult = (event) => {
-      clearTimeout(vadTimer);
-      let interim = "", final = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) final += event.results[i][0].transcript;
-        else interim += event.results[i][0].transcript;
-      }
-      input.value = final || interim;
-      // VAD: auto-stop and send after 1.8s of silence with confirmed speech
-      if (final.trim().length > 0) {
-        vadTimer = setTimeout(() => {
-          if (isRecording) stopRecording(true);
-        }, 1800);
-      }
-    };
-
-    recognition.onerror = (event) => {
-      isRecording = false;
-      setMicState("active");
-      if (event.error === "not-allowed" || event.error === "denied") {
-        appendBotMsg("Permiso de micr\u00F3fono denegado. Habil\u00EDtalo en tu navegador.", false);
-        exitVoiceMode();
-      }
-    };
-
-    recognition.onend = () => {
-      isRecording = false;
-      setMicState("active");
-      // No auto-restart — user must press mic again
-    };
-
-    try { recognition.start(); } catch (e) { isRecording = false; setMicState("active"); }
-  }
-
-  function stopRecording(andSend) {
-    clearTimeout(vadTimer);
-    isRecording = false;
-    if (recognition) {
-      try { recognition.stop(); } catch (e) { }
-      recognition = null;
-    }
-    setMicState("active");
-    if (andSend && input.value.trim()) {
-      handleSend();
-    }
-  }
-
-  function enterVoiceMode() {
-    const av = document.getElementById("ocAvatarContainer");
-    if (av) av.classList.add("show-avatar");
-    voiceModeActive = true;
-    if (modeText) modeText.classList.remove("oc-mode-active");
-    if (modeVoice) modeVoice.classList.add("oc-mode-active");
-    const sel = document.getElementById("ocModeSelector");
-    if (sel) sel.style.display = "none";
-
-    if (!document.getElementById("ocMicBtn")) {
-      micBtn = document.createElement("button");
-      micBtn.id = "ocMicBtn";
-      micBtn.className = "oc-voice-btn active";
-      micBtn.setAttribute("aria-label", "Grabar mensaje de voz");
-      micBtn.title = "Pulsa para hablar";
-      micBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
-      footer.insertBefore(micBtn, sendBtn);
-      micBtn.addEventListener("click", () => {
-        if (isRecording) stopRecording(true);
-        else startRecording();
-      });
-    } else {
-      micBtn = document.getElementById("ocMicBtn");
-      micBtn.classList.add("active");
-    }
-
-    input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
-    appendBotMsg("\uD83C\uDF99\uFE0F Modo voz activado. Pulsa el micr\u00F3fono para hablar.", false);
-    // Do NOT auto-start — wait for user to press mic
-  }
-
-  function exitVoiceMode() {
-    const av = document.getElementById("ocAvatarContainer");
-    if (av) av.classList.remove("show-avatar");
-    voiceModeActive = false;
-    stopRecording(false);
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
-    if (modeText) modeText.classList.add("oc-mode-active");
-    if (modeVoice) modeVoice.classList.remove("oc-mode-active");
-    const m = document.getElementById("ocMicBtn");
-    if (m) m.remove();
-    micBtn = null;
-    input.placeholder = "Escribe tu consulta...";
-  }
-
-  // ── Mode Selector Handlers ──
-  if (modeText) {
-    modeText.classList.add("oc-mode-active");
-    modeText.addEventListener("click", () => {
-      if (voiceModeActive) exitVoiceMode();
-      const sel = document.getElementById("ocModeSelector");
-      if (sel) sel.style.display = "none";
-    });
-  }
-  if (modeVoice) {
-    modeVoice.addEventListener("click", () => {
-      if (!voiceModeActive) enterVoiceMode();
-    });
-  }
-});
-
+console.log("=== INICIO TEST ===");
+for (let q of queries) {
+    let match = getBestMatch(q);
+    console.log("PREGUNTA: " + q);
+    console.log("  TOKENS: " + tokenize(q).join(", "));
+    console.log("  CONF:   " + (match ? match.confidence.toFixed(2) : "0.00"));
+    console.log("  MATCH:  " + (match ? match.answer.substring(0,60) + "..." : "NADAAA"));
+    console.log("-----------------------------------------");
+}
+console.log("=== FIN TEST ===");
