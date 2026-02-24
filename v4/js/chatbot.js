@@ -1615,8 +1615,8 @@ const qnaDB = [
 //         cotizar synonym expansion, input maxlength, ARIA
 // ══════════════════════════════════════════════════════════
 
-const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","cono","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
-const stopWords = new Set(["el","la","los","las","un","una","unos","unas","y","o","pero","si","no","en","por","para","con","de","del","a","al","que","cual","quien","como","donde","cuando","porque","es","son","ser","estar","hay","fue","era","han","ha","me","te","se","nos","le","lo","su","mi","tu","mas","muy","ya","tambien","solo","otro","toda","todo","todos","estas","este","esta","eso","ese","esos","cada","aqui","ahi","alla"]);
+const badWords = ["estupido", "imbecil", "tonto", "mierda", "puta", "pene", "culo", "caca", "joder", "cono", "pendejo", "cabron", "idiota", "maricon", "zorra", "sexo", "porno", "weon", "weona", "ctm", "csm", "chucha", "concha", "verga", "aweonao", "culiao", "gil", "boludo", "pelotudo", "marico"];
+const stopWords = new Set(["el", "la", "los", "las", "un", "una", "unos", "unas", "y", "o", "pero", "si", "no", "en", "por", "para", "con", "de", "del", "a", "al", "que", "cual", "quien", "como", "donde", "cuando", "porque", "es", "son", "ser", "estar", "hay", "fue", "era", "han", "ha", "me", "te", "se", "nos", "le", "lo", "su", "mi", "tu", "mas", "muy", "ya", "tambien", "solo", "otro", "toda", "todo", "todos", "estas", "este", "esta", "eso", "ese", "esos", "cada", "aqui", "ahi", "alla"]);
 
 function normalize(str) {
   return str.toLowerCase()
@@ -1633,11 +1633,11 @@ function tokenize(str) {
 function levenshtein(a, b) {
   const m = a.length, n = b.length;
   if (m === 0) return n; if (n === 0) return m;
-  const d = Array.from({length: m + 1}, (_, i) => [i]);
+  const d = Array.from({ length: m + 1 }, (_, i) => [i]);
   for (let j = 1; j <= n; j++) d[0][j] = j;
   for (let i = 1; i <= m; i++)
     for (let j = 1; j <= n; j++)
-      d[i][j] = a[i-1] === b[j-1] ? d[i-1][j-1] : 1 + Math.min(d[i-1][j], d[i][j-1], d[i-1][j-1]);
+      d[i][j] = a[i - 1] === b[j - 1] ? d[i - 1][j - 1] : 1 + Math.min(d[i - 1][j], d[i][j - 1], d[i - 1][j - 1]);
   return d[m][n];
 }
 
@@ -1653,38 +1653,38 @@ function fuzzyMatch(a, b) {
 
 function bigrams(tokens) {
   const bg = [];
-  for (let i = 0; i < tokens.length - 1; i++) bg.push(tokens[i] + " " + tokens[i+1]);
+  for (let i = 0; i < tokens.length - 1; i++) bg.push(tokens[i] + " " + tokens[i + 1]);
   return bg;
 }
 
 // Unified synonym map
 const synonyms = {
-  "precio":      ["costo","valor","cobran","cobrar","tarifa","presupuesto","cotizacion","cotizar","costos","precios"],
-  "proyecto":    ["trabajo","desarrollo","sistema","implementacion"],
-  "rapido":      ["urgente","express","apurado","pronto","inmediato"],
-  "experiencia": ["trayectoria","recorrido","anos","antiguedad"],
-  "empresa":     ["compania","consultora","organizacion","firma","negocio","compañia"],
-  "seguridad":   ["proteccion","confidencialidad","privacidad","resguardo"],
-  "migracion":   ["migrar","trasladar","mover","transferir"],
-  "integracion": ["integrar","conectar","vincular","enlazar"],
-  "soporte":     ["mantenimiento","ayuda","asistencia","apoyo","help","socorro"],
-  "cloud":       ["nube","aws","azure","gcp"],
-  "legacy":      ["antiguo","viejo","obsoleto","heredado"],
-  "inventario":  ["stock","bodega","almacen"],
-  "facturacion": ["factura","boleta","tributario","dte"],
-  "contrato":    ["acuerdo","convenio","sla"],
-  "equipo":      ["team","grupo","personal","plantel"],
-  "como":        ["komo"],
-  "quien":       ["kien","qn","qien"],
-  "que":         ["ke","q"],
-  "cuanto":      ["cuantos","cuanta"],
-  "hola":        ["ola","hello","hi","hey","wena"],
-  "gracias":     ["grax","thx","thanks","tenkiu"],
-  "adios":       ["chao","bye","chaito"],
-  "correo":      ["email","mail","e-mail"],
-  "telefono":    ["fono","celular","numero"],
-  "servicio":    ["servicios","ofrecen","hacen"],
-  "necesito":    ["nesesito","nesecito","requiero"]
+  "precio": ["costo", "valor", "cobran", "cobrar", "tarifa", "presupuesto", "cotizacion", "cotizar", "costos", "precios"],
+  "proyecto": ["trabajo", "desarrollo", "sistema", "implementacion"],
+  "rapido": ["urgente", "express", "apurado", "pronto", "inmediato"],
+  "experiencia": ["trayectoria", "recorrido", "anos", "antiguedad"],
+  "empresa": ["compania", "consultora", "organizacion", "firma", "negocio", "compañia"],
+  "seguridad": ["proteccion", "confidencialidad", "privacidad", "resguardo"],
+  "migracion": ["migrar", "trasladar", "mover", "transferir"],
+  "integracion": ["integrar", "conectar", "vincular", "enlazar"],
+  "soporte": ["mantenimiento", "ayuda", "asistencia", "apoyo", "help", "socorro"],
+  "cloud": ["nube", "aws", "azure", "gcp"],
+  "legacy": ["antiguo", "viejo", "obsoleto", "heredado"],
+  "inventario": ["stock", "bodega", "almacen"],
+  "facturacion": ["factura", "boleta", "tributario", "dte"],
+  "contrato": ["acuerdo", "convenio", "sla"],
+  "equipo": ["team", "grupo", "personal", "plantel"],
+  "como": ["komo"],
+  "quien": ["kien", "qn", "qien"],
+  "que": ["ke", "q"],
+  "cuanto": ["cuantos", "cuanta"],
+  "hola": ["ola", "hello", "hi", "hey", "wena"],
+  "gracias": ["grax", "thx", "thanks", "tenkiu"],
+  "adios": ["chao", "bye", "chaito"],
+  "correo": ["email", "mail", "e-mail"],
+  "telefono": ["fono", "celular", "numero"],
+  "servicio": ["servicios", "ofrecen", "hacen"],
+  "necesito": ["nesesito", "nesecito", "requiero"]
 };
 
 function expandWithSynonyms(token) {
@@ -1698,7 +1698,7 @@ function expandWithSynonyms(token) {
 // Pre-compute token cache on load (huge perf win — no re-tokenizing per query)
 const precomputedDB = qnaDB.map(item => ({
   q: item.q, a: item.a,
-  tokens:     tokenize(item.q),
+  tokens: tokenize(item.q),
   normalized: normalize(item.q)
 }));
 
@@ -1718,11 +1718,11 @@ function scoreEntry(inputTokens, entry) {
   }
   const iBg = bigrams(inputTokens), qBg = bigrams(qTokens);
   for (const ib of iBg) for (const qb of qBg) if (ib === qb) totalScore += 1.5;
-  const coverage    = matchedTokens / Math.max(inputTokens.length, 1);
+  const coverage = matchedTokens / Math.max(inputTokens.length, 1);
   const lengthRatio = Math.min(inputTokens.length / qTokens.length, 1);
-  const base        = (totalScore * 0.6) + (coverage * 2.0) + (lengthRatio * 0.4);
+  const base = (totalScore * 0.6) + (coverage * 2.0) + (lengthRatio * 0.4);
   // Bayesian length adjustment
-  const bayesRatio  = Math.min(inputTokens.length, qTokens.length) / Math.max(inputTokens.length, qTokens.length);
+  const bayesRatio = Math.min(inputTokens.length, qTokens.length) / Math.max(inputTokens.length, qTokens.length);
   return base * 0.7 + bayesRatio * base * 0.3;
 }
 
@@ -1736,27 +1736,27 @@ function getBestMatch(inputStr) {
     else if (!secondBest || score > (secondBest.score || 0)) secondBest = { ...item, score };
   }
   let threshold;
-  if (inputTokens.length <= 2)      threshold = 2.6;
+  if (inputTokens.length <= 2) threshold = 2.6;
   else if (inputTokens.length <= 4) threshold = 2.0;
-  else                               threshold = 1.6;
+  else threshold = 1.6;
   if (bestScore < threshold) return null;
   if (inputTokens.length < 3 && bestScore < 2.8) return null;
   return {
-    answer:     bestMatch.a,
+    answer: bestMatch.a,
     confidence: Math.min(bestScore / 4.5, 1),
     suggestion: (secondBest && secondBest.score >= threshold * 0.75) ? secondBest.q : null
   };
 }
 
 // Intent detection
-const greetings = ["hola","buenas","ola","hey","hi","hello","buenos dias","buenas tardes","buenas noches","que tal","saludos","buen dia"];
-const farewells = ["chao","adios","bye","hasta luego","nos vemos","hasta pronto","hasta la vista"];
-const thanks    = ["gracias","agradecido","agradezco","te agradezco","muchas gracias","mil gracias","grax","thx"];
+const greetings = ["hola", "buenas", "ola", "hey", "hi", "hello", "buenos dias", "buenas tardes", "buenas noches", "que tal", "saludos", "buen dia"];
+const farewells = ["chao", "adios", "bye", "hasta luego", "nos vemos", "hasta pronto", "hasta la vista"];
+const thanks = ["gracias", "agradecido", "agradezco", "te agradezco", "muchas gracias", "mil gracias", "grax", "thx"];
 
-function isGreeting(i) { const n = normalize(i); return greetings.some(g => n === g || n.startsWith(g+" ") || n.endsWith(" "+g)); }
-function isFarewell(i) { const n = normalize(i); return farewells.some(f => n === f || n.startsWith(f+" ") || n.endsWith(" "+f)); }
-function isThanks(i)   { const n = normalize(i); return thanks.some(t => n.includes(t)); }
-function pick(arr)     { return arr[Math.floor(Math.random() * arr.length)]; }
+function isGreeting(i) { const n = normalize(i); return greetings.some(g => n === g || n.startsWith(g + " ") || n.endsWith(" " + g)); }
+function isFarewell(i) { const n = normalize(i); return farewells.some(f => n === f || n.startsWith(f + " ") || n.endsWith(" " + f)); }
+function isThanks(i) { const n = normalize(i); return thanks.some(t => n.includes(t)); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 // All greeting responses contain: "asistente" and "opencore"
 const greetingResponses = [
@@ -1831,19 +1831,19 @@ function handlePersonEntity(input) {
   }
   const mo = input.match(/qui[eé]n\s+es\s+([a-z\u00e0-\u00ff\s]+)/i) || input.match(/quien\s+es\s+([a-z\u00e0-\u00ff\s]+)/i);
   if (mo) {
-    const pn = mo[1].replace(/\?/g,"").trim().toLowerCase();
-    if (!["jorge","quezada","barbara","bonilla","opencore"].some(k => pn.includes(k)) && pn.length > 2)
+    const pn = mo[1].replace(/\?/g, "").trim().toLowerCase();
+    if (!["jorge", "quezada", "barbara", "bonilla", "opencore"].some(k => pn.includes(k)) && pn.length > 2)
       return { text: "No dispongo de esa informacion. Puedo ayudarte con algo relacionado a OpenCORE o tecnologia empresarial?", suggestions: [] };
   }
   return null;
 }
 
 // Barbara engine
-const BARBARA_NAMES   = ["barbara","bonilla","barbara bonilla"];
-const PERSON_Q        = ["quien","kien","qn","qien","cual","kual"];
-const LOVE_ATTR       = ["linda","hermosa","bella","bonita","guapa","preciosa","atractiva","sexy","amor","enamor","amo","ama","quiere","quiero","adora","pareja","polola","novia","esposa","mujer","unica","reina","la mejor","perfecta","ideal","favorita","corazon","maravillosa","especial","adorable","estrella","diosa","modelo","miss","belleza"];
-const BUSINESS_BLOCK  = ["negocio","empresa","cliente","ventas","cotizacion","precio","costo","uf","proyecto","implementacion","sistema","software","inventario","logistica","facturacion","ia","inteligencia artificial","automatizacion","chatbot","api","integracion","migracion","cloud","servidor","solucion","estrategia","rentabilidad","servicio","consultoria","opencore","erp","crm","sla","desarrollo","codigo","programacion","plataforma","tarifa","hora","contrato","diagnostico","modernizar","legacy"];
-const BARBARA_RESPONSES = ["Barbara.","Barbara Bonilla.","Sin duda alguna, Barbara.","Barbara, sin discusion.","Claramente Barbara. No hay competencia.","Barbara Bonilla, la unica y definitiva."];
+const BARBARA_NAMES = ["barbara", "bonilla", "barbara bonilla"];
+const PERSON_Q = ["quien", "kien", "qn", "qien", "cual", "kual"];
+const LOVE_ATTR = ["linda", "hermosa", "bella", "bonita", "guapa", "preciosa", "atractiva", "sexy", "amor", "enamor", "amo", "ama", "quiere", "quiero", "adora", "pareja", "polola", "novia", "esposa", "mujer", "unica", "reina", "la mejor", "perfecta", "ideal", "favorita", "corazon", "maravillosa", "especial", "adorable", "estrella", "diosa", "modelo", "miss", "belleza"];
+const BUSINESS_BLOCK = ["negocio", "empresa", "cliente", "ventas", "cotizacion", "precio", "costo", "uf", "proyecto", "implementacion", "sistema", "software", "inventario", "logistica", "facturacion", "ia", "inteligencia artificial", "automatizacion", "chatbot", "api", "integracion", "migracion", "cloud", "servidor", "solucion", "estrategia", "rentabilidad", "servicio", "consultoria", "opencore", "erp", "crm", "sla", "desarrollo", "codigo", "programacion", "plataforma", "tarifa", "hora", "contrato", "diagnostico", "modernizar", "legacy"];
+const BARBARA_RESPONSES = ["Barbara.", "Barbara Bonilla.", "Sin duda alguna, Barbara.", "Barbara, sin discusion.", "Claramente Barbara. No hay competencia.", "Barbara Bonilla, la unica y definitiva."];
 
 function containsAny(text, list) { return list.some(item => text.includes(item)); }
 function isBarbaraLove(input) {
@@ -1851,18 +1851,18 @@ function isBarbaraLove(input) {
   if (containsAny(t, BUSINESS_BLOCK)) return false;
   if (containsAny(t, PERSON_Q) && containsAny(t, LOVE_ATTR)) return true;
   if (containsAny(t, BARBARA_NAMES) && containsAny(t, LOVE_ATTR)) return true;
-  if (containsAny(t, BARBARA_NAMES) && containsAny(t, PERSON_Q) && containsAny(t, ["ama","quiere","amor","corazon"])) return true;
+  if (containsAny(t, BARBARA_NAMES) && containsAny(t, PERSON_Q) && containsAny(t, ["ama", "quiere", "amor", "corazon"])) return true;
   return false;
 }
 function getBarbaraResponse(input) {
   const t = normalize(input);
   if (t.includes("mundo") || t.includes("universo") || t.includes("modelo") || t.includes("miss"))
-    return pick(["Barbara Bonilla.","Sin duda alguna, Barbara Bonilla.","Barbara Bonilla, la unica y definitiva."]);
+    return pick(["Barbara Bonilla.", "Sin duda alguna, Barbara Bonilla.", "Barbara Bonilla, la unica y definitiva."]);
   return pick(BARBARA_RESPONSES);
 }
 
 // CTA
-const LEAD_GEN_TRIGGERS = ["precio","costo","cobran","implementacion","auditoria","error","critico","migracion","cotizar","cotizacion","uf","presupuesto","tarifa","contrato","servicio","soporte"];
+const LEAD_GEN_TRIGGERS = ["precio", "costo", "cobran", "implementacion", "auditoria", "error", "critico", "migracion", "cotizar", "cotizacion", "uf", "presupuesto", "tarifa", "contrato", "servicio", "soporte"];
 const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="https://calendly.com/opencore-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
 function shouldAppendCTA(input) {
   const n = normalize(input);
@@ -1873,7 +1873,7 @@ function shouldAppendCTA(input) {
 function processInput(input) {
   const clean = input.trim();
   if (!clean) return { text: "Escribe tu consulta y con gusto te ayudo.", suggestions: [] };
-  const norm  = normalize(clean);
+  const norm = normalize(clean);
   const words = new Set(norm.split(/\s+/));
 
   // 1. Profanity (word-boundary via Set)
@@ -1907,7 +1907,7 @@ function processInput(input) {
   for (const item of precomputedDB) {
     const qn = item.normalized;
     if (qn.length > 4 && norm.length > 4 &&
-        (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
+      (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }
@@ -1917,7 +1917,7 @@ function processInput(input) {
   const match = getBestMatch(clean);
   if (match) {
     const prefix = match.confidence >= 0.78 ? "" : "Basandome en tu consulta: ";
-    let answer   = prefix + match.answer;
+    let answer = prefix + match.answer;
     if (shouldAppendCTA(clean)) answer += CTA_HTML;
     return { text: answer, suggestions: match.suggestion ? [match.suggestion] : [], isHTML: true };
   }
@@ -1934,7 +1934,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
       <div class="oc-chat-label">Habla con OpenCORE AI</div>
       <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
-         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05"></path><path d="M12 22.08V12"></path>
+         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </svg>
       <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -1942,12 +1942,12 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <div class="oc-chat-window" id="ocChatWindow" role="dialog" aria-label="Chat OpenCORE">
             <div class="oc-chat-header">
-        <div class="oc-chat-avatar" style="background: transparent; border: none; overflow: visible;">
-           <img src="img/logo-white.png" alt="OC" style="width: 28px; height: 28px; filter: drop-shadow(0 0 8px var(--cyan-g)); object-fit: contain;" />
+        <div class="oc-chat-avatar" style="background: transparent; border: none; padding: 0; width: auto; overflow: visible;">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" style="height: 22px; width: 80px; filter: drop-shadow(0 0 6px rgba(0,194,255,0.4)); object-fit: contain; margin-top:2px;"><defs><linearGradient id="oc-g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00c2ff"/><stop offset="100%" stop-color="#a5b4fc"/></linearGradient></defs><g fill="none" stroke="url(#oc-g)" stroke-width="5"><polygon points="30,10 10,20 10,40 30,50 50,40 50,20"/></g><text x="60" y="39" font-family="Arial,Geneva,sans-serif" font-size="30" font-weight="bold" fill="#fff"><span>OPEN</span><span fill="url(#oc-g)">CORE</span></text></svg>
         </div>
         <div>
-          <div class="oc-chat-name" style="display:flex; align-items:center;">OpenCORE AI</div>
-          <div class="oc-chat-status"><span class="oc-status-dot"></span>En linea</div>
+          <div class="oc-chat-name" style="display:none;">OpenCORE AI</div>
+          <div class="oc-chat-status" style="margin-left: 6px;"><span class="oc-status-dot"></span>En linea</div>
         </div>
         <button class="oc-chat-close" id="ocChatClose" aria-label="Cerrar chat" style="border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:4px;">
            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
@@ -1979,8 +1979,8 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
             <div class="oc-chat-footer">
         <input type="text" id="ocChatInput" class="oc-chat-input" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="400" aria-label="Mensaje" />
-        <button id="ocChatSend" class="oc-chat-send" aria-label="Enviar mensaje">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <button id="ocChatSend" class="oc-chat-send" aria-label="Enviar mensaje" style="background:var(--cyan); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:none; color:#fff; cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" style="transform: translateX(-1px) translateY(1px);">
             <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
         </button>
@@ -1990,11 +1990,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.insertAdjacentHTML("beforeend", chatHTML);
 
-  const trigger  = document.getElementById("ocChatTrigger");
-  const win      = document.getElementById("ocChatWindow");
-  const body     = document.getElementById("ocChatBody");
-  const input    = document.getElementById("ocChatInput");
-  const sendBtn  = document.getElementById("ocChatSend");
+  const trigger = document.getElementById("ocChatTrigger");
+  const win = document.getElementById("ocChatWindow");
+  const body = document.getElementById("ocChatBody");
+  const input = document.getElementById("ocChatInput");
+  const sendBtn = document.getElementById("ocChatSend");
   const closeBtn = document.getElementById("ocChatClose");
 
   function toggleChat() {
@@ -2034,7 +2034,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const d = document.createElement("div");
     d.className = "oc-msg bot";
     if (isHTML) d.innerHTML = content;
-    else        d.textContent = content;
+    else d.textContent = content;
     body.appendChild(d);
     body.scrollTop = body.scrollHeight;
     return d;
