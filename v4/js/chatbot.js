@@ -1,6 +1,6 @@
 /* ========================================================
-   CHATBOT V3 PRO - OPENCORE NLP ENGINE
-   Versión: 3.5 | Build: 2026-02-23
+   CHATBOT V4 VOICE - OPENCORE NLP ENGINE
+   Versión: 4.0 | Build: 2026-02-23
    Features: Levenshtein, N-gram, Stopwords, Quick Replies,
              Sentiment Guard, Person Entity Handler,
              Barbara Intent Engine, CTA Lead Gen,
@@ -1951,6 +1951,19 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="oc-chat-body" id="ocChatBody">
         <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
+        <div class="oc-mode-selector" id="ocModeSelector">
+          <p class="oc-mode-label">¿Cómo prefieres interactuar?</p>
+          <div class="oc-mode-buttons">
+            <button class="oc-mode-btn" id="ocModeText" data-mode="text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>Texto</span>
+            </button>
+            <button class="oc-mode-btn" id="ocModeVoice" data-mode="voice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              <span>Voz</span>
+            </button>
+          </div>
+        </div>
         <div class="oc-quick-replies" id="ocQuickInit">
           <button class="oc-qr" data-q="Que servicios ofrece OpenCORE?">Servicios disponibles</button>
           <button class="oc-qr" data-q="Cuanto cobran por hora?">Estructura de tarifas</button>

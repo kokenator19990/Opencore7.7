@@ -1,0 +1,14 @@
+[
+  {
+    "input": "hola",
+    "cat": "Saludos",
+    "reason": "MISSING \"hola\" | ",
+    "got": "¡Bienvenido! Estoy aquí para resolver tus dudas sobre tecnología empresarial, migraciones o integración de sistemas."
+  },
+  {
+    "input": "manejan AWS?",
+    "cat": "Tecnología",
+    "reason": "MISSING \"aws\" | ",
+    "got": "Sí, somos expertos en Amazon Web Services: EC2, S3, RDS, Lambda, VPC y arquitecturas Serverless."
+  }
+]
