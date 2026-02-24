@@ -1519,7 +1519,7 @@ const qnaDB = [
   { q: "¿Qué pasa si hay un problema grave de rendimiento?", a: "Diagnosticamos el cuello de botella: consultas lentas, falta de índices, saturación de memoria, concurrencia o arquitectura. Priorizamos la causa raíz y proponemos optimización medida. En sistemas críticos el diagnóstico de rendimiento se hace bajo contrato con métricas claras." },
   { q: "¿Qué pasa si cambio de infraestructura o proveedor?", a: "Si el sistema está bien diseñado, es independiente del proveedor. Coordinamos la migración de infraestructura con mínima interrupción. La documentación técnica facilita este proceso independientemente de quién lo ejecute en el futuro." },
 
-  
+
   // ═══ PREGUNTAS INSTITUCIONALES / CONFIANZA / EQUIPO (Nuevas) ═══
   { q: "¿Sus soluciones son realmente de calidad?", a: "Nuestras soluciones siguen estándares empresariales y están respaldadas por más de 15 años de experiencia en entornos críticos. Priorizamos estabilidad y sostenibilidad técnica sobre soluciones improvisadas." },
   { q: "¿Son de nivel internacional?", a: "Trabajamos bajo estándares comparables a consultoría tecnológica internacional, especialmente en arquitectura empresarial y modernización estructural." },
@@ -1660,8 +1660,8 @@ const qnaDB = [
   { q: "¿Tienen especialistas por área?", a: "Sí. Podemos integrar especialistas en arquitectura, integración ERP, automatización y bases de datos según necesidad." },
   { q: "¿Cómo gestionan equipos grandes en proyectos complejos?", a: "Dimensionamos recursos de manera proporcional al alcance técnico, manteniendo supervisión ejecutiva constante." },
   { q: "¿Qué garantiza que el equipo sea competente?", a: "Nuestra estructura combina liderazgo estratégico con ejecución técnica especializada y experiencia comprobada." },
-  { q: "¿Depende mucho el proyecto de una sola persona?", a: "No. Operamos con estructura colaborativa y supervisión técnica centralizada para asegurar continuidad." }
-// ═══ PREGUNTAS TÍPICAS ADICIONALES ═══
+  { q: "¿Depende mucho el proyecto de una sola persona?", a: "No. Operamos con estructura colaborativa y supervisión técnica centralizada para asegurar continuidad." },
+  // ═══ PREGUNTAS TÍPICAS ADICIONALES ═══
   { q: "¿Pueden hacer solo consultoría sin desarrollo?", a: "Sí. Ofrecemos consultoría independiente: diagnóstico técnico, revisión de arquitectura, asesoría estratégica y auditoría, sin obligación de ejecución posterior." },
   { q: "¿Hacen revisión de código de terceros?", a: "Sí. Auditamos código desarrollado por otros equipos, evaluamos calidad, seguridad y deuda técnica, y entregamos informe técnico con plan de remediación priorizado." },
   { q: "¿Cuánto cuesta una auditoría técnica?", a: "Depende del volumen y complejidad del sistema. Se estima tras revisión inicial del alcance. Generalmente se trabaja por horas de auditoría a valor de 1-5 UF/hora, con informe técnico ejecutivo incluido." },
@@ -1682,7 +1682,49 @@ const qnaDB = [
   { q: "¿Integran con medios de pago online?", a: "Sí. Tenemos experiencia en integración de pasarelas de pago: Transbank, MercadoPago, Kushki y otras. La integración incluye manejo de errores, reintentos y trazabilidad completa de transacciones." },
   { q: "¿Pueden hacer sistemas multiempresa?", a: "Sí. Diseñamos arquitecturas multiempresa o multitenant con aislamiento de datos, permisos por empresa y reportería consolidada. Es un requerimiento común en holding y grupos empresariales." },
   { q: "¿Qué tan rápido pueden entregar una cotización formal?", a: "Una estimación inicial la podemos dar en la primera reunión. Una propuesta técnica formal con desglose de horas y costos requiere diagnóstico previo, típicamente entre 3 y 10 días hábiles según complejidad." }
-  , 
+  ,
+
+  // ═══ RESOLUCIÓN Y EXPERIENCIA (Nuevas) ═══
+  { q: "Hola, ¿qué ofrecen exactamente?", a: "Ofrecemos consultoría tecnológica especializada en arquitectura empresarial, modernización de sistemas legacy, integración ERP y automatización estructural de procesos. Nuestro enfoque no es vender software estándar, sino diseñar soluciones sostenibles alineadas con la operación real de cada organización." },
+  { q: "Hola, ¿qué servicios me pueden vender?", a: "Más que vender servicios aislados, estructuramos intervenciones tecnológicas orientadas a resolver problemas de fondo: integración de plataformas, reducción de deuda técnica, optimización de bases de datos y estabilización de sistemas críticos." },
+  { q: "Hola, quiero contratar sus servicios, ¿cómo funciona?", a: "El proceso comienza con un levantamiento técnico para comprender su arquitectura actual, nivel de madurez tecnológica y objetivos estratégicos. A partir de ello definimos alcance, modalidad contractual y plan de ejecución progresiva." },
+  { q: "Hola, ¿qué tipo de proyectos desarrollan?", a: "Desarrollamos proyectos de modernización tecnológica, migraciones estructurales, integración entre sistemas heterogéneos y automatización empresarial. También intervenimos en rescate de proyectos con desviaciones técnicas o estructurales." },
+  { q: "Hola, ¿pueden desarrollar una aplicación desde cero?", a: "Sí, siempre que exista una definición clara de objetivos funcionales y arquitectura futura. Diseñamos la solución desde la base considerando escalabilidad, seguridad, integración y sostenibilidad a largo plazo." },
+  { q: "Hola, ¿qué precios manejan?", a: "Los valores dependen directamente de la especificidad, complejidad y extensión del proyecto. Contamos con modalidad mensual desde 30 UF para servicios continuos, mientras que proyectos estructurales se valorizan según evaluación técnica formal." },
+  { q: "Hola, tengo una empresa pequeña, ¿pueden trabajar conmigo?", a: "Sí, evaluamos proyectos de PYMEs cuando existe una necesidad tecnológica estructural clara. En estos casos proponemos fases progresivas que permitan escalar de manera controlada." },
+  { q: "Hola, tengo una empresa grande, ¿pueden manejar proyectos complejos?", a: "Nuestra estructura está diseñada precisamente para abordar entornos empresariales complejos. Dimensionamos el equipo y la arquitectura según la criticidad y el alcance del proyecto." },
+  { q: "Hola, ¿son profesionales certificados?", a: "Nuestro equipo está conformado por profesionales con trayectoria comprobada en entornos tecnológicos empresariales. Más allá de certificaciones puntuales, priorizamos experiencia aplicada y resultados sostenibles." },
+  { q: "Hola, ¿cuántas personas trabajan con ustedes?", a: "Contamos con un núcleo estable de entre 5 y 10 profesionales especializados, ampliable hasta 20 o 30 recursos según el tipo de proyecto y nivel de complejidad requerido." },
+  { q: "¿Trabajan con Java?", a: "Sí, trabajamos con Java en proyectos que requieren robustez empresarial y arquitecturas escalables. Evaluamos cada caso según la estructura tecnológica existente del cliente." },
+  { q: "¿Trabajan con Python?", a: "Utilizamos Python cuando el proyecto demanda automatización, procesamiento backend o integración específica. La elección tecnológica siempre responde a criterios estructurales y no a preferencias arbitrarias." },
+  { q: "¿Trabajan con SQL y bases de datos complejas?", a: "Sí, tenemos experiencia en diseño, optimización e integración de bases de datos SQL en entornos empresariales de alta criticidad operativa." },
+  { q: "¿Pueden trabajar con sistemas antiguos como COBOL?", a: "Sí, evaluamos integración y modernización progresiva de sistemas legacy, incluyendo entornos tradicionales que requieren transición controlada." },
+  { q: "¿Pueden integrar múltiples sistemas distintos?", a: "Sí, diseñamos arquitectura interoperable mediante APIs, capas de integración y estandarización de datos, asegurando coherencia operativa." },
+  { q: "¿Hacen mantenimiento mensual?", a: "Sí, ofrecemos modalidad de acompañamiento y soporte estratégico desde 30 UF mensuales, sujeto a evaluación técnica y alcance definido." },
+  { q: "¿Pueden rescatar un proyecto que salió mal?", a: "Sí, analizamos técnicamente el estado actual del sistema, identificamos brechas estructurales y proponemos un plan de estabilización progresivo." },
+  { q: "¿Cuánto tiempo dura un proyecto típico?", a: "Depende del alcance. Integraciones puntuales pueden tardar semanas, mientras que transformaciones estructurales pueden extenderse varios meses bajo planificación formal." },
+  { q: "¿Trabajan en la nube o solo local?", a: "Podemos diseñar arquitecturas cloud, híbridas o on-premise según la infraestructura y estrategia tecnológica del cliente." },
+  { q: "¿Son una empresa pequeña o grande?", a: "Somos una consultora especializada con estructura ejecutiva definida y capacidad escalable. Nuestra fortaleza está en enfoque técnico estructural más que en volumen indiscriminado." },
+  { q: "¿Pueden garantizar resultados?", a: "Garantizamos metodología, supervisión técnica y ejecución profesional. Los resultados dependen también del contexto operativo y compromiso organizacional." },
+  { q: "¿Qué los diferencia de otras consultoras?", a: "Nuestra especialización en modernización estructural y rescate de arquitecturas complejas nos diferencia de proveedores enfocados únicamente en desarrollo superficial." },
+  { q: "¿Trabajan con ERP?", a: "Sí, intervenimos en integración, optimización y modernización de plataformas ERP existentes, asegurando coherencia con procesos financieros y operativos." },
+  { q: "¿Hacen automatización de procesos?", a: "Sí, implementamos automatización administrativa, financiera y operativa cuando genera eficiencia medible y sostenibilidad técnica." },
+  { q: "¿Son flexibles en sus propuestas?", a: "Adaptamos la solución a la necesidad real del cliente, manteniendo estándares técnicos y metodológicos claros." },
+  { q: "¿Pueden trabajar con presupuesto limitado?", a: "Evaluamos alcance y proponemos fases progresivas que permitan avanzar sin comprometer calidad estructural." },
+  { q: "¿Trabajan con integración contable multimoneda?", a: "Sí, diseñamos arquitectura financiera multimoneda e integración contable cuando el entorno empresarial lo requiere." },
+  { q: "¿Manejan microservicios?", a: "Sí, utilizamos arquitectura de microservicios cuando aporta escalabilidad y separación lógica eficiente." },
+  { q: "¿Hacen auditoría tecnológica?", a: "Sí, realizamos diagnóstico estructural para identificar brechas técnicas, riesgos operativos y oportunidades de mejora." },
+  { q: "¿Pueden desarrollar aplicaciones móviles?", a: "Sí, siempre que estén integradas a una arquitectura empresarial robusta y no como solución aislada." },
+  { q: "¿Qué pasa después de terminar el proyecto?", a: "Podemos ofrecer continuidad operacional bajo modalidad mensual o transferencia documentada de conocimiento." },
+  { q: "¿Trabajan bajo contrato formal?", a: "Sí, toda intervención se formaliza contractualmente con alcance, responsabilidades y cronograma definidos." },
+  { q: "¿Son solo desarrolladores o también consultores?", a: "Somos consultoría estratégica con capacidad de ejecución técnica especializada." },
+  { q: "¿Pueden escalar si mi empresa crece?", a: "Diseñamos arquitectura escalable para acompañar crecimiento operativo futuro." },
+  { q: "¿Qué tan seguros son sus desarrollos?", a: "Aplicamos buenas prácticas de seguridad estructural y validación técnica antes de despliegue." },
+  { q: "¿Trabajan con APIs externas?", a: "Sí, diseñamos integración controlada entre sistemas internos y plataformas externas." },
+  { q: "¿Pueden mejorar rendimiento de mi base de datos?", a: "Sí, realizamos optimización estructural, indexación y rediseño lógico cuando es necesario." },
+  { q: "¿Trabajan con proyectos internacionales?", a: "Evaluamos cada caso según alcance técnico y estructura operativa requerida." },
+  { q: "¿Pueden desarrollar dashboards ejecutivos?", a: "Sí, diseñamos reportes estructurados alineados con métricas operativas y financieras." },
+  { q: "¿Son realmente expertos o solo dicen serlo?", a: "Nuestra experiencia se sustenta en años de intervención en sistemas reales y entornos empresariales críticos, no en declaraciones comerciales." },
 
   // ═══ ESCENARIOS COMBINADOS: HOLA + PREGUNTA ═══
   { q: "Hola, ¿En qué sectores son fuertes?", a: "Logística, turismo, facturación y sistemas empresariales con alta criticidad operativa." },
@@ -1752,11 +1794,16 @@ const badWords = ["estupido", "imbecil", "tonto", "mierda", "puta", "pene", "cul
 const stopWords = new Set(["el", "la", "los", "las", "un", "una", "unos", "unas", "y", "o", "pero", "si", "no", "en", "por", "para", "con", "de", "del", "a", "al", "que", "cual", "quien", "como", "donde", "cuando", "porque", "es", "son", "ser", "estar", "hay", "fue", "era", "han", "ha", "me", "te", "se", "nos", "le", "lo", "su", "mi", "tu", "mas", "muy", "ya", "tambien", "solo", "otro", "toda", "todo", "todos", "estas", "este", "esta", "eso", "ese", "esos", "cada", "aqui", "ahi", "alla"]);
 
 function normalize(str) {
-  return str.toLowerCase()
+  let s = str.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s]/gi, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/[^\w\s]/gi, " ");
+
+  // Detach glued greetings (e.g. "holaque", "buenastardesque")
+  const glued = "(que|q|como|komo|cuanto|cual|kual|cuales|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me|sirven|hacen|desarrollan|venden|son|es|esta|estan)";
+  s = s.replace(new RegExp("^(hola|ola|wena|buenas?)" + glued + "\\b", "ig"), "$1 $2 ");
+  s = s.replace(new RegExp("^(buenas?\\s?tardes|buenas?\\s?noches|buenos?\\s?dias)" + glued + "\\b", "ig"), "$1 $2 ");
+
+  return s.replace(/\s+/g, " ").trim();
 }
 
 function tokenize(str) {
@@ -1891,7 +1938,17 @@ const greetings = ["hola", "buenas", "ola", "hey", "hi", "hello", "buenos dias",
 const farewells = ["chao", "adios", "bye", "hasta luego", "nos vemos", "hasta pronto", "hasta la vista"];
 const thanks = ["gracias", "agradecido", "agradezco", "te agradezco", "muchas gracias", "mil gracias", "grax", "thx"];
 
-function isGreeting(i) { const n = normalize(i); return greetings.some(g => n === g || n.startsWith(g + " ") || n.endsWith(" " + g)); }
+function isGreeting(i) { 
+  const n = normalize(i); 
+  if (greetings.some(g => n === g)) return true;
+  if (greetings.some(g => n.startsWith(g + " ") || n.endsWith(" " + g))) {
+    const tokens = n.split(/\s+/).filter(w => !stopWords.has(w) && w.length > 1);
+    const greetingsSet = new Set(["hola", "ola", "hello", "hi", "hey", "wena", "buenas", "buenos", "saludos", "dias", "tardes", "noches", "que", "tal", "buen", "dia"]);
+    const contentTokens = tokens.filter(w => !greetingsSet.has(w));
+    return contentTokens.length === 0;
+  }
+  return false;
+}
 function isFarewell(i) { const n = normalize(i); return farewells.some(f => n === f || n.startsWith(f + " ") || n.endsWith(" " + f)); }
 function isThanks(i) { const n = normalize(i); return thanks.some(t => n.includes(t)); }
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -2259,7 +2316,7 @@ function processInput(input) {
     if (qn.length > 4 && norm.length > 4 &&
       // FIX: Prefix match only fires when Q&A is >=50% of input length (prevents short Q&As from capturing long queries)
       ((norm.startsWith(qn) && qn.length >= norm.length * 0.5) ||
-        (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
+        (qn.startsWith(norm) && qn.length <= norm.length * 2.2))) {
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }
