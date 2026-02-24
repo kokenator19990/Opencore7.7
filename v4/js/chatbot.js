@@ -1947,27 +1947,21 @@ function saveLead(tipo, dato) {
     const leads = JSON.parse(localStorage.getItem('oc_leads') || '[]');
     leads.push({ tipo, dato, fecha: new Date().toISOString(), pagina: window.location.href });
     localStorage.setItem('oc_leads', JSON.stringify(leads));
-    console.log('[OpenCORE Lead] Guardado:', { tipo, dato });
+    console.log('[OpenCORE Lead] Guardado localmente:', { tipo, dato });
   } catch (e) { }
 
-  const msg = encodeURIComponent(
-    `\u{1F4CB} *Nuevo Lead desde Web OpenCORE*\n\n` +
-    `\u{1F4CC} Tipo: ${tipo === 'phone' ? 'Tel\u00e9fono' : 'Email'}\n` +
-    `\u{1F4CE} Dato: ${dato}\n` +
-    `\u{1F4C5} Fecha: ${new Date().toLocaleString('es-CL')}\n` +
-    `\u{1F310} Origen: ${window.location.href}`
-  );
-  setTimeout(() => { window.open(`https://wa.me/56949587198?text=${msg}`, '_blank'); }, 1500);
-
+  // 2. Send silently to backend (cPanel PHP)
   try {
-    const subject = encodeURIComponent('Nuevo Lead - Chatbot OpenCORE');
-    const body = encodeURIComponent(`Nuevo lead capturado:\n\nTipo: ${tipo === 'phone' ? 'Tel\u00e9fono' : 'Email'}\nDato: ${dato}\nFecha: ${new Date().toLocaleString('es-CL')}\nP\u00e1gina: ${window.location.href}`);
-    const a = document.createElement('a');
-    a.href = `mailto:contacto@opencore.cl?subject=${subject}&body=${body}`;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => a.remove(), 1000);
+    fetch('lead.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tipo: tipo,
+        dato: dato,
+        pagina: window.location.href
+      })
+    })
+      .catch(error => console.error('[OpenCORE Lead] Error envío:', error));
   } catch (e) { }
 }
 
@@ -2465,3 +2459,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
