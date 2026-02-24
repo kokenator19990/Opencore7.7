@@ -1381,12 +1381,18 @@ const qnaDB = [
   { q: "Qué pasa si no me gusta", a: "El alcance y entregables se definen contractualmente. Si algo no cumple lo acordado, se revisa." }
 ];
 
-const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","coño","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
+// ══════════════════════════════════════════════════════════
+//  NLP ENGINE v3.6 — OPENCORE CHATBOT
+//  Fixes: CTA HTML rendering, bad words word-boundary,
+//         dead code removed, pre-computed token cache,
+//         merged synonym maps, Bayesian confidence,
+//         rate limiting, conversation context memory,
+//         input maxlength, ARIA labels
+// ══════════════════════════════════════════════════════════
 
-// ── STOPWORDS (ES) ──
-const stopWords = new Set(["el","la","los","las","un","una","unos","unas","y","o","pero","si","no","en","por","para","con","de","del","a","al","que","cual","quien","como","donde","cuando","porque","es","son","ser","estar","hay","fue","era","han","ha","me","te","se","nos","le","lo","su","mi","tu","su","mas","muy","ya","tambien","solo","otro","toda","todo","todos","estas","este","esta","eso","ese","esos","cada","aqui","ahi","alla"]);
+const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","cono","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
+const stopWords = new Set(["el","la","los","las","un","una","unos","unas","y","o","pero","si","no","en","por","para","con","de","del","a","al","que","cual","quien","como","donde","cuando","porque","es","son","ser","estar","hay","fue","era","han","ha","me","te","se","nos","le","lo","su","mi","tu","mas","muy","ya","tambien","solo","otro","toda","todo","todos","estas","este","esta","eso","ese","esos","cada","aqui","ahi","alla"]);
 
-// ── TEXT NORMALIZER ──
 function normalize(str) {
   return str.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -1395,567 +1401,330 @@ function normalize(str) {
     .trim();
 }
 
-// ── TOKENIZER WITH STOPWORDS ──
 function tokenize(str) {
-  return normalize(str).split(/\s+/)
-    .filter(w => w.length > 1)
-    .filter(w => !stopWords.has(w));
+  return normalize(str).split(/\s+/).filter(w => w.length > 1 && !stopWords.has(w));
 }
 
-// ── LEVENSHTEIN DISTANCE (typo tolerance) ──
 function levenshtein(a, b) {
   const m = a.length, n = b.length;
-  if (m === 0) return n;
-  if (n === 0) return m;
+  if (m === 0) return n; if (n === 0) return m;
   const d = Array.from({length: m + 1}, (_, i) => [i]);
   for (let j = 1; j <= n; j++) d[0][j] = j;
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      d[i][j] = a[i-1] === b[j-1]
-        ? d[i-1][j-1]
-        : 1 + Math.min(d[i-1][j], d[i][j-1], d[i-1][j-1]);
-    }
-  }
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      d[i][j] = a[i-1] === b[j-1] ? d[i-1][j-1] : 1 + Math.min(d[i-1][j], d[i][j-1], d[i-1][j-1]);
   return d[m][n];
 }
 
-// ── FUZZY TOKEN MATCH (tolerates 1-2 char typos) ──
-function fuzzyMatch(inputToken, targetToken) {
-  if (inputToken === targetToken) return 1;
-  if (targetToken.includes(inputToken) || inputToken.includes(targetToken)) return 0.85;
-  const dist = levenshtein(inputToken, targetToken);
-  const maxLen = Math.max(inputToken.length, targetToken.length);
+function fuzzyMatch(a, b) {
+  if (a === b) return 1;
+  if (b.includes(a) || a.includes(b)) return 0.85;
+  const dist = levenshtein(a, b);
+  const maxLen = Math.max(a.length, b.length);
   if (maxLen <= 3) return dist === 0 ? 1 : 0;
-  const similarity = 1 - (dist / maxLen);
-  return similarity >= 0.65 ? similarity : 0;
+  const sim = 1 - dist / maxLen;
+  return sim >= 0.65 ? sim : 0;
 }
 
-// ── N-GRAM GENERATOR (bigrams for context) ──
 function bigrams(tokens) {
   const bg = [];
-  for (let i = 0; i < tokens.length - 1; i++) {
-    bg.push(tokens[i] + " " + tokens[i+1]);
-  }
+  for (let i = 0; i < tokens.length - 1; i++) bg.push(tokens[i] + " " + tokens[i+1]);
   return bg;
 }
 
-// ── SYNONYM MAP (common alternative words) ──
+// Unified synonym map
 const synonyms = {
-  "precio": ["costo","valor","cobran","cobrar","tarifa","presupuesto","cotizacion"],
-  "proyecto": ["trabajo","desarrollo","sistema","implementacion"],
-  "rapido": ["urgente","express","apurado","pronto","inmediato"],
+  "precio":      ["costo","valor","cobran","cobrar","tarifa","presupuesto","cotizacion","costos","precios"],
+  "proyecto":    ["trabajo","desarrollo","sistema","implementacion"],
+  "rapido":      ["urgente","express","apurado","pronto","inmediato"],
   "experiencia": ["trayectoria","recorrido","anos","antiguedad"],
-  "empresa": ["compania","consultora","organizacion","firma","negocio"],
-  "seguridad": ["proteccion","confidencialidad","privacidad","resguardo"],
-  "migracion": ["migrar","trasladar","mover","transferir"],
+  "empresa":     ["compania","consultora","organizacion","firma","negocio","compañia"],
+  "seguridad":   ["proteccion","confidencialidad","privacidad","resguardo"],
+  "migracion":   ["migrar","trasladar","mover","transferir"],
   "integracion": ["integrar","conectar","vincular","enlazar"],
-  "soporte": ["mantenimiento","ayuda","asistencia","apoyo"],
-  "cloud": ["nube","aws","azure","gcp"],
-  "legacy": ["antiguo","viejo","obsoleto","heredado"],
-  "inventario": ["stock","bodega","almacen"],
+  "soporte":     ["mantenimiento","ayuda","asistencia","apoyo","help","socorro"],
+  "cloud":       ["nube","aws","azure","gcp"],
+  "legacy":      ["antiguo","viejo","obsoleto","heredado"],
+  "inventario":  ["stock","bodega","almacen"],
   "facturacion": ["factura","boleta","tributario","dte"],
-  "contrato": ["acuerdo","convenio","sla"],
-  "equipo": ["team","grupo","personal","plantel"]
+  "contrato":    ["acuerdo","convenio","sla"],
+  "equipo":      ["team","grupo","personal","plantel"],
+  "como":        ["komo"],
+  "quien":       ["kien","qn","qien"],
+  "que":         ["ke","q"],
+  "cuanto":      ["cuantos","cuanta"],
+  "hola":        ["ola","hello","hi","hey","wena"],
+  "gracias":     ["grax","thx","thanks","tenkiu"],
+  "adios":       ["chao","bye","chaito"],
+  "correo":      ["email","mail","e-mail"],
+  "telefono":    ["fono","celular","numero"],
+  "servicio":    ["servicios","ofrecen","hacen"],
+  "necesito":    ["nesesito","nesecito","requiero"]
 };
 
 function expandWithSynonyms(token) {
-  const expanded = [token];
+  const exp = [token];
   for (const [key, syns] of Object.entries(synonyms)) {
-    if (syns.includes(token) || key === token) {
-      expanded.push(key, ...syns);
-    }
+    if (syns.includes(token) || key === token) exp.push(key, ...syns);
   }
-  return [...new Set(expanded)];
+  return [...new Set(exp)];
 }
 
-// ── ADVANCED SCORING ENGINE ──
+// Pre-compute token cache on load (huge perf win — no re-tokenizing 1108 Q&As per query)
+const precomputedDB = qnaDB.map(item => ({
+  q: item.q, a: item.a,
+  tokens:     tokenize(item.q),
+  normalized: normalize(item.q)
+}));
+
 function scoreEntry(inputTokens, entry) {
-  const qTokens = tokenize(entry.q);
+  const qTokens = entry.tokens;
   if (qTokens.length === 0) return 0;
-
-  let totalScore = 0;
-  let matchedTokens = 0;
-
-  // 1. Direct + Fuzzy token matching with synonym expansion
+  let totalScore = 0, matchedTokens = 0;
   for (const it of inputTokens) {
-    const expandedInput = expandWithSynonyms(it);
-    let bestTokenScore = 0;
-
-    for (const qt of qTokens) {
-      for (const ei of expandedInput) {
+    const exp = expandWithSynonyms(it);
+    let best = 0;
+    for (const qt of qTokens)
+      for (const ei of exp) {
         const s = fuzzyMatch(ei, qt);
-        if (s > bestTokenScore) bestTokenScore = s;
+        if (s > best) best = s;
       }
-    }
-
-    if (bestTokenScore > 0) {
-      totalScore += bestTokenScore;
-      matchedTokens++;
-    }
+    if (best > 0) { totalScore += best; matchedTokens++; }
   }
-
-  // 2. Bigram bonus (consecutive word pairs match = higher relevance)
-  const inputBigrams = bigrams(inputTokens);
-  const qBigrams = bigrams(qTokens);
-  for (const ib of inputBigrams) {
-    for (const qb of qBigrams) {
-      if (ib === qb) totalScore += 1.5;
-    }
-  }
-
-  // 3. Coverage ratio (what % of input tokens matched)
-  const coverage = matchedTokens / Math.max(inputTokens.length, 1);
-
-  // 4. Length penalty (avoid matching very short inputs to very long questions)
+  const iBg = bigrams(inputTokens), qBg = bigrams(qTokens);
+  for (const ib of iBg) for (const qb of qBg) if (ib === qb) totalScore += 1.5;
+  const coverage    = matchedTokens / Math.max(inputTokens.length, 1);
   const lengthRatio = Math.min(inputTokens.length / qTokens.length, 1);
-
-  // Combined weighted score
-  return (totalScore * 0.6) + (coverage * 2.0) + (lengthRatio * 0.4);
+  const base        = (totalScore * 0.6) + (coverage * 2.0) + (lengthRatio * 0.4);
+  // Bayesian length adjustment
+  const bayesRatio  = Math.min(inputTokens.length, qTokens.length) / Math.max(inputTokens.length, qTokens.length);
+  return base * 0.7 + bayesRatio * base * 0.3;
 }
 
 function getBestMatch(inputStr) {
   const inputTokens = tokenize(inputStr);
   if (inputTokens.length === 0) return null;
-
-  let bestScore = 0;
-  let bestMatch = null;
-  let secondBest = null;
-
-  for (const item of qnaDB) {
+  let bestScore = 0, bestMatch = null, secondBest = null;
+  for (const item of precomputedDB) {
     const score = scoreEntry(inputTokens, item);
-    if (score > bestScore) {
-      secondBest = bestMatch;
-      bestScore = score;
-      bestMatch = { ...item, score };
-    } else if (!secondBest || score > secondBest.score) {
-      secondBest = { ...item, score };
-    }
+    if (score > bestScore) { secondBest = bestMatch; bestScore = score; bestMatch = { ...item, score }; }
+    else if (!secondBest || score > (secondBest.score || 0)) secondBest = { ...item, score };
   }
-
-  // STRICT THRESHOLDS - ANTI HALLUCINATION
   let threshold;
-  if (inputTokens.length <= 2) threshold = 2.4;
-  else if (inputTokens.length <= 4) threshold = 1.8;
-  else threshold = 1.5;
-
-  if (bestScore >= threshold) {
-    const confidence = Math.min(bestScore / 4, 1);
-    if (inputTokens.length < 3 && bestScore < 2.5) return null;
-    return {
-      answer: bestMatch.a,
-      confidence: confidence,
-      suggestion: secondBest && secondBest.score >= threshold * 0.8 ? secondBest.q : null
-    };
-  }
-  return null;
+  if (inputTokens.length <= 2)      threshold = 2.6;
+  else if (inputTokens.length <= 4) threshold = 2.0;
+  else                               threshold = 1.6;
+  if (bestScore < threshold) return null;
+  if (inputTokens.length < 3 && bestScore < 2.8) return null;
+  return {
+    answer:     bestMatch.a,
+    confidence: Math.min(bestScore / 4.5, 1),
+    suggestion: (secondBest && secondBest.score >= threshold * 0.75) ? secondBest.q : null
+  };
 }
 
-// ── GREETING / FAREWELL / THANKS DETECTION ──
-const greetings = ["hola","buenas","ola","hey","hi","hello","buenos dias","buenas tardes","buenas noches","que tal","saludos"];
-const farewells = ["chao","adios","bye","hasta luego","nos vemos","gracias","muchas gracias","vale gracias","ok gracias","perfecto gracias","genial gracias","excelente"];
-const thanks = ["gracias","agradecido","agradezco","te agradezco","muchas gracias","mil gracias"];
+// Intent detection
+const greetings = ["hola","buenas","ola","hey","hi","hello","buenos dias","buenas tardes","buenas noches","que tal","saludos","buen dia"];
+const farewells = ["chao","adios","bye","hasta luego","nos vemos","hasta pronto","hasta la vista"];
+const thanks    = ["gracias","agradecido","agradezco","te agradezco","muchas gracias","mil gracias","grax","thx"];
 
-function isGreeting(input) {
-  const n = normalize(input);
-  return greetings.some(g => n === g || n.startsWith(g + " "));
-}
-function isFarewell(input) {
-  const n = normalize(input);
-  return farewells.some(f => n === f || n.startsWith(f + " ") || n.endsWith(" " + f));
-}
-function isThanks(input) {
-  const n = normalize(input);
-  return thanks.some(t => n.includes(t));
-}
-
-// ── RANDOM RESPONSE PICKER ──
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function isGreeting(i) { const n = normalize(i); return greetings.some(g => n === g || n.startsWith(g+" ") || n.endsWith(" "+g)); }
+function isFarewell(i) { const n = normalize(i); return farewells.some(f => n === f || n.startsWith(f+" ") || n.endsWith(" "+f)); }
+function isThanks(i)   { const n = normalize(i); return thanks.some(t => n.includes(t)); }
+function pick(arr)     { return arr[Math.floor(Math.random() * arr.length)]; }
 
 const greetingResponses = [
-  "¡Hola! Soy el Asistente Inteligente de OpenCORE. ¿En qué te puedo apoyar hoy?",
-  "¡Bienvenido! Estoy aquí para resolver tus dudas sobre tecnología empresarial, migraciones o integración de sistemas.",
-  "¡Hola! Consulta lo que necesites sobre nuestros servicios, costos, metodología o experiencia."
+  "Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?",
+  "Bienvenido! Estoy aqui para resolver tus dudas sobre tecnologia empresarial, migraciones o integracion de sistemas.",
+  "Hola! Consulta lo que necesites sobre nuestros servicios, costos, metodologia o experiencia."
 ];
 const farewellResponses = [
-  "¡Hasta pronto! Si necesitas algo más, aquí estaremos. 🚀",
-  "¡Gracias por tu interés! No dudes en volver cuando lo necesites.",
-  "¡Éxito en tu proyecto! Estamos disponibles cuando quieras retomar la conversación."
+  "Hasta pronto! Si necesitas algo mas, aqui estaremos.",
+  "Gracias por tu interes en OpenCORE! No dudes en volver cuando lo necesites.",
+  "Exito en tu proyecto! Estamos disponibles cuando quieras retomar la conversacion."
 ];
 const thanksResponses = [
-  "¡Con gusto! Si surge algo más, aquí estamos. 💪",
-  "¡De nada! Estamos para ayudarte a tomar mejores decisiones tecnológicas.",
-  "¡Gracias a ti por tu interés! No dudes en volver si necesitas más información."
+  "Con gusto! Si surge algo mas, aqui estamos.",
+  "De nada! Estamos para ayudarte a tomar mejores decisiones tecnologicas.",
+  "Gracias a ti por tu interes! No dudes en volver si necesitas mas informacion."
 ];
 const fallbackLong = [
-  "Tu consulta parece requerir un contexto técnico específico. Para no darte una recomendación imprecisa, prefiero derivarte con un especialista. ¿Desea coordinar una reunión técnica o escribirnos a contacto@opencore.cl?",
-  "Para entregarle una respuesta técnica precisa, recomendamos una breve fase de diagnóstico. ¿Le gustaría que un arquitecto de software lo contacte directamente?",
-  "Esta consulta excede una respuesta automatizada estándar. Le sugiero agendar una sesión exploratoria técnica sin costo para evaluar su caso en detalle."
+  "Tu consulta parece requerir contexto tecnico especifico. Para no darte una recomendacion imprecisa, te recomiendo una evaluacion directa. Puedes escribirnos a contacto@opencore.cl o agendar una sesion.",
+  "Para una respuesta tecnica precisa, recomendamos una breve fase de diagnostico. Te gustaria que un arquitecto de software te contacte directamente?",
+  "Esta consulta merece mas detalle del que puedo dar aqui. Te sugiero agendar una sesion exploratoria tecnica sin costo."
 ];
 const fallbackShort = [
-  "Para esta consulta, lo ideal es una evaluación directa con nuestros ingenieros. ¿Gusta que lo contactemos?",
-  "Esa consulta merece revisión de nuestro equipo de consultoría. ¿Podemos agendar una breve llamada?",
-  "No dispongo de los datos exactos para responder eso con responsabilidad técnica. ¿Lo derivamos a un especialista?"
+  "Para esta consulta lo ideal es una evaluacion directa con nuestros ingenieros. Agendamos una breve llamada?",
+  "Esa consulta merece revision de nuestro equipo. Podemos agendar una breve llamada?",
+  "No dispongo de los datos exactos para eso. Lo derivamos a un especialista de OpenCORE?"
 ];
-
-// ── QUICK REPLY SUGGESTIONS ──
 const quickReplies = [
   "Consultar servicios disponibles",
   "Conocer estructura de tarifas",
   "Revisar experiencia y trayectoria",
-  "Información sobre migraciones empresariales"
+  "Informacion sobre migraciones empresariales"
 ];
 
-
-
-// ══════════════════════════════════════════════════════════
-// INTENT ENGINE: ENTIDADES Y PERSONAJES
-// Jorge Quezada Senior/Junior, Bárbara Bonilla, Desconocidos
-// ══════════════════════════════════════════════════════════
-
+// Person entity handler with auto-reset
 let pendingDisambiguation = null;
+let pendingMsgCount = 0;
 
 function handlePersonEntity(input) {
   const t = normalize(input);
-
-  // ACTIVE DISAMBIGUATION: If waiting for Junior/Senior answer
-  if (pendingDisambiguation === 'jorge_quezada') {
-    if (t.includes('senior') || t.includes('big boss') || t.includes('creador')) {
-      pendingDisambiguation = null;
-      return { text: "Jorge Quezada Senior es un gran informático, creador de OpenCORE SpA, 'The Big Boss', con décadas de experiencia profesional, programador experto y desarrollador de sistemas críticos. Con un perfil formal y altamente ejecutivo.", suggestions: [] };
-    }
-    if (t.includes('junior') || t.includes('jr') || t.includes('hijo')) {
-      pendingDisambiguation = null;
-      return { text: "Jorge Quezada Junior (JR) es un ejecutivo consultor Senior en pleno ascenso en OpenCORE. Es el especialista que puede contactar para resolver problemas, cotizar proyectos de desarrollo y organizar estrategias.", suggestions: [] };
-    }
-    pendingDisambiguation = null;
+  if (pendingDisambiguation) {
+    pendingMsgCount++;
+    if (pendingMsgCount > 2) { pendingDisambiguation = null; pendingMsgCount = 0; }
   }
-
-  // Is it asking "who is Jorge Quezada"?
-  if (t.includes('jorge quezada') && (t.includes('quien') || t.includes('kien') || t.includes('qn'))) {
-    pendingDisambiguation = 'jorge_quezada';
-    return { text: "¿Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
-  }
-
-  // Direct "quien es jorge" with qualifier
-  if (t.includes('jorge') && (t.includes('quien') || t.includes('kien'))) {
-    if (t.includes('senior')) {
-      return { text: "Jorge Quezada Senior es un gran informático, creador de OpenCORE SpA, con décadas de experiencia profesional en sistemas críticos.", suggestions: [] };
+  if (pendingDisambiguation === "jorge_quezada") {
+    if (t.includes("senior") || t.includes("big boss") || t.includes("creador")) {
+      pendingDisambiguation = null; pendingMsgCount = 0;
+      return { text: "Jorge Quezada Senior es el fundador de OpenCORE SpA. Informatico con decadas de experiencia en sistemas criticos, arquitecto y desarrollador senior.", suggestions: [] };
     }
-    if (t.includes('junior') || t.includes('jr')) {
-      return { text: "Jorge Quezada Junior (JR) es un ejecutivo consultor Senior en OpenCORE, dedicado a resolver problemas y liderar proyectos.", suggestions: [] };
+    if (t.includes("junior") || t.includes("jr") || t.includes("hijo")) {
+      pendingDisambiguation = null; pendingMsgCount = 0;
+      return { text: "Jorge Quezada Junior (JR) es consultor ejecutivo Senior en OpenCORE. Es el especialista para cotizaciones, proyectos de desarrollo y estrategia tecnologica.", suggestions: [] };
     }
-    // Generic "quien es jorge"
-    pendingDisambiguation = 'jorge_quezada';
-    return { text: "¿Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
+    pendingDisambiguation = null; pendingMsgCount = 0;
   }
-
-  // UNKNOWN PERSON FALLBACK
-  // If user says "quien es X" and X is NOT Jorge, Barbara, or OpenCORE-related
-  var matchObj = input.match(/qui[eé]n\s+es\s+([a-záéíóúñ\s]+)/i);
-  if (!matchObj) matchObj = input.match(/quien\s+es\s+([a-záéíóúñ\s]+)/i);
-  
-  if (matchObj) {
-    var personName = matchObj[1].trim().toLowerCase();
-    // Remove trailing question mark
-    personName = personName.replace(/\?/g, '').trim();
-    
-    var knownNames = ['jorge', 'quezada', 'barbara', 'bonilla', 'opencore'];
-    var isKnown = knownNames.some(function(k) { return personName.includes(k); });
-    
-    // Only intercept if it's truly an unknown person
-    if (!isKnown && personName.length > 2) {
-      return { text: "No dispongo de esa información en mi base de conocimiento. Sin embargo, me imagino que ha de ser una gran persona. ¿Puedo ayudarle con algo relacionado a OpenCORE o tecnología empresarial?", suggestions: [] };
-    }
+  if (t.includes("jorge quezada") && (t.includes("quien") || t.includes("kien") || t.includes("qn"))) {
+    pendingDisambiguation = "jorge_quezada"; pendingMsgCount = 0;
+    return { text: "Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
   }
-
+  if (t.includes("jorge") && (t.includes("quien") || t.includes("kien"))) {
+    if (t.includes("senior")) return { text: "Jorge Quezada Senior es el fundador de OpenCORE, con decadas de experiencia en sistemas criticos.", suggestions: [] };
+    if (t.includes("junior") || t.includes("jr")) return { text: "Jorge Quezada Junior es consultor ejecutivo en OpenCORE, especialista en proyectos y cotizaciones.", suggestions: [] };
+    pendingDisambiguation = "jorge_quezada"; pendingMsgCount = 0;
+    return { text: "Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
+  }
+  const mo = input.match(/qui[eé]n\s+es\s+([a-z\u00e0-\u00ff\s]+)/i) || input.match(/quien\s+es\s+([a-z\u00e0-\u00ff\s]+)/i);
+  if (mo) {
+    const pn = mo[1].replace(/\?/g,"").trim().toLowerCase();
+    if (!["jorge","quezada","barbara","bonilla","opencore"].some(k => pn.includes(k)) && pn.length > 2)
+      return { text: "No dispongo de esa informacion. Puedo ayudarte con algo relacionado a OpenCORE o tecnologia empresarial?", suggestions: [] };
+  }
   return null;
 }
 
+// Barbara engine
+const BARBARA_NAMES   = ["barbara","bonilla","barbara bonilla"];
+const PERSON_Q        = ["quien","kien","qn","qien","cual","kual"];
+const LOVE_ATTR       = ["linda","hermosa","bella","bonita","guapa","preciosa","atractiva","sexy","amor","enamor","amo","ama","quiere","quiero","adora","pareja","polola","novia","esposa","mujer","unica","reina","la mejor","perfecta","ideal","favorita","corazon","maravillosa","especial","adorable","estrella","diosa","modelo","miss","belleza"];
+const BUSINESS_BLOCK  = ["negocio","empresa","cliente","ventas","cotizacion","precio","costo","uf","proyecto","implementacion","sistema","software","inventario","logistica","facturacion","ia","inteligencia artificial","automatizacion","chatbot","api","integracion","migracion","cloud","servidor","solucion","estrategia","rentabilidad","servicio","consultoria","opencore","erp","crm","sla","desarrollo","codigo","programacion","plataforma","tarifa","hora","contrato","diagnostico","modernizar","legacy"];
+const BARBARA_RESPONSES = ["Barbara.","Barbara Bonilla.","Sin duda alguna, Barbara.","Barbara, sin discusion.","Claramente Barbara. No hay competencia.","Barbara Bonilla, la unica y definitiva."];
 
-// ══════════════════════════════════════════════════════════
-// INTENT ENGINE: BÁRBARA BONILLA ❤️
-// Semantic detection with business-context negative filter
-// ══════════════════════════════════════════════════════════
-
-const BARBARA_NAMES = ["barbara", "bonilla", "barbara bonilla", "jorge", "jorge casado", "jorge quezada"];
-const PERSON_Q = ["quien", "kien", "qn", "qien", "cual", "kual"];
-const LOVE_ATTR = [
-  "linda","hermosa","bella","bonita","guapa","preciosa","atractiva","sexy",
-  "amor","enamor","amo","ama","quiere","quiero","adora",
-  "pareja","polola","novia","esposa","mujer",
-  "unica","reina","numero uno","numero 1","n1","la mejor","perfecta","ideal",
-  "favorita","corazon","inspiracion","inspiradora",
-  "inteligente","brillante","genial","increible","extraordinaria",
-  "maravillosa","especial","importante","valiosa","adorable",
-  "ilumina","luz","estrella","diosa",
-  "modelo","miss","miss universo","belleza",
-  "proxima miss","mejor modelo","top model"
-];
-
-const BUSINESS_BLOCK = [
-  "negocio","empresa","cliente","ventas","cotizacion","precio","costo","uf","presupuesto",
-  "proyecto","implementacion","sistema","software","inventario","logistica","facturacion",
-  "ia","inteligencia artificial","automatizacion","chatbot","api","integracion","migracion",
-  "cloud","servidor","base de datos","solucion","estrategia","rentabilidad","operacion",
-  "servicio","consultoria","opencore","erp","crm","sla","devops","scrum","sprint",
-  "desarrollo","codigo","programacion","plataforma","infraestructura","hosting","dominio",
-  "tarifa","hora","contrato","diagnostico","modernizar","legacy","continuidad"
-];
-
-const BARBARA_RESPONSES = [
-  "Bárbara.",
-  "Bárbara Bonilla.",
-  "Sin duda alguna, Bárbara.",
-  "Bárbara, sin discusión.",
-  "Claramente Bárbara. No hay competencia.",
-  "Bárbara Bonilla, la única y definitiva."
-];
-
-function containsAny(text, list) {
-  return list.some(item => text.includes(item));
-}
-
+function containsAny(text, list) { return list.some(item => text.includes(item)); }
 function isBarbaraLove(input) {
   const t = normalize(input);
-  
-  // BLOCK: if contains business/tech terms → NOT Barbara
   if (containsAny(t, BUSINESS_BLOCK)) return false;
-  
-  // Must contain a person question signal OR a name
-  const hasPersonQ = containsAny(t, PERSON_Q);
-  const hasName = containsAny(t, BARBARA_NAMES);
-  
-  // Must have at least one love/beauty attribute
-  const hasLoveAttr = containsAny(t, LOVE_ATTR);
-  
-  // Pattern 1: "quien es la mas linda?" (person Q + love attr)
-  if (hasPersonQ && hasLoveAttr) return true;
-  
-  // Pattern 2: "barbara es la mas linda" (name + love attr)
-  if (hasName && hasLoveAttr) return true;
-  
-  // Pattern 3: "jorge ama a quien?" (name + person Q + love attr implicit)
-  if (hasName && hasPersonQ) {
-    // Check for love-adjacent words
-    const loveAdjacent = ["ama","quiere","amor","heart","corazon"];
-    if (containsAny(t, loveAdjacent)) return true;
-  }
-  
+  if (containsAny(t, PERSON_Q) && containsAny(t, LOVE_ATTR)) return true;
+  if (containsAny(t, BARBARA_NAMES) && containsAny(t, LOVE_ATTR)) return true;
+  if (containsAny(t, BARBARA_NAMES) && containsAny(t, PERSON_Q) && containsAny(t, ["ama","quiere","amor","corazon"])) return true;
   return false;
 }
-
 function getBarbaraResponse(input) {
   const t = normalize(input);
-  // Use full name for "most beautiful in the world" / "miss universo" type queries
-  if (t.includes("mundo") || t.includes("universo") || t.includes("planeta") || 
-      t.includes("modelo") || t.includes("miss") || t.includes("importante")) {
-    return pick(["Bárbara Bonilla.", "Sin duda alguna, Bárbara Bonilla.", "Bárbara Bonilla, la única y definitiva."]);
-  }
+  if (t.includes("mundo") || t.includes("universo") || t.includes("modelo") || t.includes("miss"))
+    return pick(["Barbara Bonilla.","Sin duda alguna, Barbara Bonilla.","Barbara Bonilla, la unica y definitiva."]);
   return pick(BARBARA_RESPONSES);
 }
 
-
-// ── INTENT ROUTER & CTA INJECTION ──
-const LEAD_GEN_TRIGGERS = ["precio", "costo", "cobran", "implementacion", "auditoria", "error", "critico", "migracion", "cotizar", "cotizacion", "uf"];
-const CTA_TEXT = "<br><br><em>Dado que cada operación es única, te sugiero una evaluación rápida. <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff; font-weight:bold; text-decoration:underline;'>Agenda aquí un diagnóstico de 15 min con nuestros arquitectos</a>.</em>";
-
+// CTA
+const LEAD_GEN_TRIGGERS = ["precio","costo","cobran","implementacion","auditoria","error","critico","migracion","cotizar","cotizacion","uf","presupuesto","tarifa","contrato","servicio","soporte"];
+const CTA_HTML = '<br><br><em style="font-size:0.88em;opacity:0.9;">Quieres una evaluacion real? <a href="https://calendly.com/opencore-diagnostico" target="_blank" rel="noopener" style="color:#00c2ff;font-weight:700;text-decoration:underline;">Agenda aqui un diagnostico de 15 min</a> con nuestros arquitectos.</em>';
 function shouldAppendCTA(input) {
   const n = normalize(input);
   return LEAD_GEN_TRIGGERS.some(t => n.includes(t));
 }
 
-// ── MAIN PROCESSOR ──
-
-// ═══════════════════════════════════════════════════════════
-// ADVANCED NLP v2: BAYESIAN SCORING + SYNONYM EXPANSION
-// Improves match quality for conversational inputs
-// ═══════════════════════════════════════════════════════════
-
-// Synonym expansion map for better fuzzy matching
-const SYNONYM_MAP = {
-  'como': ['cómo', 'komo'],
-  'estas': ['estás', 'esta', 'andas', 'encuentras', 'vas'],
-  'eres': ['ere', 'sos'],
-  'quien': ['quién', 'kien', 'qn'],
-  'que': ['qué', 'ke', 'q'],
-  'cuanto': ['cuánto', 'cuando'],
-  'donde': ['dónde', 'adonde', 'ande'],
-  'porque': ['porqué', 'por que', 'xq', 'pq'],
-  'puedo': ['puedes', 'puede', 'podrian', 'podrían'],
-  'necesito': ['nesesito', 'nesecito', 'requiero'],
-  'ayuda': ['ayúda', 'socorro', 'help'],
-  'hola': ['ola', 'hello', 'hi', 'hey', 'wena'],
-  'bueno': ['buena', 'weno', 'wena'],
-  'gracias': ['grax', 'thx', 'thanks', 'tenkiu'],
-  'adios': ['adiós', 'chao', 'bye', 'chaito'],
-  'precio': ['precios', 'costo', 'costos', 'valor', 'tarifa'],
-  'servicio': ['servicios', 'ofrecen', 'hacen'],
-  'sistema': ['sistemas', 'software', 'plataforma', 'aplicacion'],
-  'empresa': ['compañia', 'compañía', 'firma', 'negocio'],
-  'telefono': ['teléfono', 'fono', 'celular', 'numero', 'número'],
-  'correo': ['email', 'mail', 'e-mail'],
-};
-
-// Expand input with synonyms for better matching
-function expandWithSynonyms(input) {
-  let expanded = input;
-  for (const [canonical, syns] of Object.entries(SYNONYM_MAP)) {
-    for (const syn of syns) {
-      if (expanded.includes(syn)) {
-        expanded += ' ' + canonical;
-      }
-    }
-  }
-  return expanded;
-}
-
-// N-gram overlap scoring (bigrams)
-function bigramOverlap(a, b) {
-  function getBigrams(str) {
-    const s = str.toLowerCase().trim();
-    const bigrams = new Set();
-    for (let i = 0; i < s.length - 1; i++) bigrams.add(s.substring(i, i + 2));
-    return bigrams;
-  }
-  const biA = getBigrams(a);
-  const biB = getBigrams(b);
-  if (biA.size === 0 || biB.size === 0) return 0;
-  let intersection = 0;
-  for (const bi of biA) { if (biB.has(bi)) intersection++; }
-  return (2.0 * intersection) / (biA.size + biB.size);
-}
-
-// Bayesian-inspired confidence adjustment
-function bayesianConfidence(rawScore, inputLength, questionLength) {
-  // Prior: longer inputs matching longer questions = higher confidence
-  const lengthRatio = Math.min(inputLength, questionLength) / Math.max(inputLength, questionLength);
-  // Likelihood: raw NLP score
-  const likelihood = rawScore;
-  // Posterior: weighted combination
-  return likelihood * 0.7 + lengthRatio * rawScore * 0.3;
-}
-
-
+// Main processor
 function processInput(input) {
-  const cleanInput = input.trim();
-  const lowerInput = cleanInput.toLowerCase();
-  const normalizedInput = normalize(cleanInput);
+  const clean = input.trim();
+  if (!clean) return { text: "Escribe tu consulta y con gusto te ayudo.", suggestions: [] };
+  const norm  = normalize(clean);
+  const words = new Set(norm.split(/\s+/));
 
-  // 1. Profanity guard
+  // 1. Profanity (word-boundary via Set)
   for (const bw of badWords) {
-    if (normalizedInput.includes(bw)) {
-      pendingDisambiguation = null; // reset state
-      return { text: "No respondemos este tipo de preguntas. Por favor, formula una consulta profesional y con gusto te orientamos.", suggestions: [] };
-    }
+    if (words.has(bw)) { pendingDisambiguation = null; return { text: "Por favor formula tu consulta de manera profesional.", suggestions: [] }; }
   }
 
-  // 3. Bárbara Intent Detection (semantic, with business filter)
-  if (isBarbaraLove(cleanInput)) {
-    return { text: getBarbaraResponse(cleanInput), suggestions: [] };
+  // 2. Barbara
+  if (isBarbaraLove(clean)) return { text: getBarbaraResponse(clean), suggestions: [] };
+
+  // 3. Person entity
+  const pm = handlePersonEntity(clean);
+  if (pm) return pm;
+
+  // 4. Greeting
+  if (isGreeting(clean)) return { text: pick(greetingResponses), suggestions: quickReplies };
+
+  // 5. Thanks
+  if (isThanks(clean) && clean.split(" ").length <= 6) return { text: pick(thanksResponses), suggestions: [] };
+
+  // 6. Farewell
+  if (isFarewell(clean)) return { text: pick(farewellResponses), suggestions: [] };
+
+  // 7. Exact match (uses pre-computed normalized)
+  for (const item of precomputedDB) {
+    if (item.normalized === norm) return { text: item.a, suggestions: [] };
+  }
+  for (const item of precomputedDB) {
+    const qn = item.normalized;
+    if (qn.length > 4 && norm.length > 4 &&
+        (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35)))
+      return { text: item.a, suggestions: [] };
   }
 
-  // 3. Person Entity and Disambiguation (Jorge Sr/Jr, Unknown persons)
-  const personMatch = handlePersonEntity(cleanInput);
-  if (personMatch) return personMatch;
-
-  // 3. Greetings
-  if (isGreeting(cleanInput)) {
-    return { text: pick(greetingResponses), suggestions: quickReplies };
-  }
-
-  // 4. Thanks
-  if (isThanks(cleanInput) && cleanInput.split(" ").length <= 5) {
-    return { text: pick(thanksResponses), suggestions: [] };
-  }
-
-  // 5. Farewells
-  if (isFarewell(cleanInput)) {
-    return { text: pick(farewellResponses), suggestions: [] };
-  }
-
-
-  // ═══ EXACT-MATCH FAST PATH (bypasses NLP scoring for direct hits) ═══
-  const exactInput = normalize(cleanInput);
-  for (let i = 0; i < qnaDB.length; i++) {
-    const qNorm = normalize(qnaDB[i].q);
-    if (qNorm === exactInput) {
-      return { text: qnaDB[i].a, suggestions: [] };
-    }
-  }
-  // Partial exact match for very close inputs (within 2 chars difference)
-  for (let i = 0; i < qnaDB.length; i++) {
-    const qNorm = normalize(qnaDB[i].q);
-    if (qNorm.length > 3 && exactInput.length > 3) {
-      // Check if one contains the other
-      if (qNorm === exactInput || 
-          (exactInput.length >= 4 && qNorm.startsWith(exactInput)) ||
-          (qNorm.length >= 4 && exactInput.startsWith(qNorm) && qNorm.length >= exactInput.length * 0.7)) {
-        return { text: qnaDB[i].a, suggestions: [] };
-      }
-    }
-  }
-
-  // 6. NLP Match
-  const match = getBestMatch(cleanInput);
+  // 8. NLP fuzzy match
+  const match = getBestMatch(clean);
   if (match) {
-    const suggestions = match.suggestion ? [match.suggestion] : [];
-    const prefix = match.confidence >= 0.8 ? "" : "Basándome en tu consulta: ";
-    return { text: prefix + match.answer, suggestions };
+    const prefix = match.confidence >= 0.78 ? "" : "Basandome en tu consulta: ";
+    let answer   = prefix + match.answer;
+    if (shouldAppendCTA(clean)) answer += CTA_HTML;
+    return { text: answer, suggestions: match.suggestion ? [match.suggestion] : [], isHTML: true };
   }
 
-  // 7. Intelligent fallback (Reputation Protection)
-  let fallbackResp = cleanInput.split(" ").length > 3 ? pick(fallbackLong) : pick(fallbackShort);
-  if (shouldAppendCTA(cleanInput)) fallbackResp += CTA_TEXT;
-  return { text: fallbackResp, suggestions: quickReplies.slice(0, 2) };
+  // 9. Fallback
+  let fallback = clean.split(" ").length > 3 ? pick(fallbackLong) : pick(fallbackShort);
+  if (shouldAppendCTA(clean)) fallback += CTA_HTML;
+  return { text: fallback, suggestions: quickReplies.slice(0, 2), isHTML: true };
 }
 
-// ── DOM INJECTION & UI LOGIC ──
+// DOM injection
 document.addEventListener("DOMContentLoaded", () => {
   const chatHTML = `
-    <div class="oc-chat-trigger" id="ocChatTrigger">
+    <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
       <div class="oc-chat-label">Habla con OpenCORE AI</div>
-      <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
       </svg>
-      <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
+      <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
     </div>
-
-    <div class="oc-chat-window" id="ocChatWindow">
+    <div class="oc-chat-window" id="ocChatWindow" role="dialog" aria-label="Chat OpenCORE">
       <div class="oc-chat-header">
-        <div class="oc-chat-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-            <circle cx="12" cy="5" r="2"></circle>
-            <path d="M12 7v4"></path>
-            <line x1="8" y1="16" x2="8" y2="16"></line>
-            <line x1="16" y1="16" x2="16" y2="16"></line>
-          </svg>
+        <div class="oc-chat-avatar">OC</div>
+        <div>
+          <div class="oc-chat-name">OpenCORE AI</div>
+          <div class="oc-chat-status"><span class="oc-status-dot"></span>En linea</div>
         </div>
-        <div class="oc-chat-title">
-          <h4>Asistente OpenCORE</h4>
-          <span>Online</span>
-        </div>
+        <button class="oc-chat-close" id="ocChatClose" aria-label="Cerrar chat">&times;</button>
       </div>
-      
       <div class="oc-chat-body" id="ocChatBody">
-        <div class="oc-msg bot">Hola 👋 Soy el asistente IA de OpenCORE Consulting. Pregúntame sobre servicios, costos, metodología o experiencia.</div>
+        <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
         <div class="oc-quick-replies" id="ocQuickInit">
-          <button class="oc-qr" data-q="¿Qué servicios ofrece OpenCORE?">Servicios disponibles</button>
-          <button class="oc-qr" data-q="¿Cuál es la estructura de tarifas de OpenCORE?">Estructura de tarifas</button>
-          <button class="oc-qr" data-q="¿Cuántos años de experiencia tiene OpenCORE?">Trayectoria y experiencia</button>
-          <button class="oc-qr" data-q="¿Qué tipo de migraciones empresariales realizan?">Migraciones empresariales</button>
+          <button class="oc-qr" data-q="Que servicios ofrece OpenCORE?">Servicios disponibles</button>
+          <button class="oc-qr" data-q="Cuanto cobran por hora?">Estructura de tarifas</button>
+          <button class="oc-qr" data-q="Desde cuando trabajan en tecnologia?">Experiencia y trayectoria</button>
+          <button class="oc-qr" data-q="Solo hacen migraciones?">Sobre migraciones</button>
         </div>
       </div>
-
       <div class="oc-chat-footer">
-        <input type="text" id="ocChatInput" class="oc-chat-input" placeholder="Escribe tu consulta..." autocomplete="off">
-        <button id="ocChatSend" class="oc-chat-send">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        <input type="text" id="ocChatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="400" aria-label="Mensaje" />
+        <button id="ocChatSend" aria-label="Enviar mensaje">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
         </button>
       </div>
@@ -1964,29 +1733,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.insertAdjacentHTML("beforeend", chatHTML);
 
-  const trigger = document.getElementById("ocChatTrigger");
-  const win = document.getElementById("ocChatWindow");
-  const body = document.getElementById("ocChatBody");
-  const input = document.getElementById("ocChatInput");
-  const sendBtn = document.getElementById("ocChatSend");
+  const trigger  = document.getElementById("ocChatTrigger");
+  const win      = document.getElementById("ocChatWindow");
+  const body     = document.getElementById("ocChatBody");
+  const input    = document.getElementById("ocChatInput");
+  const sendBtn  = document.getElementById("ocChatSend");
+  const closeBtn = document.getElementById("ocChatClose");
 
-  // Toggle
-  trigger.addEventListener("click", () => {
+  function toggleChat() {
     trigger.classList.toggle("active");
     win.classList.toggle("open");
     if (win.classList.contains("open")) input.focus();
-  });
+  }
+  trigger.addEventListener("click", toggleChat);
+  if (closeBtn) closeBtn.addEventListener("click", toggleChat);
+  trigger.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") toggleChat(); });
 
-  // Quick reply buttons
-  body.addEventListener("click", (e) => {
+  body.addEventListener("click", e => {
     if (e.target.classList.contains("oc-qr")) {
       const q = e.target.dataset.q;
-      if (q) {
-        input.value = q;
-        handleSend();
-      }
+      if (q) { input.value = q; handleSend(); }
     }
   });
+
+  // Rate limiter: max 5 messages per 10s
+  let msgCount = 0, rateLimitTimer = null;
+  function isRateLimited() {
+    if (msgCount >= 5) return true;
+    msgCount++;
+    if (!rateLimitTimer) rateLimitTimer = setTimeout(() => { msgCount = 0; rateLimitTimer = null; }, 10000);
+    return false;
+  }
 
   function appendUserMsg(txt) {
     const d = document.createElement("div");
@@ -1996,17 +1773,18 @@ document.addEventListener("DOMContentLoaded", () => {
     body.scrollTop = body.scrollHeight;
   }
 
-  function appendBotMsg(txt) {
+  function appendBotMsg(content, isHTML) {
     const d = document.createElement("div");
     d.className = "oc-msg bot";
-    d.textContent = txt;
+    if (isHTML) d.innerHTML = content;
+    else        d.textContent = content;
     body.appendChild(d);
     body.scrollTop = body.scrollHeight;
     return d;
   }
 
   function appendQuickReplies(suggestions) {
-    if (!suggestions || suggestions.length === 0) return;
+    if (!suggestions || !suggestions.length) return;
     const wrap = document.createElement("div");
     wrap.className = "oc-quick-replies";
     suggestions.forEach(s => {
@@ -2028,38 +1806,29 @@ document.addEventListener("DOMContentLoaded", () => {
     body.appendChild(d);
     body.scrollTop = body.scrollHeight;
   }
+  function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
 
-  function removeTyping() {
-    const d = document.getElementById("ocTyping");
-    if (d) d.remove();
-  }
-
+  let isSending = false;
   function handleSend() {
     const txt = input.value.trim();
-    if (!txt) return;
-
-    // Remove initial quick replies
+    if (!txt || isSending) return;
+    if (isRateLimited()) { appendBotMsg("Estas enviando mensajes muy rapido. Espera un momento.", false); return; }
     const initQR = document.getElementById("ocQuickInit");
     if (initQR) initQR.remove();
-
     appendUserMsg(txt);
     input.value = "";
+    isSending = true;
     appendTyping();
-
-    // Dynamic delay based on response length simulation
     const delay = 600 + Math.random() * 900;
     setTimeout(() => {
       removeTyping();
       const result = processInput(txt);
-      appendBotMsg(result.text);
-      if (result.suggestions && result.suggestions.length > 0) {
-        appendQuickReplies(result.suggestions);
-      }
+      appendBotMsg(result.text, result.isHTML || false);
+      if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
+      isSending = false;
     }, delay);
   }
 
   sendBtn.addEventListener("click", handleSend);
-  input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSend();
-  });
+  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
 });
