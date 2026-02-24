@@ -2160,13 +2160,14 @@ document.addEventListener("DOMContentLoaded", () => {
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
 
   // ══════════════════════════════════════════════
-  //  VOICE MODE — Web Speech API
+  //  VOICE MODE — Push-to-talk (manual mic press)
   // ══════════════════════════════════════════════
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let voiceModeActive = false;
   let recognition = null;
   let micBtn = null;
   let vadTimer = null;
+  let isRecording = false;
 
   function speakText(text) {
     if (!window.speechSynthesis) return;
@@ -2175,7 +2176,6 @@ document.addEventListener("DOMContentLoaded", () => {
     utt.lang = "es-CL";
     utt.rate = 1.05;
     utt.pitch = 1.0;
-    // Prefer a Spanish voice if available
     const voices = window.speechSynthesis.getVoices();
     const esVoice = voices.find(v => v.lang.startsWith("es"));
     if (esVoice) utt.voice = esVoice;
@@ -2187,30 +2187,31 @@ document.addEventListener("DOMContentLoaded", () => {
     micBtn.classList.remove("listening", "active");
     if (state === "listening") {
       micBtn.classList.add("listening");
-      micBtn.title = "Escuchando…";
-      input.placeholder = "🎙️ Escuchando…";
-    } else if (state === "active") {
-      micBtn.classList.add("active");
-      micBtn.title = "Iniciar dictado";
-      input.placeholder = "Pulsa el ícono de micrófono o escribe…";
+      input.placeholder = "\uD83C\uDF99\uFE0F Grabando\u2026 pulsa de nuevo para enviar";
     } else {
-      micBtn.title = "Activar micrófono";
+      micBtn.classList.add("active");
+      input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
     }
   }
 
-  function startRecognition() {
+  function startRecording() {
     if (!SpeechRecognition) {
       appendBotMsg("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome.", false);
       return;
     }
-    if (recognition) { try { recognition.stop(); } catch (e) { } recognition = null; }
+    if (isRecording) return;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (recognition) { try { recognition.abort(); } catch (e) { } recognition = null; }
 
     recognition = new SpeechRecognition();
     recognition.lang = "es-CL";
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
 
-    recognition.onstart = () => setMicState("listening");
+    recognition.onstart = () => {
+      isRecording = true;
+      setMicState("listening");
+    };
 
     recognition.onresult = (event) => {
       clearTimeout(vadTimer);
@@ -2220,82 +2221,77 @@ document.addEventListener("DOMContentLoaded", () => {
         else interim += event.results[i][0].transcript;
       }
       input.value = final || interim;
-      // VAD: auto-submit after 1.4s silence if there's final text
+      // VAD: auto-stop and send after 1.8s of silence with confirmed speech
       if (final) {
         vadTimer = setTimeout(() => {
-          if (input.value.trim()) handleSend();
-          if (voiceModeActive) setTimeout(startRecognition, 500);
-        }, 1400);
+          stopRecording(true);
+        }, 1800);
       }
     };
 
     recognition.onerror = (event) => {
+      isRecording = false;
       setMicState("active");
       if (event.error === "not-allowed" || event.error === "denied") {
-        appendBotMsg("Permisos de micrófono denegados. Habilítalos en tu navegador.", false);
+        appendBotMsg("Permiso de micr\u00F3fono denegado. Habil\u00EDtalo en tu navegador.", false);
         exitVoiceMode();
       }
     };
 
     recognition.onend = () => {
+      isRecording = false;
       setMicState("active");
-      // If vadTimer hasn't fired, submit whatever is in the input
-      clearTimeout(vadTimer);
-      if (input.value.trim() && !isSending) {
-        vadTimer = setTimeout(() => {
-          if (input.value.trim()) handleSend();
-          if (voiceModeActive) setTimeout(startRecognition, 500);
-        }, 800);
-      } else if (voiceModeActive) {
-        setTimeout(startRecognition, 500);
-      }
+      // No auto-restart — user must press mic again
     };
 
-    try { recognition.start(); } catch (e) { setMicState("active"); }
+    try { recognition.start(); } catch (e) { isRecording = false; setMicState("active"); }
   }
 
-  function stopRecognition() {
+  function stopRecording(andSend) {
     clearTimeout(vadTimer);
-    if (recognition) { try { recognition.stop(); } catch (e) { } recognition = null; }
-    setMicState("idle");
+    isRecording = false;
+    if (recognition) {
+      try { recognition.stop(); } catch (e) { }
+      recognition = null;
+    }
+    setMicState("active");
+    if (andSend && input.value.trim()) {
+      handleSend();
+    }
   }
 
   function enterVoiceMode() {
     voiceModeActive = true;
-    // Update mode buttons
     if (modeText) modeText.classList.remove("oc-mode-active");
     if (modeVoice) modeVoice.classList.add("oc-mode-active");
-
-    // Hide mode selector
     const sel = document.getElementById("ocModeSelector");
     if (sel) sel.style.display = "none";
 
-    // Add mic button to footer if not already there
     if (!document.getElementById("ocMicBtn")) {
       micBtn = document.createElement("button");
       micBtn.id = "ocMicBtn";
-      micBtn.className = "oc-voice-btn";
-      micBtn.setAttribute("aria-label", "Iniciar dictado por voz");
-      micBtn.title = "Iniciar dictado";
+      micBtn.className = "oc-voice-btn active";
+      micBtn.setAttribute("aria-label", "Grabar mensaje de voz");
+      micBtn.title = "Pulsa para hablar";
       micBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
       footer.insertBefore(micBtn, sendBtn);
       micBtn.addEventListener("click", () => {
-        if (recognition) stopRecognition();
-        else startRecognition();
+        if (isRecording) stopRecording(true);
+        else startRecording();
       });
     } else {
       micBtn = document.getElementById("ocMicBtn");
+      micBtn.classList.add("active");
     }
 
-    setMicState("active");
-    // Start recognition immediately
-    startRecognition();
-    appendBotMsg("🎙️ Modo voz activado. Habla y responderé en voz alta.", false);
+    input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
+    appendBotMsg("\uD83C\uDF99\uFE0F Modo voz activado. Pulsa el micr\u00F3fono para hablar.", false);
+    // Do NOT auto-start — wait for user to press mic
   }
 
   function exitVoiceMode() {
     voiceModeActive = false;
-    stopRecognition();
+    stopRecording(false);
     if (window.speechSynthesis) window.speechSynthesis.cancel();
     if (modeText) modeText.classList.add("oc-mode-active");
     if (modeVoice) modeVoice.classList.remove("oc-mode-active");
