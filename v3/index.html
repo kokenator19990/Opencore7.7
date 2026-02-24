@@ -475,7 +475,7 @@
       height: 2px;
       background: var(--text2);
       border-radius: 2px;
-      transition: all .3s
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease
     }
 
     .ham.open span:nth-child(1) {
@@ -1102,7 +1102,7 @@
       font-weight: 600;
       color: var(--text3);
       white-space: nowrap;
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
     }
 
@@ -1937,7 +1937,7 @@
       text-align: center;
       padding: 36px 20px;
       position: relative;
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: default;
     }
 
@@ -2001,7 +2001,7 @@
     }
 
     .exp-ico svg {
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     /* ================================================
@@ -2665,7 +2665,7 @@
       border: 1px solid var(--bd);
       border-radius: var(--rl);
       padding: 34px;
-      transition: all .3s
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease
     }
 
     .test-card:hover {
@@ -2937,7 +2937,7 @@
       font-weight: 800;
       cursor: pointer;
       border: none;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 194, 255, .3);
       position: relative;
       overflow: hidden
@@ -3562,7 +3562,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .sched-bubble:hover {
@@ -3717,7 +3717,7 @@
       font-size: 1rem;
       border: none;
       cursor: pointer;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 194, 255, .3);
     }
 
@@ -3778,7 +3778,7 @@
       background: var(--bg);
       padding: 40px 28px;
       text-align: center;
-      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
     }
 
@@ -4006,7 +4006,7 @@
       border-radius: var(--r);
       padding: 20px 24px;
       margin-bottom: 12px;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .calc-metric:hover {
@@ -4026,7 +4026,7 @@
       font-size: 1.9rem;
       font-weight: 800;
       letter-spacing: -.025em;
-      transition: all .5s;
+      transition: opacity 0.5s ease, transform 0.5s ease;
       color: var(--cyan);
     }
 
@@ -4080,7 +4080,7 @@
       font-size: .9rem;
       border: none;
       cursor: pointer;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 194, 255, .3);
       text-decoration: none;
     }
@@ -4134,7 +4134,7 @@
       border-radius: var(--rl);
       padding: 28px 26px;
       position: relative;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       cursor: default;
     }
 
@@ -4167,7 +4167,7 @@
       border: 1px solid var(--bd);
       border-radius: var(--rl);
       padding: 36px;
-      transition: all .3s;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
       overflow: hidden;
     }
@@ -4675,6 +4675,17 @@
       }
 
     }
+  
+    /* Mobile Touch Target Optimizations Phase 2 */
+    @media (max-width: 480px) {
+      .oc-chat-trigger { width: 56px; height: 56px; bottom: 15px; right: 15px; }
+      .oc-chat-window { bottom: 0; right: 0; width: 100%; height: 100%; border-radius: 0; }
+      .oc-mode-btn { min-height: 52px; } /* Increase touch target */
+      .oc-qr { min-height: 48px; padding: 12px 14px; } /* Finger friendly */
+      .oc-chat-send { width: 48px; height: 48px; }
+      #ocChatInput { height: 48px; }
+    }
+    
   </style>
   <!-- Chatbot CSS (non-blocking) -->
   <link rel="preload" href="css/chatbot.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

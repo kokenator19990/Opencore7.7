@@ -102,6 +102,17 @@ const qnaDB = [
   { q: "¿Pueden hacer lo imposible?", a: "Podemos hacer lo técnicamente viable. Lo imposible requiere redefinición estratégica." },
   { q: "¿Son perfectos?", a: "Somos rigurosos. La perfección se busca con método y control." },
 
+  
+  // ═══ OPENCORE OFICIAL: TECNOLOGÍA Y LENGUAJES (CLEVER & B2B) ═══
+  { q: "¿Qué lenguaje manejan?", a: "Trabajamos con un stack robusto enfocado en misión crítica: Python, Go, Java, y C# para backend corporativo, y TypeScript/React para frontend. Todo enfocado en arquitecturas escalables y de alto rendimiento." },
+  { q: "¿Qué código manejan?", a: "Escribimos código robusto. Nuestro equipo domina Python, Go, Java y C#, además de ecosistemas modernos en la nube. Seleccionamos el stack tecnológico según la criticidad de su proceso, no por moda." },
+  { q: "¿Qué lenguajes de programación usan?", a: "Utilizamos Python, Go, Java, C# y TypeScript, soportado por bases de datos de alto rendimiento y arquitectura cloud. Todo orquestado para que su operación nunca se detenga." },
+  { q: "¿Trabajan con Cobol?", a: "Sí. Entendemos que muchos cores financieros y logísticos siguen en COBOL. En OpenCORE nos especializamos en 'envolver' esos sistemas legacy con capas de integración (APIs/microservicios) para conectarlos con plataformas modernas." },
+  { q: "¿Tienen experiencia en Cobol?", a: "Absolutamente. Conocemos la complejidad de interactuar con sistemas Mainframe. Extraemos y modernizamos flujos desde COBOL hacia la nube sin que la continuidad operacional se vea afectada." },
+  { q: "¿Podrían integrar un sistema COBOL con nuevas tecnologías?", a: "Esa es exactamente una de nuestras mayores fortalezas empresariales. Construimos middleware y APIs que hacen que la tecnología moderna (Web, Móvil, IA) se hable fluidamente con su sistema heredado en COBOL." },
+  { q: "¿Cómo harían el proyecto?", a: "Iniciamos de inmediato con un Diagnóstico Técnico en profundidad (Discovery) para descubrir dependencias ocultas. Luego, ejecutamos el proyecto en etapas progresivas, para que vea retornos financieros antes de siquiera apagar un servidor antiguo." },
+  { q: "¿Cómo desarrollarían el sistema?", a: "Aplicamos ingeniería metodológica: dividimos el proyecto en entregables mensuales (sprints) y utilizamos despliegues automatizados (CI/CD) para garantizar que todo avance modularmente sin quebrar nada en su producción diaria." },
+
   // ═══ OPENCORE OFICIAL: PROFUNDAS (61-70) ═══
   { q: "¿Cómo reducen riesgo en migraciones?", a: "Con planificación por etapas, pruebas y planes de reversa." },
   { q: "¿Qué es deuda técnica?", a: "Costos ocultos acumulados por malas decisiones de desarrollo." },
@@ -2189,10 +2200,16 @@ const leadConfirmResponses = [
   "✅ <b>¡Recibido!</b> Nuestro equipo se comunicará contigo a <b>DATO</b> en los próximos minutos.<br><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>"
 ];
 
+// ── CONVERSATIONAL MEMORY & ANTI-LOOP ──
+let lastIntent = null;
+let sameIntentCount = 0;
+let fallbackCount = 0;
+
 // Main processor
 function processInput(input) {
   const clean = input.trim();
   const ln = clean.toLowerCase();
+
   if (!clean) return { text: "Escribe tu consulta y con gusto te ayudo.", suggestions: [] };
 
   // ── LEAD CAPTURE: waiting for phone/email ──
@@ -2311,9 +2328,20 @@ function processInput(input) {
   // 6. Farewell
   if (isFarewell(clean)) return { text: pick(farewellResponses), suggestions: [] };
 
-  // 7. Exact match (uses pre-computed normalized) — FIX: propagate isHTML when CTA fires
+  // 7. Exact match (uses pre-computed normalized)
   for (const item of precomputedDB) {
     if (item.normalized === norm) {
+      if (lastIntent === item.q) {
+        sameIntentCount++;
+        if (sameIntentCount >= 2) {
+          sameIntentCount = 0;
+          return { text: "Veo que tienes una inquietud persistente sobre esto. ¿Te parece si agendamos una breve llamada para aclararlo personalmente?", suggestions: ["Quiero que me llamen"], isHTML: false };
+        }
+      } else {
+        lastIntent = item.q;
+        sameIntentCount = 0;
+        fallbackCount = 0; // Reset fallback counter on success
+      }
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
     }
@@ -2332,6 +2360,17 @@ function processInput(input) {
   // 8. NLP fuzzy match
   const match = getBestMatch(clean);
   if (match && match.confidence >= 0.55) {
+    if (lastIntent === match.answer) {
+      sameIntentCount++;
+      if (sameIntentCount >= 2) {
+        sameIntentCount = 0;
+        return { text: "Parece que seguimos volviendo al mismo punto. ¿Te gustaría que un especialista de OpenCORE evalúe tu caso en detalle?", suggestions: ["Quiero que me llamen"], isHTML: false };
+      }
+    } else {
+      lastIntent = match.answer;
+      sameIntentCount = 0;
+      fallbackCount = 0; // Reset fallback
+    }
     const prefix = match.confidence >= 0.78 ? "" : "Basandome en tu consulta: ";
     let answer = prefix + match.answer;
     if (shouldAppendCTA(clean)) answer += CTA_HTML;
@@ -2339,6 +2378,11 @@ function processInput(input) {
   }
 
   // 9. Fallback — escalate to Gemini AI
+  fallbackCount++;
+  if (fallbackCount >= 3) {
+    fallbackCount = 0;
+    return { text: "Noto que mi información predeterminada no está resolviendo tu duda principal. Hemos diseñado un formulario diagnóstico de 1 minuto para evaluar casos complejos. <a href='#formulario-diagnostico' style='color:#00c2ff;text-decoration:underline;'>Haz clic aquí para llenarlo</a> y te contactaremos de inmediato.", suggestions: [], isHTML: true, aiNeeded: false };
+  }
   return { text: '', aiNeeded: true, userMessage: clean, suggestions: [], isHTML: false };
 }
 

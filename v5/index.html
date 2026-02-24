@@ -4675,18 +4675,50 @@
       }
 
     }
-  
+
     /* Mobile Touch Target Optimizations Phase 2 */
     @media (max-width: 480px) {
-      .oc-chat-trigger { width: 56px; height: 56px; bottom: 15px; right: 15px; }
-      .oc-chat-window { bottom: 0; right: 0; width: 100%; height: 100%; border-radius: 0; }
-      .oc-mode-btn { min-height: 52px; } /* Increase touch target */
-      .oc-qr { min-height: 48px; padding: 12px 14px; } /* Finger friendly */
-      .oc-chat-send { width: 48px; height: 48px; }
-      #ocChatInput { height: 48px; }
+      .oc-chat-trigger {
+        width: 56px;
+        height: 56px;
+        bottom: 15px;
+        right: 15px;
+      }
+
+      .oc-chat-window {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      .oc-mode-btn {
+        min-height: 52px;
+      }
+
+      /* Increase touch target */
+      .oc-qr {
+        min-height: 48px;
+        padding: 12px 14px;
+      }
+
+      /* Finger friendly */
+      .oc-chat-send {
+        width: 48px;
+        height: 48px;
+      }
+
+      #ocChatInput {
+        height: 48px;
+      }
     }
-    
   </style>
+  <!-- Chatbot CSS (non-blocking) -->
+  <link rel="preload" href="css/chatbot.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="css/chatbot.css">
+  </noscript>
   <!-- Chatbot CSS (non-blocking) -->
   <link rel="preload" href="css/chatbot.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>

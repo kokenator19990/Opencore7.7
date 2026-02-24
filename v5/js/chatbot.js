@@ -1,6 +1,6 @@
 ﻿/* ========================================================
-   CHATBOT V3 PRO - OPENCORE NLP ENGINE
-   Versión: 3.5 | Build: 2026-02-23
+   CHATBOT V4 VOICE - OPENCORE NLP ENGINE
+   Versión: 4.0 | Build: 2026-02-23
    Features: Levenshtein, N-gram, Stopwords, Quick Replies,
              Sentiment Guard, Person Entity Handler,
              Barbara Intent Engine, CTA Lead Gen,
@@ -44,7 +44,6 @@ const qnaDB = [
   { q: "¿Trabajan con SLA?", a: "Sí. Podemos definir acuerdos de nivel de servicio según criticidad." },
   { q: "¿Ofrecen soporte 24/7?", a: "Sí, bajo contrato específico para sistemas críticos." },
   { q: "¿Cuánto cuesta el mantenimiento anual?", a: "El mantenimiento se estructura según criticidad y evolución requerida. Generalmente entre 5% y 30% del valor del proyecto como referencia. Para proyectos en curso trabajamos con retainer mensual mínimo de ~30 UF, ajustado según recursos y complejidad." },
-  { q: "¿Entregan el código fuente?", a: "En aproximadamente el 90% de los casos, sí, según contrato." },
 
   // ═══ OPENCORE OFICIAL: TARIFAS POR PERÍODO ═══
   { q: "¿Los precios son mensuales o anuales?", a: "Trabajamos con modelos flexibles. El mínimo recomendado para desarrollo activo es ~30 UF mensuales. El esquema anual no tiene tarifa fija: se negocia caso a caso según tamaño del proyecto, complejidad, recursos asignados y magnitud de la solución." },
@@ -58,6 +57,7 @@ const qnaDB = [
   { q: "¿Tienen plan mensual o anual?", a: "Ofrecemos retainer mensual para proyectos en curso (mínimo ~30 UF/mes recomendado). El esquema anual se negocia según complejidad, recursos y duración estimada. No hay tarifa anual preestablecida: todo se define en contrato formal." },
   { q: "¿Qué es una bolsa de horas?", a: "Es un bloque prepagado de horas de ingeniería que el cliente usa según necesidad. Da flexibilidad sin alcance cerrado. Ideal para mejoras puntuales, soporte o cambios evolutivos. El valor hora va de 1 a 5 UF según especialización." },
   { q: "¿Tienen permanencia mínima?", a: "Depende de la modalidad. En retainer mensual puede acordarse mínimo de 2 o 3 meses para asegurar continuidad. En proyectos por hitos no hay permanencia mínima más allá del contrato firmado." },
+  { q: "¿Entregan el código fuente?", a: "En aproximadamente el 90% de los casos, sí, según contrato." },
 
 
   // ═══ OPENCORE OFICIAL: FORTALEZAS Y DEBILIDADES ═══
@@ -1515,7 +1515,6 @@ const qnaDB = [
   { q: "Trabajan con Power BI", a: "Sí, para visualización de datos y reportería ejecutiva en ecosistemas Microsoft." },
   { q: "Pueden automatizar reportes", a: "Sí, automatizamos reportes periódicos para reducir trabajo manual y eliminar errores." },
   { q: "Pueden hacer notificaciones automáticas", a: "Sí, alertas y notificaciones por email, SMS o WhatsApp integradas a procesos del sistema." },
-
   // ═══ SEGURIDAD, FALLOS Y CONTINGENCIAS ═══
   { q: "¿Qué pasa si el sistema falla en producción?", a: "Activamos el protocolo de respuesta según el SLA contratado: diagnóstico inmediato, contención del impacto y corrección prioritaria. En sistemas críticos definimos 'war room' con tiempos de respuesta de 30-60 minutos y responsables claros." },
   { q: "¿Qué pasa si me hackean?", a: "Ante un incidente de seguridad: contención inmediata, análisis forense del vector de ataque, aislamiento del sistema afectado y plan de remediación. Operamos bajo NDA con total confidencialidad del incidente. Si aplica, cumplimos las obligaciones legales de notificación según la ley de datos personales en Chile." },
@@ -1700,47 +1699,7 @@ const qnaDB = [
   { q: "¿Trabajan con empresas de turismo?", a: "Sí. El turismo es uno de nuestros sectores de mayor fortaleza, especialmente en sistemas de facturación, reservas, integraciones con proveedores y continuidad operacional en temporadas de alta demanda." },
   { q: "¿Integran con medios de pago online?", a: "Sí. Tenemos experiencia en integración de pasarelas de pago: Transbank, MercadoPago, Kushki y otras. La integración incluye manejo de errores, reintentos y trazabilidad completa de transacciones." },
   { q: "¿Pueden hacer sistemas multiempresa?", a: "Sí. Diseñamos arquitecturas multiempresa o multitenant con aislamiento de datos, permisos por empresa y reportería consolidada. Es un requerimiento común en holding y grupos empresariales." },
-  { q: "¿Qué tan rápido pueden entregar una cotización formal?", a: "Una estimación inicial la podemos dar en la primera reunión. Una propuesta técnica formal con desglose de horas y costos requiere diagnóstico previo, típicamente entre 3 y 10 días hábiles según complejidad." },
-
-  // ═══ INTENCIONES DIRECTAS: TIPO DE SERVICIOS / PROYECTOS / EXPERIENCIA ═══
-  { q: "¿Qué servicios ofrecen?", a: "Consultoría de arquitectura empresarial, rescate de proyectos fallidos, integración de sistemas críticos (ERP, WMS, SAP, MS Dynamics), automatización de procesos, migración cloud y modernización de software legacy." },
-  { q: "¿Qué tipo de servicios tienen?", a: "Nuestros servicios se agrupan en cuatro ejes: diagnóstico técnico, rescate y modernización de sistemas, integración empresarial (ERP/WMS/APIs) y automatización con n8n, Node.js y Docker." },
-  { q: "¿Cuáles son sus servicios?", a: "Arquitectura de software, consultoría ejecutiva, integración de sistemas empresariales, rescate de proyectos fallidos, automatización de procesos, migración cloud y desarrollo de soluciones críticas a medida." },
-  { q: "¿En qué servicios se especializan?", a: "Nuestro diferencial es el diagnóstico clínico de software: encontramos el fallo que otros no ven. Nos especializamos en sistemas críticos, integración empresarial y rescate de proyectos que ya fallaron con otros proveedores." },
-  { q: "¿Qué tipo de consultoría hacen?", a: "Consultoría tecnológica senior: diagnóstico de sistemas, arquitectura empresarial, estrategia de integración, auditoría técnica y asesoría para decisiones de inversión en tecnología." },
-  { q: "¿En qué áreas trabajan?", a: "Trabajamos en arquitectura de software, integración de sistemas críticos, automatización de procesos, cloud computing, rescate de proyectos fallidos y modernización de sistemas legacy." },
-  { q: "¿Qué hacen exactamente?", a: "Somos una consultora boutique de arquitectura y tecnología empresarial. Diagnosticamos, rescatamos, integramos y modernizamos sistemas críticos para medianas y grandes empresas en Chile." },
-  { q: "¿Qué ofrecen exactamente?", a: "Diagnóstico técnico, arquitectura de software, integración de sistemas ERP/WMS/SAP, automatización con n8n/Node.js, migración cloud (AWS/GCP/Azure) y consultoría estratégica de tecnología." },
-  { q: "¿Cuáles son sus servicios principales?", a: "Los servicios principales son: rescate de sistemas fallidos, integración empresarial (ERP/WMS/SAP), automatización de procesos, migración cloud y consultoría de arquitectura. Todo comienza con un diagnóstico honesto." },
-  { q: "¿Tienen servicio de CTO externo?", a: "Sí. Ofrecemos modalidad de CTO Externo o Área Tecnológica as-a-Service: gestionamos la arquitectura, proveedores tecnológicos y decisiones técnicas estratégicas de tu empresa." },
-
-  // ═══ INTENCIONES DIRECTAS: TIPO DE PROYECTOS ═══
-  { q: "¿Qué tipo de proyectos hacen?", a: "Rescate de sistemas fallidos, integración ERP/WMS/SAP, migración cloud, automatización de procesos con n8n, desarrollo de APIs críticas y modernización de software legacy. Siempre con diagnóstico técnico previo." },
-  { q: "¿Qué tipo de proyectos ofrecen?", a: "Desde diagnóstico técnico y auditorías hasta proyectos llave en mano: integración empresarial, automatización, migración cloud y rescate de sistemas críticos. Cada proyecto parte con evaluación real." },
-  { q: "¿Con qué proyectos trabajan?", a: "Proyectos de alta complejidad técnica: sistemas heredados que nadie logró modernizar, integraciones ERP fallidas, automatizaciones críticas y migraciones cloud. Nos especializamos en lo que ya fracasó con otros." },
-  { q: "¿Qué proyectos han realizado?", a: "Por NDA no revelamos clientes, pero nuestro historial incluye rescate de sistemas de inventario, integración de ERPs corporativos, automatización de flujos logísticos y migración a cloud. Mostramos casos bajo acuerdo de confidencialidad." },
-  { q: "¿Cuáles son sus proyectos típicos?", a: "Los más frecuentes: rescate de software fallido, integración ERP/WMS, automatización con n8n, migración cloud y desarrollo de APIs para sistemas de alto tráfico y criticidad operacional." },
-  { q: "¿Qué proyectos mínimos aceptan?", a: "El mínimo práctico es ~30 UF mensuales. Proyectos más pequeños pueden no tener la continuidad necesaria para avanzar con calidad. Para requerimientos puntuales existe la modalidad por horas o bolsa de horas." },
-  { q: "¿Pueden mostrar proyectos anteriores?", a: "Sí, bajo NDA. Mostramos arquitectura, alcance y resultados de proyectos previos en sesión privada con los arquitectos. El primer paso es agendar un diagnóstico VIP de 15 minutos para evaluar el fit." },
-  { q: "¿Qué escala tienen sus proyectos?", a: "Desde intervenciones puntuales de consultoría (bolsa de horas) hasta proyectos corporativos de 300 a 500+ UF. El tamaño exacto lo definimos tras diagnóstico técnico." },
-
-  // ═══ INTENCIONES DIRECTAS: EXPERIENCIA / TRAYECTORIA ═══
-  { q: "¿Qué experiencia tienen?", a: "Arquitectos senior con trayectoria real en proyectos de alta complejidad: integración de ERP, rescate de sistemas críticos, automatización empresarial y consultoría estratégica para empresas medianas y grandes en Chile." },
-  { q: "¿Cuánta experiencia tienen?", a: "Experiencia acumulada en proyectos reales de alta complejidad. El equipo incluye arquitectos senior con historial en integración de sistemas críticos, automatización empresarial y rescate de proyectos fallidos." },
-  { q: "¿Qué tipo de experiencia tienen?", a: "Experiencia técnica y ejecutiva aplicada en escenarios reales: diagnóstico de sistemas, arquitectura empresarial, integración ERP/WMS/SAP, automatización y rescate de proyectos. No teórica: probada en campo." },
-  { q: "¿Cuántos años llevan en el mercado?", a: "El equipo acumula años de experiencia senior en consultoría tecnológica empresarial. Nuestra trayectoria está en los proyectos resueltos y los sistemas que hoy operan gracias a nuestro trabajo." },
-  { q: "¿Tienen trayectoria comprobable?", a: "Sí. Jorge Quezada Senior y Junior tienen trayectoria real en estrategia tecnológica, arquitectura empresarial y proyectos críticos. Los detalles se comparten bajo NDA en reunión inicial." },
-  { q: "¿Son consultores seniors?", a: "Sí. OpenCORE opera con perfil senior. No somos una fábrica de código junior: cada proyecto es liderado por arquitectos y consultores con experiencia real en escenarios complejos de alta criticidad." },
-  { q: "¿Tienen experiencia con ERP?", a: "Sí. Integramos y rescatamos proyectos con SAP, MS Dynamics, WMS y ERPs a medida. Es una de nuestras especialidades más demandadas por empresas medianas y grandes." },
-  { q: "¿Han trabajado con empresas grandes?", a: "Sí. Nuestro perfil natural son empresas medianas y grandes. Por NDA no revelamos nombres, pero tenemos experiencia en sectores como retail, logística, turismo y servicios financieros." },
-
-  // ═══ EQUIPO / OUTSOURCING ═══
-  { q: "¿Quiénes integran el equipo?", a: "El núcleo está formado por Jorge Quezada Senior (dirección ejecutiva y estrategia) y Jorge Quezada Junior (arquitectura y consultoría técnica), complementados por especialistas asociados según proyecto." },
-  { q: "¿Hacen outsourcing de TI?", a: "Sí. Ofrecemos outsourcing de arquitectura y consultoría tecnológica en modalidad de retainer mensual, con dedicación de arquitecto senior o equipo técnico completo según el alcance acordado." },
-  { q: "¿Pueden ser el área de tecnología de mi empresa?", a: "Sí. En modalidad de CTO Externo o Área Tecnológica as-a-Service gestionamos la arquitectura, proveedores tecnológicos y decisiones técnicas estratégicas para tu empresa." },
-  { q: "¿Por qué elegir OpenCORE?", a: "Por diagnóstico clínico real: encontramos el fallo que otros no ven. No prometemos magia, prometemos ingeniería rigurosa. Si un software no tiene salvación, lo decimos desde el día uno." },
-  { q: "¿Qué los diferencia de otras consultoras?", a: "El rigor diagnóstico previo al código, la experiencia real en sistemas críticos fallidos, la transparencia contractual y el perfil senior del equipo. No somos una fábrica de software: somos arquitectos de soluciones." },
-  { q: "¿Tienen casos de éxito?", a: "Sí, bajo NDA. Rescate de sistemas de inventario que bloqueaban operaciones, integración de ERPs en standby, automatizaciones que eliminaron procesos manuales críticos. Mostramos en reunión con acuerdo de confidencialidad." }
+  { q: "¿Qué tan rápido pueden entregar una cotización formal?", a: "Una estimación inicial la podemos dar en la primera reunión. Una propuesta técnica formal con desglose de horas y costos requiere diagnóstico previo, típicamente entre 3 y 10 días hábiles según complejidad." }
   ,
 
   // ═══ RESOLUCIÓN Y EXPERIENCIA (Nuevas) ═══
@@ -1857,9 +1816,10 @@ function normalize(str) {
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w\s]/gi, " ");
 
-  // Separar saludos pegados a la pregunta (ej: "holaque", "buenastardesque")
-  s = s.replace(/^(hola|ola|wena|buenas?)(que|q|como|komo|cuanto|cual|kual|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me)\b/ig, "$1 $2 ");
-  s = s.replace(/^(buenas?\s?tardes|buenas?\s?noches|buenos?\s?dias)(que|q|como|komo|cuanto|cual|kual|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me)\b/ig, "$1 $2 ");
+  // Detach glued greetings (e.g. "holaque", "buenastardesque")
+  const glued = "(que|q|como|komo|cuanto|cual|kual|cuales|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me|sirven|hacen|desarrollan|venden|son|es|esta|estan)";
+  s = s.replace(new RegExp("^(hola|ola|wena|buenas?)" + glued + "\\b", "ig"), "$1 $2 ");
+  s = s.replace(new RegExp("^(buenas?\\s?tardes|buenas?\\s?noches|buenos?\\s?dias)" + glued + "\\b", "ig"), "$1 $2 ");
 
   return s.replace(/\s+/g, " ").trim();
 }
@@ -2189,13 +2149,10 @@ const extraContactIntents = [
 
 // Phone/email validation
 function validatePhone(str) {
-  // Strip everything except digits and +
   const digits = str.replace(/[^\d+]/g, '');
-  // Chilean mobile: +569XXXXXXXX (12 digits) or 9XXXXXXXX (9 digits) or 569XXXXXXXX (11)
-  // Also accept international formats with 8+ digits
   const cleaned = digits.replace(/^\+/, '');
   if (cleaned.length < 8 || cleaned.length > 15) return null;
-  return digits; // valid
+  return digits;
 }
 
 function validateEmail(str) {
@@ -2230,7 +2187,6 @@ function saveLead(tipo, dato) {
   } catch (e) { }
 }
 
-// Response variants for asking contact info
 const leadAskResponses = [
   "¡Perfecto! Déjanos tu número de teléfono o correo electrónico y nuestro equipo te contactará en la próxima hora.",
   "¡Con gusto! Escribe tu teléfono o email y un especialista de OpenCORE se pondrá en contacto contigo a la brevedad.",
@@ -2238,7 +2194,6 @@ const leadAskResponses = [
   "¡Por supuesto! Indícanos tu teléfono o email para que nuestro equipo te contacte."
 ];
 
-// Response for when we capture the lead successfully
 const leadConfirmResponses = [
   "✅ <b>¡Listo!</b> Hemos registrado tus datos (<b>DATO</b>). Un especialista de OpenCORE te contactará en breve.<br><br>Si necesitas algo más inmediato:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
   "✅ <b>¡Perfecto!</b> Tu información (<b>DATO</b>) fue recibida. Nos pondremos en contacto contigo muy pronto.<br><br>También puedes escribirnos directo:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
@@ -2259,7 +2214,6 @@ function processInput(input) {
 
   // ── LEAD CAPTURE: waiting for phone/email ──
   if (leadCaptureActive) {
-    // Try to find phone or email
     const rawPhone = clean.match(phoneRegex);
     const rawEmail = clean.match(emailRegex);
     const validPhone = rawPhone ? validatePhone(rawPhone[0]) : null;
@@ -2281,7 +2235,6 @@ function processInput(input) {
       const resp = pick(leadConfirmResponses).replace(/DATO/g, validEmail);
       return { text: resp, suggestions: [], isHTML: true };
     }
-    // Check if they typed something that LOOKS like a phone but is invalid
     const hasDigits = (clean.replace(/\D/g, '').length >= 4);
     if (hasDigits) {
       return {
@@ -2290,7 +2243,6 @@ function processInput(input) {
         isHTML: true
       };
     }
-    // User wrote something else entirely
     return {
       text: "Para contactarte necesito tu <b>número de teléfono</b> (ej: +569 1234 5678) o <b>correo electrónico</b>. Escríbelo aquí directamente 👇",
       suggestions: [],
@@ -2333,7 +2285,7 @@ function processInput(input) {
       const resp = pick(leadConfirmResponses).replace(/DATO/g, inlineValidEmail);
       return { text: resp, suggestions: [], isHTML: true };
     }
-    // No data found in message — ask for it
+    // No data in message — ask for it
     leadCaptureActive = true;
     return {
       text: pick(leadAskResponses),
@@ -2396,9 +2348,8 @@ function processInput(input) {
   }
   for (const item of precomputedDB) {
     const qn = item.normalized;
-    // FIX: Prefix match (norm starts with qn) only fires when Q&A is ≥50% of input length.
-    // Prevents short Q&As like "pero dime" from capturing unrelated long queries.
     if (qn.length > 4 && norm.length > 4 &&
+      // FIX: Prefix match only fires when Q&A is >=50% of input length (prevents short Q&As from capturing long queries)
       ((norm.startsWith(qn) && qn.length >= norm.length * 0.5) ||
         (qn.startsWith(norm) && qn.length <= norm.length * 2.2))) {
       if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
@@ -2438,6 +2389,58 @@ function processInput(input) {
 // DOM injection
 document.addEventListener("DOMContentLoaded", () => {
   const chatHTML = `
+    
+    <style>
+      .oc-avatar-container {
+         display: none; /* hidden by default */
+         position: fixed;
+         bottom: 120px;
+         right: 380px; /* To the left of the chat window */
+         width: 180px;
+         height: 180px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, #0f1828, #1c2a42);
+         box-shadow: 0 0 20px rgba(0, 194, 255, 0.15);
+         border: 2px solid rgba(0, 194, 255, 0.3);
+         z-index: 10000;
+         overflow: hidden;
+         transition: opacity 0.4s ease, transform 0.4s ease;
+         opacity: 0;
+         transform: translateY(20px);
+         pointer-events: none;
+      }
+      .oc-avatar-container.show-avatar {
+         display: flex;
+         opacity: 1;
+         transform: translateY(0);
+      }
+      .oc-avatar-container img {
+         width: 100%;
+         height: 100%;
+         object-fit: contain;
+         border-radius: 50%;
+         transform-origin: center bottom;
+         transition: transform 0.15s ease;
+      }
+      .oc-avatar-container.is-speaking {
+         border-color: rgba(0, 194, 255, 0.8);
+         box-shadow: 0 0 30px rgba(0, 194, 255, 0.4);
+      }
+      .oc-avatar-container.is-speaking img {
+         animation: avatarSpeak 0.25s infinite alternate;
+      }
+      @keyframes avatarSpeak {
+         0% { transform: scale(1) translateY(0); }
+         100% { transform: scale(1.03) translateY(-2px); }
+      }
+      @media (max-width: 1024px) {
+         .oc-avatar-container { display: none !important; }
+      }
+    </style>
+    <div id="ocAvatarContainer" class="oc-avatar-container">
+       <img src="img/avatar_empresarial.png" alt="OpenCORE Senior Advisor" id="ocAvatarImg">
+    </div>
+
     <div class="oc-chat-trigger" id="ocChatTrigger" aria-label="Abrir chat OpenCORE AI" role="button" tabindex="0">
       <div class="oc-chat-label">Habla con OpenCORE AI</div>
       <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
@@ -2464,6 +2467,19 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="oc-chat-body" id="ocChatBody">
         <div class="oc-msg bot">Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?</div>
+        <div class="oc-mode-selector" id="ocModeSelector">
+          <p class="oc-mode-label">¿Cómo prefieres interactuar?</p>
+          <div class="oc-mode-buttons">
+            <button class="oc-mode-btn" id="ocModeText" data-mode="text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>Texto</span>
+            </button>
+            <button class="oc-mode-btn" id="ocModeVoice" data-mode="voice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              <span>Voz</span>
+            </button>
+          </div>
+        </div>
         <div class="oc-quick-replies" id="ocQuickInit">
           <button class="oc-qr" data-q="Que servicios ofrece OpenCORE?">Servicios disponibles</button>
           <button class="oc-qr" data-q="Cuanto cobran por hora?">Estructura de tarifas</button>
@@ -2490,7 +2506,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("ocChatInput");
   const sendBtn = document.getElementById("ocChatSend");
   const closeBtn = document.getElementById("ocChatClose");
+  const modeText = document.getElementById("ocModeText");
+  const modeVoice = document.getElementById("ocModeVoice");
+  const footer = document.querySelector(".oc-chat-footer");
 
+  // ── Toggle Chat ──
   function toggleChat() {
     trigger.classList.toggle("active");
     win.classList.toggle("open");
@@ -2500,6 +2520,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) closeBtn.addEventListener("click", toggleChat);
   trigger.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") toggleChat(); });
 
+  // ── Quick Reply clicks ──
   body.addEventListener("click", e => {
     if (e.target.classList.contains("oc-qr")) {
       const q = e.target.dataset.q;
@@ -2507,21 +2528,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Rate limiter: max 5 messages per 10s
+  // ── Rate Limiter ──
   let msgCount = 0, rateLimitTimer = null;
   function isRateLimited() {
     if (msgCount >= 5) return true;
     msgCount++;
     if (!rateLimitTimer) rateLimitTimer = setTimeout(() => { msgCount = 0; rateLimitTimer = null; }, 10000);
-    // VAD: auto-stop and send after 1.8s of silence with confirmed speech
-    if (final.trim().length > 0) {
-      vadTimer = setTimeout(() => {
-        if (isRecording) stopRecording(true);
-      }, 1800);
-    }
     return false;
   }
 
+  // ── Message Helpers ──
   function appendUserMsg(txt) {
     const d = document.createElement("div");
     d.className = "oc-msg user";
@@ -2529,7 +2545,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.appendChild(d);
     body.scrollTop = body.scrollHeight;
   }
-
   function appendBotMsg(content, isHTML) {
     const d = document.createElement("div");
     d.className = "oc-msg bot";
@@ -2539,7 +2554,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.scrollTop = body.scrollHeight;
     return d;
   }
-
   function appendQuickReplies(suggestions) {
     if (!suggestions || !suggestions.length) return;
     const wrap = document.createElement("div");
@@ -2554,7 +2568,6 @@ document.addEventListener("DOMContentLoaded", () => {
     body.appendChild(wrap);
     body.scrollTop = body.scrollHeight;
   }
-
   function appendTyping() {
     const d = document.createElement("div");
     d.className = "oc-msg bot oc-typing-wrapper";
@@ -2565,6 +2578,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function removeTyping() { const d = document.getElementById("ocTyping"); if (d) d.remove(); }
 
+  // ── Send Handler ──
   // Conversation history for Gemini context
   const chatHistory = [];
 
@@ -2610,19 +2624,205 @@ document.addEventListener("DOMContentLoaded", () => {
         // No regex match — ask Gemini AI
         const aiResponse = await askGemini(txt);
         removeTyping();
-        appendBotMsg(aiResponse, false);
+        const msgEl = appendBotMsg(aiResponse, false);
         chatHistory.push({ role: 'assistant', text: aiResponse });
+        // Speak in voice mode
+        if (voiceModeActive) {
+          const plain = msgEl.textContent || msgEl.innerText;
+          speakText(plain);
+        }
       } else {
         removeTyping();
-        appendBotMsg(result.text, result.isHTML || false);
+        const msgEl = appendBotMsg(result.text, result.isHTML || false);
         if (result.suggestions && result.suggestions.length) appendQuickReplies(result.suggestions);
         chatHistory.push({ role: 'assistant', text: result.text });
+        // Speak in voice mode
+        if (voiceModeActive) {
+          const plain = msgEl.textContent || msgEl.innerText;
+          speakText(plain);
+        }
       }
       isSending = false;
     }, delay);
   }
 
-  sendBtn.addEventListener("click", handleSend);
+  sendBtn.addEventListener("click", () => handleSend());
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+
+  // ══════════════════════════════════════════════
+  //  VOICE MODE — Push-to-talk (manual mic press)
+  // ══════════════════════════════════════════════
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let voiceModeActive = false;
+  let recognition = null;
+  let micBtn = null;
+  let vadTimer = null;
+  let isRecording = false;
+
+  function speakText(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = "es-CL";
+    utt.rate = 1.05;
+    utt.pitch = 1.0;
+    const voices = window.speechSynthesis.getVoices();
+    const esVoice = voices.find(v => v.lang.startsWith("es"));
+    if (esVoice) utt.voice = esVoice;
+    
+    // Avatar Animation Binding
+    utt.onstart = () => {
+       const av = document.getElementById("ocAvatarContainer");
+       if (av) av.classList.add("is-speaking");
+    };
+    utt.onend = () => {
+       const av = document.getElementById("ocAvatarContainer");
+       if (av) av.classList.remove("is-speaking");
+    };
+    utt.onerror = () => {
+       const av = document.getElementById("ocAvatarContainer");
+       if (av) av.classList.remove("is-speaking");
+    };
+    
+    window.speechSynthesis.speak(utt);
+  }
+
+  function setMicState(state) {
+    if (!micBtn) return;
+    micBtn.classList.remove("listening", "active");
+    if (state === "listening") {
+      micBtn.classList.add("listening");
+      input.placeholder = "\uD83C\uDF99\uFE0F Grabando\u2026 pulsa de nuevo para enviar";
+    } else {
+      micBtn.classList.add("active");
+      input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
+    }
+  }
+
+  function startRecording() {
+    if (!SpeechRecognition) {
+      appendBotMsg("Tu navegador no soporta reconocimiento de voz. Prueba con Chrome.", false);
+      return;
+    }
+    if (isRecording) return;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (recognition) { try { recognition.abort(); } catch (e) { } recognition = null; }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "es-CL";
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => {
+      isRecording = true;
+      setMicState("listening");
+    };
+
+    recognition.onresult = (event) => {
+      clearTimeout(vadTimer);
+      let interim = "", final = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) final += event.results[i][0].transcript;
+        else interim += event.results[i][0].transcript;
+      }
+      input.value = final || interim;
+      // VAD: auto-stop and send after 1.8s of silence with confirmed speech
+      if (final.trim().length > 0) {
+        vadTimer = setTimeout(() => {
+          if (isRecording) stopRecording(true);
+        }, 1800);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      isRecording = false;
+      setMicState("active");
+      if (event.error === "not-allowed" || event.error === "denied") {
+        appendBotMsg("Permiso de micr\u00F3fono denegado. Habil\u00EDtalo en tu navegador.", false);
+        exitVoiceMode();
+      }
+    };
+
+    recognition.onend = () => {
+      isRecording = false;
+      setMicState("active");
+      // No auto-restart — user must press mic again
+    };
+
+    try { recognition.start(); } catch (e) { isRecording = false; setMicState("active"); }
+  }
+
+  function stopRecording(andSend) {
+    clearTimeout(vadTimer);
+    isRecording = false;
+    if (recognition) {
+      try { recognition.stop(); } catch (e) { }
+      recognition = null;
+    }
+    setMicState("active");
+    if (andSend && input.value.trim()) {
+      handleSend();
+    }
+  }
+
+  function enterVoiceMode() {
+    const av = document.getElementById("ocAvatarContainer");
+    if (av) av.classList.add("show-avatar");
+    voiceModeActive = true;
+    if (modeText) modeText.classList.remove("oc-mode-active");
+    if (modeVoice) modeVoice.classList.add("oc-mode-active");
+    const sel = document.getElementById("ocModeSelector");
+    if (sel) sel.style.display = "none";
+
+    if (!document.getElementById("ocMicBtn")) {
+      micBtn = document.createElement("button");
+      micBtn.id = "ocMicBtn";
+      micBtn.className = "oc-voice-btn active";
+      micBtn.setAttribute("aria-label", "Grabar mensaje de voz");
+      micBtn.title = "Pulsa para hablar";
+      micBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+      footer.insertBefore(micBtn, sendBtn);
+      micBtn.addEventListener("click", () => {
+        if (isRecording) stopRecording(true);
+        else startRecording();
+      });
+    } else {
+      micBtn = document.getElementById("ocMicBtn");
+      micBtn.classList.add("active");
+    }
+
+    input.placeholder = "Pulsa \uD83C\uDF99\uFE0F para hablar o escribe\u2026";
+    appendBotMsg("\uD83C\uDF99\uFE0F Modo voz activado. Pulsa el micr\u00F3fono para hablar.", false);
+    // Do NOT auto-start — wait for user to press mic
+  }
+
+  function exitVoiceMode() {
+    const av = document.getElementById("ocAvatarContainer");
+    if (av) av.classList.remove("show-avatar");
+    voiceModeActive = false;
+    stopRecording(false);
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (modeText) modeText.classList.add("oc-mode-active");
+    if (modeVoice) modeVoice.classList.remove("oc-mode-active");
+    const m = document.getElementById("ocMicBtn");
+    if (m) m.remove();
+    micBtn = null;
+    input.placeholder = "Escribe tu consulta...";
+  }
+
+  // ── Mode Selector Handlers ──
+  if (modeText) {
+    modeText.classList.add("oc-mode-active");
+    modeText.addEventListener("click", () => {
+      if (voiceModeActive) exitVoiceMode();
+      const sel = document.getElementById("ocModeSelector");
+      if (sel) sel.style.display = "none";
+    });
+  }
+  if (modeVoice) {
+    modeVoice.addEventListener("click", () => {
+      if (!voiceModeActive) enterVoiceMode();
+    });
+  }
 });
 
