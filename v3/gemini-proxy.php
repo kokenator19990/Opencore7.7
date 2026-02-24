@@ -14,7 +14,8 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // ── CONFIGURATION ──
-$GEMINI_API_KEY = 'AIzaSyBBfTiinKLzv17e-2zzQN00gYLUKpBHSQc'; // Gemini API Key
+require_once 'config.php';
+$GEMINI_API_KEY = GEMINI_API_KEY; // Loaded securely from config.php
 $MODEL = 'gemini-1.5-flash'; // Free tier compatible model
 
 // ── SYSTEM PROMPT ──
