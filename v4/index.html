@@ -3172,17 +3172,12 @@
         padding: 100px 0 60px
       }
 
-      /* Foto empresario como fondo en mobile */
+      /* Hero: fondo oscuro sólido en mobile (sin foto empresario) */
       .hero-bg {
-        background:
-          linear-gradient(to bottom,
-            rgba(6, 9, 18, 0.78) 0%,
-            rgba(6, 9, 18, 0.65) 40%,
-            rgba(6, 9, 18, 0.85) 100%),
-          url('img/hero-reunion.jpg') center 15% / cover no-repeat;
+        background: linear-gradient(135deg, #060912 0%, #0b1428 50%, #060912 100%);
       }
 
-      /* Anular el overlay oscuro que tapa la foto */
+      /* Anular el overlay oscuro */
       .hero-bg::after {
         background: transparent;
       }
@@ -3194,7 +3189,7 @@
       }
 
       .global-canvas {
-        opacity: 0.45;
+        opacity: 0.18;
       }
 
       .hero-stats {
