@@ -1871,24 +1871,47 @@ function shouldAppendCTA(input) {
   return triggered;
 }
 
-// ── CONTACT STATE TRACKING & LOGIC ──
+// ── CONTACT STATE TRACKING & LEAD CAPTURE ──
 let contactPromptActive = false;
 let contactPromptCounter = 0;
+let leadCaptureActive = false; // true = waiting for phone/email from user
 
-// Excesive but robust regex tracking almost any contact intent
+// Regex for any contact-related intent
 const contactRegex = /\b(contacto|contactar|contactarme|contactenme|contáctenme|contactanos|comunicarme|llamar|llamada|llamenme|llámame|llámenme|llamanme|llamame|llamarnos|telefono|teléfono|numero|número|celular|cel|whatsapp|wsp|wasap|correo|email|mail|humano|persona\sreal|asesor|ejecutivo|arquitecto|vendedor|ventas|comercial|agendar|agenda|reunion|reunión|sesion|sesión|videollamada|zoom|meet|teams|contratar|comprar|hablemos)\b/i;
 
-// 100 manual variants to ensure bulletproof checks
+//  "QUIERO QUE ME CONTACTEN" — user wants US to call/email THEM
+const wantCallbackRegex = /\b(llam[ea]n?me|contacten?me|contáctenme|llámenme|llamenme|llámame|llamame|llamamé|que me llamen|que me contacten|que me escriban|que me manden|necesito que me llamen|quiero que me llamen|me pueden llamar|pueden llamarme|lo contactamos|contactarme|me contacten|me llamen|me escriban|me manden correo|quiero ser contactado|quiero que me devuelvan la llamada|devuélvanme la llamada)\b/i;
+
+const wantCallbackPhrases = [
+  "quiero que me llamen", "necesito que me contacten", "quiero que me contacten",
+  "llamenme", "llamame", "llámenme", "llámame", "contactenme", "contáctenme",
+  "necesito que me llamen", "me pueden llamar", "pueden llamarme",
+  "quiero ser contactado", "quiero que me devuelvan la llamada",
+  "me contacten por favor", "necesito hablar con un humano ya",
+  "háblame", "háganme una llamada", "requiero una llamada",
+  "que alguien me contacte", "quiero que alguien me llame",
+  "necesito agendar una llamada conmigo", "agenden una llamada conmigo",
+  "llámenme urgente", "llamenme urgente", "contactenme ya", "contactenme urgente",
+  "me urge que me llamen", "necesito que me contacten urgente",
+  "quiero que me llamen urgente", "me pueden contactar",
+  "me podrían llamar", "me llaman por favor", "los necesito que me llamen",
+  "quiero hablar con alguien ahora", "quiero que un asesor me contacte",
+  "quiero que un ejecutivo me llame", "que me contacte un asesor",
+  "me interesa que me llamen", "me gustaría que me contacten",
+  "comuníquense conmigo", "escribanme", "escríbanme", "mándenme un correo"
+];
+
+// Manual 100+ variants for general contact intent
 const extraContactIntents = [
-  "quiero que me llamen", "necesito que me contacten", "quiero contacto", "telefono",
+  "quiero contacto", "telefono",
   "numero de telefono", "celular", "whatsapp", "como los contacto", "hablar con un humano",
-  "agendar llamada", "llamenme inmediatamente", "quiero contratar", "quiero comprar",
-  "donde llamo", "tienen un telefono", "un telefono para contactarlos", "jajaj un telefono para llamar",
+  "agendar llamada", "quiero contratar", "quiero comprar",
+  "donde llamo", "tienen un telefono", "un telefono para contactarlos",
   "si quiero que me llamen", "quiero que me contacten tengo una empresa", "quiero automatizar mi empresa",
-  "llamanme inmediatamente", "necesito agendar", "reunion por favor", "hablar con ventas",
+  "necesito agendar", "reunion por favor", "hablar con ventas",
   "necesito hablar con alguien", "contactar", "contacto", "llamar", "llamada", "correo", "email", "asesor",
-  "ejecutivo", "arquitecto", "necesito que me llamen", "llámame", "contactenme",
-  "contáctenme", "quiero hablar con ustedes", "como me comunico", "comunicarme",
+  "ejecutivo", "arquitecto", "necesito que me llamen",
+  "quiero hablar con ustedes", "como me comunico", "comunicarme",
   "reunion", "reunión", "sesion", "sesión", "quiero sus servicios", "necesito sus servicios",
   "empezar proyecto", "contratar", "necesito cotizar", "hablemos", "me pueden llamar",
   "quien me atiende", "atencion al cliente", "soporte comercial", "mesa de ayuda",
@@ -1902,21 +1925,65 @@ const extraContactIntents = [
   "mandar un correo", "mandar email", "escribir", "a donde escribo", "donde mando correo"
 ];
 
+// Phone/email detection regex
+const phoneRegex = /(?:\+?\d{1,4}[\s-]?)?(?:\(?\d{1,4}\)?[\s-]?)?\d[\d\s.-]{6,12}\d/;
+const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
+
+// Response variants for asking contact info
+const leadAskResponses = [
+  "¡Perfecto! Déjanos tu número de teléfono o correo electrónico y nuestro equipo te contactará en la próxima hora.",
+  "¡Con gusto! Escribe tu teléfono o email y un especialista de OpenCORE se pondrá en contacto contigo a la brevedad.",
+  "¡Excelente! Comparte tu número o correo y te llamamos de inmediato.",
+  "¡Por supuesto! Indícanos tu teléfono o email para que nuestro equipo te contacte."
+];
+
+// Response for when we capture the lead successfully
+const leadConfirmResponses = [
+  "✅ <b>¡Listo!</b> Hemos registrado tus datos. Un especialista de OpenCORE te contactará en breve.<br><br>Si necesitas algo más inmediato:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+  "✅ <b>¡Perfecto!</b> Tu información fue recibida. Nos pondremos en contacto contigo muy pronto.<br><br>¿Aún más urgente? Escríbenos directo:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>",
+  "✅ <b>¡Recibido!</b> Nuestro equipo se comunicará contigo en los próximos minutos.<br><br>También puedes escribirnos directo a:<br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a>"
+];
+
 // Main processor
 function processInput(input) {
   const clean = input.trim();
   const ln = clean.toLowerCase();
   if (!clean) return { text: "Escribe tu consulta y con gusto te ayudo.", suggestions: [] };
 
+  // ── LEAD CAPTURE: waiting for phone/email ──
+  if (leadCaptureActive) {
+    const foundPhone = clean.match(phoneRegex);
+    const foundEmail = clean.match(emailRegex);
+    if (foundPhone || foundEmail) {
+      leadCaptureActive = false;
+      contactPromptActive = false;
+      contactPromptCounter = 0;
+      const dato = foundPhone ? foundPhone[0] : foundEmail[0];
+      console.log('[OpenCORE Lead] Dato capturado:', dato);
+      return {
+        text: pick(leadConfirmResponses),
+        suggestions: [],
+        isHTML: true
+      };
+    }
+    // User wrote something else — remind them
+    return {
+      text: "Para contactarte necesito tu <b>número de teléfono</b> o <b>correo electrónico</b>. Escríbelo aquí directamente 👇",
+      suggestions: [],
+      isHTML: true
+    };
+  }
+
   const isAffirmation = (ln === "si" || ln === "sí" || ln === "claro" || ln === "ok" || ln.includes("por favor") || ln.includes("bueno") || ln === "ya" || ln === "dale" || ln === "yes" || ln === "sip");
 
   if (contactPromptActive && isAffirmation) {
     contactPromptActive = false;
     contactPromptCounter = 0;
+    leadCaptureActive = true;
     return {
-      text: "¡Perfecto! Nuestro equipo está listo. <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <b>+569 4958 7198</b><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Agenda una llamada de 15 min aquí</a>.",
+      text: pick(leadAskResponses),
       suggestions: [],
-      isHTML: true
+      isHTML: false
     };
   }
 
@@ -1924,11 +1991,23 @@ function processInput(input) {
   const wasPromptActive = contactPromptActive;
   contactPromptActive = false;
 
+  // ── "QUIERO QUE ME CONTACTEN" (callback request) ──
+  if (wantCallbackRegex.test(clean) || wantCallbackPhrases.some(p => ln.includes(p))) {
+    contactPromptCounter++;
+    leadCaptureActive = true;
+    return {
+      text: pick(leadAskResponses),
+      suggestions: [],
+      isHTML: false
+    };
+  }
+
+  // ── General contact intent (user wants OUR info) ──
   if (contactRegex.test(clean) || extraContactIntents.some(i => ln.includes(i)) || (ln === 'llamame') || (ln === 'llamame a mi')) {
     contactPromptCounter++;
     return {
-      text: "¡Excelente! Para contactarnos directamente tienes estas vías: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Agendar Diagnóstico VIP (15 min)</a>.",
-      suggestions: [],
+      text: "¡Excelente! Puedes contactarnos directamente: <br><br>✉️ <b>contacto@opencore.cl</b><br>📱 <a href='https://wa.me/56949587198' target='_blank' style='color:#00c2ff;text-decoration:underline;'><b>+569 4958 7198 (WhatsApp)</b></a><br>📅 <a href='https://calendly.com/opencore-diagnostico' target='_blank' style='color:#00c2ff;font-weight:700;text-decoration:underline;'>Agendar Diagnóstico VIP (15 min)</a>.<br><br>¿O prefieres que <b>nosotros te contactemos</b>? Escribe tu teléfono o email aquí.",
+      suggestions: ["Quiero que me llamen"],
       isHTML: true
     };
   }
