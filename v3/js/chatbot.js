@@ -24,14 +24,14 @@ const qnaDB = [
 
   // ═══ OPENCORE OFICIAL: SERVICIOS (11-20) ═══
   { q: "¿Pueden desarrollar un sistema desde cero?", a: "Sí. Diseñamos arquitectura completa cuando es la solución más eficiente y sostenible." },
-  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver?" },
-  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos. ¿Qué problemática exacta enfrenta en su operación?" },
+  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver? ¿Qué desafío tecnológico específico busca resolver?" },
+  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos. ¿Qué problemática exacta enfrenta en su operación? ¿Qué problemática exacta enfrenta en su operación?" },
   { q: "¿Hacen apps móviles básicas?", a: "Solo si forman parte de una solución empresarial integrada. No desarrollamos apps aisladas sin arquitectura estratégica." },
   { q: "¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
   { q: "¿Trabajan con bases de datos grandes?", a: "Sí. Hemos trabajado con bases de datos de alto volumen y entornos críticos." },
-  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización. ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir?" },
+  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización. ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir? ¿Podría darnos un poco de contexto sobre el sistema que necesita intervenir?" },
   { q: "¿Hacen auditoría tecnológica?", a: "Sí. Podemos auditar arquitectura, seguridad y rendimiento sin obligación de desarrollo posterior." },
-  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente. Cuéntenos, ¿cuál es su problema operativo principal actual?" },
+  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente. Cuéntenos, ¿cuál es su problema operativo principal actual? Cuéntenos, ¿cuál es su problema operativo principal actual?" },
   { q: "¿Integran inteligencia artificial?", a: "Sí, cuando aporta valor real y no compromete estabilidad ni seguridad." },
 
   // ═══ OPENCORE OFICIAL: PRECIOS (21-30) ═══
@@ -59,6 +59,13 @@ const qnaDB = [
   { q: "¿Qué es una bolsa de horas?", a: "Es un bloque prepagado de horas de ingeniería que el cliente usa según necesidad. Da flexibilidad sin alcance cerrado. Ideal para mejoras puntuales, soporte o cambios evolutivos. El valor hora va de 1 a 5 UF según especialización." },
   { q: "¿Tienen permanencia mínima?", a: "Depende de la modalidad. En retainer mensual puede acordarse mínimo de 2 o 3 meses para asegurar continuidad. En proyectos por hitos no hay permanencia mínima más allá del contrato firmado." },
 
+
+  // ═══ OPENCORE OFICIAL: FORTALEZAS Y DEBILIDADES ═══
+  { q: "¿Cuáles son sus fortalezas?", a: "Nuestras fortalezas radican en un equipo compuesto por profesionales altamente capacitados técnica y estratégicamente, experiencia probada en mercado B2B, metodologías orientadas a continuidad operacional e integración fluida de IA y herramientas automatizadas para escalar." },
+  { q: "Quiero saber sus fortalezas", a: "Nuestras fortalezas son la alta capacitación de nuestro equipo senior, la especialización en migraciones y arquitectura compleja sin detener operaciones, y nuestra fluidez técnica en lenguajes modernos y heredados." },
+  { q: "Dime las fortalezas de OpenCORE", a: "Nuestras principales fortalezas son: profesionales senior altamente validados en el mercado, experiencia robusta en arquitecturas empresariales, y metodologías sólidas de prevención de riesgos técnicos." },
+  { q: "¿Cuáles son sus debilidades?", a: "Nuestros servicios tienen un enfoque Senior orientado a sistemas críticos y empresariales, por lo que no solemos abordar presupuestos o proyectos micro-pyme tradicionales. Sin embargo, mitigamos esto escalando metodologías con nuevas herramientas de IA y automatización para ser más flexibles." },
+  { q: "Dime las debilidades de OpenCORE", a: "Un desafío constante es que nuestro análisis y arquitectura es de un estándar muy senior, lo que no siempre encaja con presupuestos pequeños. Lo compensamos utilizando IA y optimización de flujos para entregar valor rápido." },
   // ═══ OPENCORE OFICIAL: OPERACIÓN (31-40) ═══
   { q: "¿Qué pasa si el proyecto se atrasa?", a: "Se gestiona bajo marco contractual con mecanismos de replanificación." },
   { q: "¿Qué pasa si el cliente cambia el alcance?", a: "Se formaliza mediante adenda contractual con ajuste de costos y plazos." },
@@ -1770,7 +1777,7 @@ const qnaDB = [
   // ═══ ESCENARIOS COMBINADOS: HOLA + PREGUNTA ═══
   { q: "Hola, ¿En qué sectores son fuertes?", a: "Logística, turismo, facturación y sistemas empresariales con alta criticidad operativa." },
   { q: "Hola, ¿Desde cuándo trabajan en tecnología?", a: "Desde 1998 como trayectoria operativa, formalizados como SpA desde 2015." },
-  { q: "Hola, ¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos." },
+  { q: "Hola, ¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos. ¿Qué desafío tecnológico específico busca resolver?" },
   { q: "Hola, ¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
   { q: "Hola, ¿Cuánto cobran por hora?", a: "Entre 1 y 5 UF por hora, dependiendo de complejidad y nivel de especialización requerido." },
   { q: "Hola, ¿Cuánto cuesta un proyecto promedio?", a: "Los proyectos medianos y grandes suelen situarse entre 300 y 500 UF o más." },
@@ -1838,11 +1845,11 @@ function normalize(str) {
   let s = str.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w\s]/gi, " ");
-  
+
   // Separar saludos pegados a la pregunta (ej: "holaque", "buenastardesque")
   s = s.replace(/^(hola|ola|wena|buenas?)(que|q|como|komo|cuanto|cual|kual|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me)\b/ig, "$1 $2 ");
   s = s.replace(/^(buenas?\s?tardes|buenas?\s?noches|buenos?\s?dias)(que|q|como|komo|cuanto|cual|kual|quien|kien|qn|tienen|ofrecen|pueden|necesito|quiero|me)\b/ig, "$1 $2 ");
-  
+
   return s.replace(/\s+/g, " ").trim();
 }
 
@@ -1978,8 +1985,8 @@ const greetings = ["hola", "buenas", "ola", "hey", "hi", "hello", "buenos dias",
 const farewells = ["chao", "adios", "bye", "hasta luego", "nos vemos", "hasta pronto", "hasta la vista"];
 const thanks = ["gracias", "agradecido", "agradezco", "te agradezco", "muchas gracias", "mil gracias", "grax", "thx"];
 
-function isGreeting(i) { 
-  const n = normalize(i); 
+function isGreeting(i) {
+  const n = normalize(i);
   if (greetings.some(g => n === g)) return true;
   if (greetings.some(g => n.startsWith(g + " ") || n.endsWith(" " + g))) {
     const tokens = n.split(/\s+/).filter(w => !stopWords.has(w) && w.length > 1);
@@ -2462,6 +2469,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (msgCount >= 5) return true;
     msgCount++;
     if (!rateLimitTimer) rateLimitTimer = setTimeout(() => { msgCount = 0; rateLimitTimer = null; }, 10000);
+    // VAD: auto-stop and send after 1.8s of silence with confirmed speech
+    if (final.trim().length > 0) {
+      vadTimer = setTimeout(() => {
+        if (isRecording) stopRecording(true);
+      }, 1800);
+    }
     return false;
   }
 
