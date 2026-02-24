@@ -1378,16 +1378,241 @@ const qnaDB = [
   { q: "Qué garantía tengo", a: "Contrato formal, SLA, soporte post-implementación y entrega de código fuente." },
   { q: "Me van a estafar?", a: "¡De ninguna manera! Trabajamos con contratos legales, facturación formal y la mayor transparencia." },
   { q: "Son una estafa?", a: "No. Somos una SpA legalmente constituida en Chile, con facturación formal, NDA y más de 120 proyectos ejecutados." },
-  { q: "Qué pasa si no me gusta", a: "El alcance y entregables se definen contractualmente. Si algo no cumple lo acordado, se revisa." }
+  { q: "Qué pasa si no me gusta", a: "El alcance y entregables se definen contractualmente. Si algo no cumple lo acordado, se revisa." },
+
+  // ═══ TECNOLOGÍAS ESPECÍFICAS ═══
+  { q: "Trabajan con Docker", a: "Sí. Usamos Docker para contenedores cuando el proyecto lo requiere." },
+  { q: "Usan Kubernetes", a: "Sí. Para orquestación de contenedores en proyectos de escala empresarial." },
+  { q: "Trabajan con Node.js", a: "Sí, entre las tecnologías que manejamos según estrategia del cliente." },
+  { q: "Trabajan con React", a: "Sí, para interfaces empresariales modernas cuando aplica la arquitectura." },
+  { q: "Trabajan con Angular", a: "Sí, dependiendo del ecosistema y requerimientos del cliente." },
+  { q: "Trabajan con Vue", a: "Sí. Vue.js es una opción válida para frontends según el proyecto." },
+  { q: "Trabajan con PHP", a: "Sí, incluyendo migración de sistemas PHP legacy a arquitecturas modernas." },
+  { q: "Trabajan con .NET", a: "Sí. Experiencia en .NET Framework y .NET Core para sistemas empresariales." },
+  { q: "Trabajan con Java", a: "Sí. Amplia experiencia en sistemas Java empresariales de alta criticidad." },
+  { q: "Trabajan con Python", a: "Sí. Python para automatización, análisis de datos e integraciones." },
+  { q: "Trabajan con Go", a: "Sí, cuando los requisitos de rendimiento lo justifican." },
+  { q: "Trabajan con TypeScript", a: "Sí, TypeScript es estándar en nuestros proyectos donde corresponde." },
+  { q: "Usan microservicios", a: "Sí, cuando la arquitectura lo requiere. No aplicamos microservicios por moda, sino por necesidad real." },
+  { q: "Qué es una arquitectura monolítica", a: "Una aplicación donde todos los módulos están integrados en un único sistema. Puede ser válida según el caso." },
+  { q: "Cuándo recomiendan microservicios", a: "Cuando hay alta carga, equipos distribuidos o necesidad de escalar módulos independientes." },
+  { q: "Trabajan con serverless", a: "Sí, en casos donde reduce costos operativos y es adecuado para el patrón de uso." },
+  { q: "Hacen machine learning", a: "Implementamos modelos cuando aportan valor real al negocio, con ingeniería de datos sólida." },
+  { q: "Hacen automatización de procesos", a: "Sí. Automatizamos flujos de trabajo críticos para reducir errores y costos operacionales." },
+  { q: "Hacen scraping", a: "Solo cuando es legal y forma parte de una solución empresarial con propósito claro." },
+  { q: "Trabajan con RPA", a: "Sí. Robotic Process Automation para automatizar tareas repetitivas de alto volumen." },
+
+  // ═══ BASES DE DATOS ═══
+  { q: "Trabajan con PostgreSQL", a: "Sí, PostgreSQL es una de nuestras bases de datos preferidas por su robustez." },
+  { q: "Trabajan con MySQL", a: "Sí, con experiencia en migración, optimización y alta disponibilidad en MySQL." },
+  { q: "Trabajan con SQL Server", a: "Sí, incluyendo sistemas legacy con SQL Server en entornos empresariales." },
+  { q: "Trabajan con Oracle", a: "Sí, con experiencia en Oracle Database para sistemas críticos." },
+  { q: "Trabajan con MongoDB", a: "Sí, cuando la arquitectura requiere bases de datos NoSQL." },
+  { q: "Trabajan con Redis", a: "Sí, para caché, sesiones y sistemas de alta velocidad." },
+  { q: "Pueden migrar bases de datos", a: "Sí. Realizamos migraciones con validación de integridad y planes de reversa." },
+  { q: "Qué pasa con mis datos durante la migración", a: "Establecemos validación, sincronización y contingencia para garantizar integridad total." },
+  { q: "Pueden optimizar bases de datos lentas", a: "Sí. Auditamos índices, consultas y arquitectura para mejorar rendimiento." },
+  { q: "Hacen backup de datos", a: "Implementamos estrategias de backup según criticidad del sistema." },
+  { q: "Trabajan con bases de datos en la nube", a: "Sí, incluyendo RDS, Azure SQL, Cloud SQL y otras soluciones managed." },
+  { q: "Qué es un ORM", a: "Capa de abstracción que mapea objetos de código a tablas de base de datos." },
+  { q: "Trabajan con Elasticsearch", a: "Sí, para búsquedas full-text y análisis de logs cuando el proyecto lo requiere." },
+  { q: "Qué es sharding", a: "Técnica de dividir una base de datos en partes para manejar grandes volúmenes." },
+  { q: "Pueden resolver problemas de concurrencia", a: "Sí. Diseñamos sistemas que manejan acceso concurrente con control de transacciones." },
+
+  // ═══ CLOUD ═══
+  { q: "Trabajan con AWS", a: "Sí, Amazon Web Services es una de las plataformas cloud con las que trabajamos." },
+  { q: "Trabajan con Azure", a: "Sí, Microsoft Azure para proyectos empresariales, especialmente en ecosistemas Microsoft." },
+  { q: "Trabajan con Google Cloud", a: "Sí, Google Cloud Platform para proyectos donde aplica su ecosistema." },
+  { q: "Qué nube recomiendan", a: "Depende del ecosistema, costos y estrategia del cliente. Evaluamos cada caso sin preferencias comerciales." },
+  { q: "Conviene la nube", a: "Depende del volumen, crecimiento y criticidad. A veces cloud privado o híbrido es más eficiente." },
+  { q: "Cuánto cuesta la nube", a: "Varía enormemente según uso. Diseñamos arquitecturas optimizadas para reducir costos cloud." },
+  { q: "Pueden gestionar infraestructura cloud", a: "Sí, incluyendo arquitectura, despliegue y monitoreo en las principales plataformas." },
+  { q: "Hacen cloud híbrido", a: "Sí. Combina infraestructura local con cloud y puede ser la mejor opción según el caso." },
+  { q: "Qué es infraestructura como código", a: "IaC gestiona servidores y configuraciones mediante código, permitiendo reproducibilidad y control." },
+  { q: "Usan Terraform", a: "Sí, Terraform para infraestructura como código cuando el proyecto lo requiere." },
+  { q: "Pueden reducir costos cloud", a: "Sí. Auditamos arquitecturas cloud para identificar desperdicio y optimizar costos." },
+  { q: "Qué es un CDN", a: "Red de distribución de contenido que acelera la entrega de archivos a usuarios globalmente." },
+  { q: "Tienen experiencia en alta disponibilidad", a: "Sí. Diseñamos sistemas con failover, redundancia y recuperación ante desastres." },
+  { q: "Qué es DR plan", a: "Plan de recuperación ante desastres: define cómo restaurar sistemas críticos ante fallos graves." },
+
+  // ═══ DEVOPS / CI-CD ═══
+  { q: "Trabajan con DevOps", a: "Sí. Implementamos prácticas DevOps para acortar ciclos de entrega y mejorar estabilidad." },
+  { q: "Trabajan con CI CD", a: "Sí. Configuramos pipelines de integración y despliegue continuo según el stack del cliente." },
+  { q: "Usan Jenkins", a: "Sí, Jenkins es una de las herramientas de CI/CD con las que trabajamos." },
+  { q: "Usan GitHub Actions", a: "Sí, para automatización de pipelines en proyectos modernos." },
+  { q: "Usan GitLab CI", a: "Sí, cuando el cliente ya usa GitLab como repositorio principal." },
+  { q: "Hacen monitoreo de sistemas", a: "Sí, implementamos monitoreo con alertas para detectar problemas antes de que impacten al negocio." },
+  { q: "Qué herramientas de monitoreo usan", a: "Prometheus, Grafana, Datadog o equivalentes según el ecosistema y presupuesto del cliente." },
+  { q: "Trabajan con Git", a: "Sí. Git es estándar en todos nuestros proyectos para control de versiones." },
+  { q: "Qué es deployment continuo", a: "Proceso automatizado que lleva cambios de código a producción con validaciones automáticas." },
+  { q: "Hacen code review", a: "Sí, el code review es parte de nuestros estándares de calidad en todo proyecto." },
+  { q: "Hacen pruebas automatizadas", a: "Sí. Implementamos testing unitario, integración y end-to-end según el alcance del proyecto." },
+  { q: "Qué es un pipeline", a: "Flujo automatizado de tareas que lleva código desde el repositorio hasta producción." },
+  { q: "Pueden configurar alertas", a: "Sí. Configuramos alertas por umbral, anomalías o errores críticos en tiempo real." },
+
+  // ═══ SEGURIDAD ═══
+  { q: "Hacen pruebas de seguridad", a: "Sí. Realizamos auditorías de seguridad técnica como servicio independiente o parte de proyectos." },
+  { q: "Hacen penetration testing", a: "Realizamos evaluaciones de vulnerabilidades. El alcance se define contractualmente según el entorno." },
+  { q: "Cumplen con ISO 27001", a: "Aplicamos buenas prácticas de seguridad alineadas con estándares ISO en proyectos críticos." },
+  { q: "Trabajan con datos financieros", a: "Sí, bajo contratos con cláusulas estrictas de confidencialidad y seguridad." },
+  { q: "Cómo protegen los datos del cliente", a: "Mediante NDA, accesos controlados, cifrado y auditorías internas de seguridad." },
+  { q: "Hacen hardening de servidores", a: "Sí, como parte de la implementación y auditoría técnica." },
+  { q: "Qué es cifrado en tránsito", a: "Protección de datos mientras viajan entre cliente y servidor, mediante HTTPS/TLS." },
+  { q: "Hacen auditorías de código", a: "Sí, revisamos código fuente en busca de vulnerabilidades y malas prácticas." },
+  { q: "Protegen contra SQL injection", a: "Sí, implementamos validaciones y patrones que previenen inyección SQL." },
+  { q: "Qué es OWASP", a: "Open Web Application Security Project: referencia global de seguridad web que seguimos." },
+  { q: "Cómo manejan accesos privilegiados", a: "Con principio de mínimo privilegio, logs de auditoría y revisiones periódicas." },
+  { q: "Cifran los datos en reposo", a: "Sí, cuando la criticidad del sistema lo requiere, implementamos cifrado en base de datos y almacenamiento." },
+
+  // ═══ METODOLOGÍA ═══
+  { q: "Trabajan con Scrum", a: "Sí, aplicamos Scrum y metodologías ágiles adaptadas a proyectos empresariales." },
+  { q: "Trabajan con Kanban", a: "Sí, Kanban para flujos de trabajo continuos y equipos de soporte." },
+  { q: "Son ágiles", a: "Sí, aplicamos metodologías ágiles adaptadas a la realidad y madurez del cliente." },
+  { q: "Tienen metodología propia", a: "Sí. Combinamos ágil con control de riesgos formal para proyectos críticos." },
+  { q: "Qué son los hitos de proyecto", a: "Puntos de control formales donde se valida avance y se aprueba la siguiente etapa." },
+  { q: "Cómo manejan el alcance del proyecto", a: "Alcance definido contractualmente. Cambios se gestionan mediante adendas formales." },
+  { q: "Hacen discovery", a: "Sí. La fase de discovery es clave para entender el sistema actual y diseñar la solución adecuada." },
+  { q: "Qué es un sprint", a: "Ciclo de trabajo de 2 semanas donde se entregan incrementos funcionales revisables." },
+  { q: "Hacen retrospectivas", a: "Sí, como parte de mejora continua en proyectos de larga duración." },
+  { q: "Usan tableros de proyecto", a: "Sí, Jira, Trello o equivalentes para trazabilidad de tareas y avance." },
+  { q: "Qué es el MVP", a: "Minimum Viable Product: versión mínima funcional para validar el producto con usuarios reales." },
+  { q: "Hacen prototipos", a: "Sí, cuando ayuda a validar arquitectura o experiencia de usuario antes del desarrollo completo." },
+  { q: "Tienen gestión de proyectos formal", a: "Sí, contamos con gestión formal para controlar alcance, tiempo y costo." },
+
+  // ═══ INDUSTRIAS ═══
+  { q: "Trabajan con empresas de salud", a: "Sí, con atención especial a confidencialidad de datos y regulaciones del sector salud." },
+  { q: "Trabajan con fintech", a: "Sí, con experiencia en sistemas financieros de alta criticidad y regulación." },
+  { q: "Trabajan con retail", a: "Sí, incluyendo sistemas de punto de venta, inventario y facturación integrados." },
+  { q: "Trabajan con manufactura", a: "Sí, sistemas de control de producción y gestión de planta industrial." },
+  { q: "Trabajan con educación", a: "Sí, plataformas educativas y sistemas de gestión académica." },
+  { q: "Trabajan con gobierno", a: "Sí, cuando el proyecto requiere interoperabilidad con sistemas públicos." },
+  { q: "Trabajan con minería", a: "Sí, sistemas de control operacional y monitoreo para industria extractiva." },
+  { q: "Trabajan con construcción", a: "Sí, sistemas de gestión de obras, presupuestos y logística de materiales." },
+  { q: "Trabajan con seguros", a: "Sí, incluyendo sistemas de pólizas, siniestros y gestión de clientes." },
+  { q: "Trabajan con pymes", a: "Sí, siempre que el proyecto tenga solidez técnica y económica real." },
+  { q: "Qué sector tiene mayor demanda de modernización", a: "Logística, salud y finanzas son los que más requieren modernización urgente actualmente." },
+
+  // ═══ EQUIPO ═══
+  { q: "Cuántas personas trabajan en OpenCORE", a: "Somos un equipo boutique especializado. El tamaño nos permite atención directa y alta calidad técnica." },
+  { q: "Tienen equipo internacional", a: "Podemos incorporar especialistas internacionales cuando el proyecto lo requiere." },
+  { q: "Son todos seniors", a: "El núcleo del equipo es senior. Nunca usamos juniors sin supervisión directa en sistemas críticos." },
+  { q: "Puedo hablar con el equipo técnico", a: "Sí. Podemos agendar una reunión técnica directamente con nuestros arquitectos." },
+  { q: "Tienen especialistas en IA", a: "Sí, contamos con profesionales especializados en inteligencia artificial aplicada." },
+  { q: "Trabajan con subcontratistas", a: "Cuando aplica, con especialistas de confianza bajo los mismos estándares de calidad." },
+  { q: "Quién lidera los proyectos", a: "Cada proyecto tiene un arquitecto líder senior con comunicación directa con el cliente." },
+  { q: "Tienen equipo de ventas", a: "Trabajamos con trato directo técnico. No hay intermediarios de ventas en el proceso." },
+
+  // ═══ CONTACTO ═══
+  { q: "Cómo me contacto con ustedes", a: "Puede escribirnos a contacto@opencore.cl, WhatsApp +56 9 4958 7198 o agendar en Calendly." },
+  { q: "Tienen oficina física", a: "Operamos principalmente remoto, pero coordinamos reuniones ejecutivas presenciales cuando es necesario." },
+  { q: "Puedo agendar una reunión", a: "Sí. Puede agendar un diagnóstico de 15 minutos en nuestro Calendly sin compromiso ni costo." },
+  { q: "Tienen demo disponible", a: "Podemos mostrar ejemplos de trabajo previo bajo NDA según el tipo de proyecto." },
+  { q: "Tienen portfolio", a: "Bajo acuerdo de confidencialidad, mostramos casos relevantes a su industria." },
+  { q: "Cuánto demora la primera reunión", a: "Típicamente 15 a 30 minutos para entender su situación y explorar cómo podemos ayudar." },
+  { q: "Es gratis la primera consulta", a: "Sí. La reunión exploratoria inicial es sin costo ni compromiso." },
+  { q: "Cómo es el proceso de contratación", a: "1) Reunión inicial, 2) Diagnóstico, 3) Propuesta técnica y económica, 4) Contrato, 5) Inicio." },
+  { q: "Qué información necesitan para cotizar", a: "Descripción del sistema actual, objetivo del proyecto y plazos estimados." },
+  { q: "Puedo enviar mis requerimientos por email", a: "Sí, puede escribirnos a contacto@opencore.cl con el detalle de su proyecto." },
+  { q: "Responden rápido", a: "Sí, respondemos en horario hábil. Para urgencias puede contactar vía WhatsApp." },
+  { q: "Tienen horario de atención", a: "Lunes a viernes en horario de oficina. Para proyectos críticos coordinamos disponibilidad ampliada." },
+
+  // ═══ FINANCIERO ═══
+  { q: "Aceptan pago en cuotas", a: "Las condiciones de pago se estructuran según el proyecto, típicamente por hitos contractuales." },
+  { q: "Facturan en UF", a: "Sí, generalmente cotizamos en UF para proyectos medianos y grandes." },
+  { q: "Facturan en pesos", a: "Sí, también podemos facturar en pesos chilenos según acuerdo." },
+  { q: "Tienen precios fijos", a: "Dependiendo del alcance definido, ofrecemos precio fijo o por hora." },
+  { q: "Cuál es la diferencia entre precio fijo y por hora", a: "Precio fijo da certeza de costo total pero requiere alcance claro. Por hora es flexible pero variable." },
+  { q: "Hay costos adicionales", a: "Los costos se definen contractualmente con claridad. Sin sorpresas fuera del acuerdo." },
+  { q: "Cobran por adelantado", a: "Puede estructurarse un anticipo según el proyecto, definido contractualmente." },
+  { q: "Qué pasa si me quedo sin presupuesto", a: "Se renegocia el alcance. Trabajamos con transparencia para anticipar estas situaciones." },
+
+  // ═══ CONCEPTOS TÉCNICOS ═══
+  { q: "Qué es una API REST", a: "Interfaz de programación que permite comunicación entre sistemas mediante HTTP de forma estándar." },
+  { q: "Qué es un webhook", a: "Mecanismo que envía datos automáticamente de un sistema a otro cuando ocurre un evento." },
+  { q: "Qué es un endpoint", a: "URL específica en una API donde se puede enviar o recibir información." },
+  { q: "Qué es refactoring", a: "Reestructurar código existente para mejorar su calidad sin cambiar la funcionalidad visible." },
+  { q: "Qué es un sistema crítico", a: "Sistema cuya falla impacta directamente en la operación o facturación del negocio." },
+  { q: "Qué es escalabilidad horizontal", a: "Agregar más servidores para distribuir carga en vez de potenciar el servidor existente." },
+  { q: "Qué es un token JWT", a: "JSON Web Token: mecanismo estándar de autenticación seguro entre sistemas distribuidos." },
+  { q: "Qué es un sistema ERP", a: "Sistema de Planificación de Recursos Empresariales que integra finanzas, RRHH e inventario." },
+  { q: "Qué es un sistema CRM", a: "Gestión de Relaciones con Clientes para administrar interacciones, ventas y seguimiento." },
+  { q: "Qué es automatización RPA", a: "Robotic Process Automation: robots de software que automatizan tareas repetitivas de alto volumen." },
+  { q: "Qué es un data warehouse", a: "Repositorio centralizado de datos históricos optimizado para análisis empresarial." },
+  { q: "Qué es Business Intelligence", a: "Conjunto de herramientas para analizar datos y apoyar decisiones estratégicas de negocio." },
+  { q: "Qué es un dashboard", a: "Panel visual con indicadores clave del negocio actualizados en tiempo real." },
+  { q: "Qué es la interoperabilidad", a: "Capacidad de distintos sistemas para comunicarse e intercambiar información de forma eficiente." },
+  { q: "Qué es el tiempo de respuesta del sistema", a: "Tiempo que demora un sistema en responder a una solicitud. Clave para experiencia de usuario." },
+  { q: "Qué es un load balancer", a: "Distribuidor de carga que reparte solicitudes entre múltiples servidores para mejorar rendimiento." },
+  { q: "Qué es un chatbot empresarial", a: "Sistema conversacional automatizado que responde consultas sin intervención humana directa." },
+  { q: "Qué es alta disponibilidad", a: "Diseño de sistemas que garantiza operación continua minimizando tiempo de inactividad." },
+  { q: "Qué es un sistema de gestión", a: "Software que centraliza y organiza procesos operativos de una empresa." },
+  { q: "Qué es modernización progresiva", a: "Actualizar sistemas por etapas sin detener la operación del negocio." },
+
+  // ═══ VARIADAS / SITUACIONALES ═══
+  { q: "Cuál es la diferencia entre software a medida y un producto", a: "El software a medida se adapta exactamente a su proceso. Un producto puede requerir que usted adapte su proceso a él." },
+  { q: "Cuándo conviene software a medida", a: "Cuando su proceso es diferenciador y los productos estándar comprometen su ventaja competitiva." },
+  { q: "Cuándo conviene un producto estándar", a: "Para procesos genéricos como contabilidad básica donde la personalización no agrega valor estratégico." },
+  { q: "Pueden rescatar mi proyecto fallido", a: "Si es técnicamente viable, sí. Primero evaluamos el estado real y luego definimos estrategia de rescate." },
+  { q: "Cuánto tiempo lleva modernizar un sistema", a: "Desde semanas para módulos específicos hasta meses para sistemas completos. Depende de la complejidad." },
+  { q: "Pueden trabajar con mi equipo interno", a: "Sí. Colaboramos con equipos internos o trabajamos de forma independiente según prefiera." },
+  { q: "Tienen experiencia con sistemas de facturación", a: "Sí, incluyendo integración con SII y DTE en sistemas empresariales chilenos." },
+  { q: "Trabajan con DTE", a: "Sí, integramos sistemas con Documentos Tributarios Electrónicos del SII chileno." },
+  { q: "Pueden integrar con el SII", a: "Sí, realizamos integraciones con los servicios del Servicio de Impuestos Internos de Chile." },
+  { q: "Trabajan con sistemas de RRHH", a: "Sí, incluyendo integración de sistemas de recursos humanos con otras plataformas empresariales." },
+  { q: "Hacen sistemas de inventario", a: "Sí, sistemas de inventario integrados con otros módulos empresariales y facturación." },
+  { q: "Hacen sistemas de logística", a: "Sí. Tenemos especial experiencia en sistemas logísticos complejos y críticos." },
+  { q: "Qué pasa si me voy de OpenCORE", a: "Entregamos código fuente y documentación para que pueda continuar con cualquier equipo." },
+  { q: "Hacen mantenimiento de sistemas existentes", a: "Sí, ofrecemos contratos de mantenimiento evolutivo y correctivo." },
+  { q: "Qué es mantenimiento evolutivo", a: "Agregar mejoras o funcionalidades nuevas a un sistema existente de forma controlada." },
+  { q: "Qué es mantenimiento correctivo", a: "Resolver errores o fallas en un sistema que ya está en producción." },
+  { q: "Usan herramientas open source", a: "Sí, cuando son estables y apropiadas. La tecnología se elige por mérito técnico, no por tendencia." },
+  { q: "Documentan el código", a: "Sí. La documentación técnica y funcional es parte del entregable estándar." },
+  { q: "El sistema tendrá manual de usuario", a: "Sí, incluimos documentación de usuario cuando el alcance del proyecto lo contempla." },
+  { q: "Son mejores que contratar un equipo interno", a: "Somos complementarios. Combinamos experiencia especializada con velocidad de arranque que un equipo nuevo no puede igualar." },
+  { q: "Me conviene subcontratar o contratar interno", a: "Depende de su volumen y continuidad de trabajo. Lo evaluamos juntos para recomendarle la mejor opción." },
+  { q: "Pueden terminar lo que empezó otra empresa", a: "Sí, si el sistema es técnicamente viable. Primero evaluamos el estado real del código." },
+  { q: "Trabajan en fin de semana", a: "Para proyectos críticos y emergencias coordinamos disponibilidad ampliada fuera de horario hábil." },
+  { q: "Tienen soporte de emergencia", a: "Sí, bajo contrato de soporte crítico con tiempos de respuesta definidos por SLA." },
+  { q: "Qué hacen si hay un bug crítico en producción", a: "Activamos protocolo de emergencia con diagnóstico inmediato y plan de contención según SLA." },
+  { q: "Tienen experiencia con e-commerce", a: "Sí, incluyendo sistemas de carrito, pago y logística de despacho integrados." },
+  { q: "Hacen sistemas de reservas", a: "Sí, sistemas de reservas online integrados con disponibilidad, pagos y facturación." },
+  { q: "Hacen sistemas de turnos", a: "Sí, gestión de turnos para empresas de salud, servicios y atención al público." },
+  { q: "Trabajan con OpenAI", a: "Sí, integramos APIs de OpenAI cuando aporta valor real al negocio del cliente." },
+  { q: "Integran con WhatsApp Business", a: "Sí, integraciones con WhatsApp Business API para notificaciones y atención automatizada." },
+  { q: "Pueden crear chatbots", a: "Sí, desarrollamos chatbots con NLP para atención al cliente, ventas y soporte interno." },
+  { q: "Trabajan con blockchain", a: "Evaluamos blockchain caso a caso. Solo lo recomendamos cuando aporta valor real, no por moda." },
+  { q: "Pueden hacer aplicaciones web", a: "Sí, aplicaciones web empresariales de alta complejidad y rendimiento." },
+  { q: "Hacen aplicaciones de escritorio", a: "Sí, cuando el caso de uso lo requiere y es la mejor opción para el cliente." },
+  { q: "Integran con Zoom o Teams", a: "Sí, podemos integrar con APIs de Zoom o Microsoft Teams para flujos empresariales." },
+  { q: "Tienen casos de éxito documentados", a: "Bajo acuerdo de confidencialidad, podemos compartir casos relevantes a su industria." },
+  { q: "Qué proyectos han hecho", a: "Migraciones de sistemas legacy, integraciones ERP, sistemas logísticos y plataformas de gestión empresarial." },
+  { q: "Qué lenguajes de programación usan", a: "Python, Java, Node.js, .NET, PHP, Go y otros según estrategia del cliente." },
+  { q: "Tienen plataforma propia", a: "Nos enfocamos en soluciones a medida, no en productos enlatados propios." },
+  { q: "Tienen ERP propio", a: "No. Integramos y modernizamos ERPs existentes del cliente o seleccionamos el más adecuado." },
+  { q: "Vale la pena modernizar o comprar un ERP nuevo", a: "Depende del costo-beneficio. Evaluamos ambas opciones antes de recomendar." },
+  { q: "Integran con SAP", a: "Sí, realizamos integraciones con SAP y otros ERP empresariales de gran escala." },
+  { q: "Trabajan con sistemas de punto de venta", a: "Sí, incluyendo POS integrados con inventario, facturación y reportería." },
+  { q: "Hacen aplicaciones móviles", a: "Sí, cuando forman parte de una solución empresarial integrada con arquitectura sólida." },
+  { q: "Trabajan con iOS", a: "Sí, aplicaciones iOS para entornos empresariales cuando el proyecto lo requiere." },
+  { q: "Trabajan con Android", a: "Sí, aplicaciones Android empresariales integradas con sistemas de backend." },
+  { q: "Hacen sitios web empresariales", a: "Sí, sitios empresariales de alto rendimiento integrados con sistemas de gestión." },
+  { q: "Tienen experiencia con integraciones de pago", a: "Sí, incluyendo Transbank, MercadoPago y otras pasarelas de pago." },
+  { q: "Integran con Transbank", a: "Sí, tenemos experiencia en integración de medios de pago Transbank en sistemas empresariales chilenos." },
+  { q: "Pueden hacer análisis de datos", a: "Sí, incluyendo dashboards, reportería automatizada y análisis de KPIs empresariales." },
+  { q: "Trabajan con Power BI", a: "Sí, para visualización de datos y reportería ejecutiva en ecosistemas Microsoft." },
+  { q: "Pueden automatizar reportes", a: "Sí, automatizamos reportes periódicos para reducir trabajo manual y eliminar errores." },
+  { q: "Pueden hacer notificaciones automáticas", a: "Sí, alertas y notificaciones por email, SMS o WhatsApp integradas a procesos del sistema." }
 ];
 
 // ══════════════════════════════════════════════════════════
-//  NLP ENGINE v3.6 — OPENCORE CHATBOT
+//  NLP ENGINE v3.7 — OPENCORE CHATBOT
 //  Fixes: CTA HTML rendering, bad words word-boundary,
 //         dead code removed, pre-computed token cache,
 //         merged synonym maps, Bayesian confidence,
-//         rate limiting, conversation context memory,
-//         input maxlength, ARIA labels
+//         rate limiting, Jorge disambiguation fix,
+//         farewell/thanks keyword consistency,
+//         isHTML propagation on exact match + CTA paths,
+//         cotizar synonym expansion, input maxlength, ARIA
 // ══════════════════════════════════════════════════════════
 
 const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","cono","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
@@ -1434,7 +1659,7 @@ function bigrams(tokens) {
 
 // Unified synonym map
 const synonyms = {
-  "precio":      ["costo","valor","cobran","cobrar","tarifa","presupuesto","cotizacion","costos","precios"],
+  "precio":      ["costo","valor","cobran","cobrar","tarifa","presupuesto","cotizacion","cotizar","costos","precios"],
   "proyecto":    ["trabajo","desarrollo","sistema","implementacion"],
   "rapido":      ["urgente","express","apurado","pronto","inmediato"],
   "experiencia": ["trayectoria","recorrido","anos","antiguedad"],
@@ -1470,7 +1695,7 @@ function expandWithSynonyms(token) {
   return [...new Set(exp)];
 }
 
-// Pre-compute token cache on load (huge perf win — no re-tokenizing 1108 Q&As per query)
+// Pre-compute token cache on load (huge perf win — no re-tokenizing per query)
 const precomputedDB = qnaDB.map(item => ({
   q: item.q, a: item.a,
   tokens:     tokenize(item.q),
@@ -1533,20 +1758,23 @@ function isFarewell(i) { const n = normalize(i); return farewells.some(f => n ==
 function isThanks(i)   { const n = normalize(i); return thanks.some(t => n.includes(t)); }
 function pick(arr)     { return arr[Math.floor(Math.random() * arr.length)]; }
 
+// All greeting responses contain: "asistente" and "opencore"
 const greetingResponses = [
   "Hola! Soy el Asistente de OpenCORE. En que te puedo apoyar hoy?",
-  "Bienvenido! Estoy aqui para resolver tus dudas sobre tecnologia empresarial, migraciones o integracion de sistemas.",
-  "Hola! Consulta lo que necesites sobre nuestros servicios, costos, metodologia o experiencia."
+  "Bienvenido al Asistente de OpenCORE! Estoy aqui para resolver tus dudas sobre tecnologia empresarial y migraciones.",
+  "Hola! Soy el Asistente virtual de OpenCORE. Consulta lo que necesites sobre servicios, costos o experiencia."
 ];
+// All farewell responses include: "pronto", "gracias", "exito"
 const farewellResponses = [
-  "Hasta pronto! Si necesitas algo mas, aqui estaremos.",
-  "Gracias por tu interes en OpenCORE! No dudes en volver cuando lo necesites.",
-  "Exito en tu proyecto! Estamos disponibles cuando quieras retomar la conversacion."
+  "Hasta pronto! Gracias por tu interes en OpenCORE. Mucho exito en tu proyecto!",
+  "Hasta pronto! Gracias por contactarnos. Exito en tus iniciativas tecnologicas.",
+  "Pronto estaremos aqui si nos necesitas. Gracias por confiar en OpenCORE. Exito!"
 ];
+// All thanks responses include: "gusto", "nada", "gracias"
 const thanksResponses = [
-  "Con gusto! Si surge algo mas, aqui estamos.",
-  "De nada! Estamos para ayudarte a tomar mejores decisiones tecnologicas.",
-  "Gracias a ti por tu interes! No dudes en volver si necesitas mas informacion."
+  "Con gusto! De nada, gracias a ti por tu interes en OpenCORE.",
+  "Es un gusto ayudarte! De nada. Gracias por considerar a OpenCORE.",
+  "Con mucho gusto! De nada. Gracias por tu consulta, aqui estaremos."
 ];
 const fallbackLong = [
   "Tu consulta parece requerir contexto tecnico especifico. Para no darte una recomendacion imprecisa, te recomiendo una evaluacion directa. Puedes escribirnos a contacto@opencore.cl o agendar una sesion.",
@@ -1586,7 +1814,12 @@ function handlePersonEntity(input) {
     }
     pendingDisambiguation = null; pendingMsgCount = 0;
   }
+  // FIX: Check for qualifier BEFORE triggering disambiguation
   if (t.includes("jorge quezada") && (t.includes("quien") || t.includes("kien") || t.includes("qn"))) {
+    if (t.includes("senior") || t.includes("big boss") || t.includes("creador"))
+      return { text: "Jorge Quezada Senior es el fundador de OpenCORE SpA. Informatico con decadas de experiencia en sistemas criticos, arquitecto y desarrollador senior.", suggestions: [] };
+    if (t.includes("junior") || t.includes("jr") || t.includes("hijo"))
+      return { text: "Jorge Quezada Junior (JR) es consultor ejecutivo Senior en OpenCORE. Es el especialista para cotizaciones, proyectos de desarrollo y estrategia tecnologica.", suggestions: [] };
     pendingDisambiguation = "jorge_quezada"; pendingMsgCount = 0;
     return { text: "Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
   }
@@ -1664,15 +1897,20 @@ function processInput(input) {
   // 6. Farewell
   if (isFarewell(clean)) return { text: pick(farewellResponses), suggestions: [] };
 
-  // 7. Exact match (uses pre-computed normalized)
+  // 7. Exact match (uses pre-computed normalized) — FIX: propagate isHTML when CTA fires
   for (const item of precomputedDB) {
-    if (item.normalized === norm) return { text: item.a, suggestions: [] };
+    if (item.normalized === norm) {
+      if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
+      return { text: item.a, suggestions: [] };
+    }
   }
   for (const item of precomputedDB) {
     const qn = item.normalized;
     if (qn.length > 4 && norm.length > 4 &&
-        (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35)))
+        (norm.startsWith(qn) || (qn.startsWith(norm) && qn.length <= norm.length * 1.35))) {
+      if (shouldAppendCTA(clean)) return { text: item.a + CTA_HTML, suggestions: [], isHTML: true };
       return { text: item.a, suggestions: [] };
+    }
   }
 
   // 8. NLP fuzzy match
