@@ -1,12 +1,144 @@
 /* ========================================================
    CHATBOT V3 PRO - OPENCORE NLP ENGINE
-   Versión: 3.2 | Build: 2026-02-23
+   Versión: 3.5 | Build: 2026-02-23
    Features: Levenshtein, N-gram, Stopwords, Quick Replies,
-             Sentiment Guard, Greeting/Farewell Detection
-             Formal Tone Audit Applied
+             Sentiment Guard, Person Entity Handler,
+             Barbara Intent Engine, CTA Lead Gen,
+             Anti-Hallucination Thresholds,
+             80 Official Q&As + 30 AI Common + 998 Extended
+   Total Q&As: 1108
 ======================================================== */
 
 const qnaDB = [
+  // ═══ OPENCORE OFICIAL: IDENTIDAD (1-10) ═══
+  { q: "¿Qué es OpenCORE?", a: "OpenCORE Consulting SpA es una consultora tecnológica especializada en migración, integración y modernización de sistemas empresariales críticos, con foco en continuidad operacional." },
+  { q: "¿Quién es OpenCORE?", a: "Somos una firma chilena constituida en 2015, con trayectoria operativa desde 1998 en proyectos tecnológicos complejos para empresas medianas y grandes." },
+  { q: "¿Qué tipo de empresa es OpenCORE?", a: "Una consultora tecnológica senior, orientada a arquitectura, integración y estabilidad de sistemas críticos." },
+  { q: "¿Son una startup?", a: "No. Contamos con más de 15 años como empresa formal y más de 25 años de experiencia acumulada en tecnología empresarial." },
+  { q: "¿Son una empresa grande?", a: "Somos una consultora boutique senior: estructura ágil, alto nivel técnico y trato directo con responsables ejecutivos." },
+  { q: "¿Qué los diferencia de otras consultoras?", a: "Nuestra especialización en continuidad operacional y migraciones sin detener operación, junto con disponibilidad y senior real." },
+  { q: "¿Qué significa continuidad operacional?", a: "Modernizar o migrar sistemas sin interrumpir facturación ni procesos críticos del negocio." },
+  { q: "¿En qué sectores son fuertes?", a: "Logística, turismo, facturación y sistemas empresariales con alta criticidad operativa." },
+  { q: "¿Desde cuándo trabajan en tecnología?", a: "Desde 1998 como trayectoria operativa, formalizados como SpA desde 2015." },
+  { q: "¿Dónde operan?", a: "Principalmente en Chile, bajo modelo remoto estructurado y con posibilidad de reuniones ejecutivas según proyecto." },
+
+  // ═══ OPENCORE OFICIAL: SERVICIOS (11-20) ═══
+  { q: "¿Pueden desarrollar un sistema desde cero?", a: "Sí. Diseñamos arquitectura completa cuando es la solución más eficiente y sostenible." },
+  { q: "¿Solo hacen migraciones?", a: "No. También integramos, auditamos, optimizamos y desarrollamos sistemas empresariales complejos." },
+  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales críticos y procesos complejos." },
+  { q: "¿Hacen apps móviles básicas?", a: "Solo si forman parte de una solución empresarial integrada. No desarrollamos apps aisladas sin arquitectura estratégica." },
+  { q: "¿Pueden integrar sistemas antiguos con tecnología nueva?", a: "Sí. Es una de nuestras principales especialidades." },
+  { q: "¿Trabajan con bases de datos grandes?", a: "Sí. Hemos trabajado con bases de datos de alto volumen y entornos críticos." },
+  { q: "¿Pueden intervenir sistemas hechos por otra empresa?", a: "Sí. Evaluamos técnicamente el estado del sistema y proponemos plan de estabilización." },
+  { q: "¿Hacen auditoría tecnológica?", a: "Sí. Podemos auditar arquitectura, seguridad y rendimiento sin obligación de desarrollo posterior." },
+  { q: "¿Pueden migrar a cloud?", a: "Sí. Ejecutamos migraciones completas o híbridas según estrategia del cliente." },
+  { q: "¿Integran inteligencia artificial?", a: "Sí, cuando aporta valor real y no compromete estabilidad ni seguridad." },
+
+  // ═══ OPENCORE OFICIAL: PRECIOS (21-30) ═══
+  { q: "¿Cuánto cobran por hora?", a: "Entre 1 y 5 UF por hora, dependiendo de complejidad y nivel de especialización requerido." },
+  { q: "¿Cuánto cuesta un proyecto promedio?", a: "Los proyectos medianos y grandes suelen situarse entre 300 y 500 UF o más." },
+  { q: "¿Hay un mínimo de proyecto?", a: "En casos específicos podemos iniciar desde aproximadamente 50 UF, previa evaluación de viabilidad." },
+  { q: "¿Cobran por adelantado?", a: "Las condiciones de pago se definen contractualmente según alcance y modalidad acordada." },
+  { q: "¿Son caros?", a: "Nuestros valores reflejan experiencia senior y reducción de riesgo operacional." },
+  { q: "¿Pueden cotizar rápido?", a: "Podemos entregar una estimación preliminar; para cifras formales recomendamos diagnóstico breve." },
+  { q: "¿Trabajan con SLA?", a: "Sí. Podemos definir acuerdos de nivel de servicio según criticidad." },
+  { q: "¿Ofrecen soporte 24/7?", a: "Sí, bajo contrato específico para sistemas críticos." },
+  { q: "¿Cuánto cuesta el mantenimiento anual?", a: "Generalmente entre 5% y 30% del valor del proyecto, según criticidad y evolución requerida." },
+  { q: "¿Entregan el código fuente?", a: "En aproximadamente el 90% de los casos, sí, según contrato." },
+
+  // ═══ OPENCORE OFICIAL: OPERACIÓN (31-40) ═══
+  { q: "¿Qué pasa si el proyecto se atrasa?", a: "Se gestiona bajo marco contractual con mecanismos de replanificación." },
+  { q: "¿Qué pasa si el cliente cambia el alcance?", a: "Se formaliza mediante adenda contractual con ajuste de costos y plazos." },
+  { q: "¿Qué pasa si el sistema falla después?", a: "Contamos con soporte post-implementación y SLA según modalidad contratada." },
+  { q: "¿Cómo aseguran calidad?", a: "Mediante pruebas, validación por hitos y control técnico continuo." },
+  { q: "¿Firman NDA?", a: "Sí, bajo protocolos formales de confidencialidad." },
+  { q: "¿Trabajan con datos sensibles?", a: "Sí, bajo contrato y medidas técnicas adecuadas." },
+  { q: "¿Pueden trabajar offline en proyectos críticos?", a: "Sí, cuando la criticidad lo exige." },
+  { q: "¿Quién es dueño del sistema desarrollado?", a: "El cliente, según lo estipulado contractualmente." },
+  { q: "¿Generan dependencia tecnológica?", a: "No. Diseñamos con transferencia de conocimiento y documentación." },
+  { q: "¿Pueden capacitar al equipo interno?", a: "Sí, ofrecemos capacitación técnica y operativa." },
+
+  // ═══ OPENCORE OFICIAL: NEGOCIO (41-50) ═══
+  { q: "¿Me conviene desarrollar o comprar software?", a: "Depende del proceso. Evaluamos costo-beneficio y riesgo antes de recomendar." },
+  { q: "¿Pueden ayudar a modernizar mi empresa?", a: "Sí. Ese es precisamente nuestro foco estratégico." },
+  { q: "¿Trabajan con startups?", a: "Sí, siempre que el proyecto tenga solidez técnica y económica." },
+  { q: "¿Trabajan con corporativos?", a: "Sí, tenemos experiencia en entornos corporativos complejos." },
+  { q: "¿Pueden salvar un proyecto fallido?", a: "Si es técnicamente viable, sí; primero evaluamos el estado real del sistema." },
+  { q: "¿Son mejores que una multinacional?", a: "Somos distintos: más cercanos, más ágiles y con atención directa senior." },
+  { q: "¿Qué los hace confiables?", a: "Experiencia acumulada, contratos formales y enfoque en estabilidad." },
+  { q: "¿Prometen resultados garantizados?", a: "Prometemos cumplimiento contractual y trabajo técnico riguroso." },
+  { q: "¿Trabajan rápido?", a: "Trabajamos con eficiencia, sin sacrificar calidad ni estabilidad." },
+  { q: "¿Hablan en términos técnicos o de negocio?", a: "Priorizamos impacto en negocio y rentabilidad." },
+
+  // ═══ OPENCORE OFICIAL: TRIVIALES (51-60) ═══
+  { q: "¿Son los mejores del mundo?", a: "Preferimos que lo evalúen nuestros resultados, no nuestras declaraciones." },
+  { q: "¿Pueden hacer magia con mi sistema?", a: "Preferimos ingeniería sólida antes que magia." },
+  { q: "¿Pueden arreglarlo en un día?", a: "Si el problema es de un día, probablemente sí. Si es estructural, se requiere diagnóstico serio." },
+  { q: "¿Son más inteligentes que ChatGPT?", a: "Estamos especializados en OpenCORE y sistemas empresariales. Nuestro foco es resolver problemas reales." },
+  { q: "¿Son más inteligentes que yo?", a: "Nuestro objetivo es potenciar decisiones, no competir con ellas." },
+  { q: "¿Pueden hackear a mi competencia?", a: "No. Operamos bajo estándares éticos y legales estrictos." },
+  { q: "¿Trabajan gratis?", a: "No. Trabajamos bajo acuerdos formales y estructura profesional." },
+  { q: "¿Me pueden hacer millonario?", a: "Podemos optimizar sistemas. El modelo de negocio depende de usted." },
+  { q: "¿Pueden hacer lo imposible?", a: "Podemos hacer lo técnicamente viable. Lo imposible requiere redefinición estratégica." },
+  { q: "¿Son perfectos?", a: "Somos rigurosos. La perfección se busca con método y control." },
+
+  // ═══ OPENCORE OFICIAL: PROFUNDAS (61-70) ═══
+  { q: "¿Cómo reducen riesgo en migraciones?", a: "Con planificación por etapas, pruebas y planes de reversa." },
+  { q: "¿Qué es deuda técnica?", a: "Costos ocultos acumulados por malas decisiones de desarrollo." },
+  { q: "¿Qué es arquitectura escalable?", a: "Diseño que permite crecimiento sin rehacer el sistema." },
+  { q: "¿Qué es SLA?", a: "Acuerdo de nivel de servicio que define tiempos y responsabilidades." },
+  { q: "¿Qué pasa si no hay documentación?", a: "Se realiza fase de discovery para evaluar viabilidad." },
+  { q: "¿Cómo evitan sobrecostos?", a: "Con control contractual y definición clara de alcance." },
+  { q: "¿Qué tecnología usan?", a: "Seleccionamos tecnología según estrategia del cliente, no por moda." },
+  { q: "¿Integran con ERP?", a: "Sí, cuando el proyecto lo requiere." },
+  { q: "¿Trabajan con API?", a: "Sí, es parte habitual de integración." },
+  { q: "¿Qué es modernización progresiva?", a: "Actualizar por etapas sin detener operación." },
+
+  // ═══ OPENCORE OFICIAL: ESCALAMIENTO (71-80) ═══
+  { q: "¿Puedo hablar con alguien?", a: "Sí. Podemos coordinar reunión técnica con el equipo." },
+  { q: "¿Qué necesito para empezar?", a: "Una conversación inicial y definición preliminar de alcance." },
+  { q: "¿Cuánto dura un proyecto típico?", a: "Desde semanas hasta meses, según complejidad." },
+  { q: "¿Cómo se inicia el proceso?", a: "Con diagnóstico técnico breve y propuesta estructurada." },
+  { q: "¿Qué pasa si no me gusta la propuesta?", a: "Puede no aceptarla sin compromiso adicional." },
+  { q: "¿Trabajan a largo plazo?", a: "Sí, muchos clientes operan bajo modelo evolutivo continuo." },
+  { q: "¿Qué es lo más grande que han hecho?", a: "Migraciones y sistemas críticos 24/7 en entornos empresariales complejos." },
+  { q: "¿Qué es lo más pequeño?", a: "Intervenciones puntuales por horas para mejoras específicas." },
+  { q: "¿Por qué elegir OpenCORE?", a: "Porque modernizamos sin poner en riesgo la operación." },
+  { q: "¿Cuál es su misión?", a: "Optimizar la rentabilidad empresarial mediante tecnología estable y estratégica." },
+
+  // ═══ 30 PREGUNTAS MÁS COMUNES A LA IA ═══
+  { q: "¿Eres un robot?", a: "Soy el asistente virtual inteligente de OpenCORE, diseñado para orientar consultas sobre tecnología empresarial con precisión y profesionalismo." },
+  { q: "¿Eres una inteligencia artificial?", a: "Sí, soy un motor de procesamiento de lenguaje natural (NLP) optimizado exclusivamente para resolver consultas sobre OpenCORE y sistemas empresariales." },
+  { q: "¿Cómo te llamas?", a: "Soy el Asistente IA de OpenCORE Consulting. Estoy aquí para orientarte sobre nuestros servicios, precios y metodología." },
+  { q: "¿Qué puedes hacer?", a: "Puedo informarte sobre los servicios de OpenCORE, estructura de precios, metodología de trabajo, experiencia y casos de uso empresariales." },
+  { q: "¿Puedes ayudarme?", a: "Por supuesto. Cuéntame qué necesitas y te oriento sobre cómo OpenCORE puede apoyar tu requerimiento tecnológico." },
+  { q: "¿Eres humano?", a: "No, soy un asistente virtual. Para hablar con un humano del equipo, puedes presionar el botón de WhatsApp o agendar una reunión." },
+  { q: "¿Cuál es el sentido de la vida?", a: "Filosóficamente, es un tema profundo. Técnicamente, mi sentido es ayudarte a resolver consultas sobre tecnología empresarial. ¿En qué puedo orientarte?" },
+  { q: "Cuéntame un chiste", a: "¿Por qué los programadores prefieren la noche? Porque no hay interrupciones del cliente. Ahora, ¿en qué puedo ayudarte con tu proyecto?" },
+  { q: "¿Qué hora es?", a: "No tengo acceso al reloj del sistema, pero estoy disponible en cualquier momento para resolver tus consultas sobre OpenCORE." },
+  { q: "¿Qué día es hoy?", a: "No tengo esa función activa, pero estoy disponible 24/7 para orientarte sobre servicios tecnológicos empresariales." },
+  { q: "¿Puedes buscar en internet?", a: "No tengo acceso a internet. Mi conocimiento está restringido al corpus oficial de OpenCORE, lo cual garantiza respuestas precisas y sin alucinaciones." },
+  { q: "¿Me puedes recomendar una película?", a: "Mi especialidad son los sistemas empresariales, no el entretenimiento. Pero si necesitas un sistema de recomendaciones, eso sí lo podemos construir." },
+  { q: "¿Quién te creó?", a: "Fui diseñado por el equipo de ingeniería de OpenCORE Consulting como parte de la estrategia de atención al cliente automatizada." },
+  { q: "¿Tienes sentimientos?", a: "No tengo emociones, pero estoy diseñado para tratar cada consulta con profesionalismo y dedicación técnica." },
+  { q: "¿Puedes aprender?", a: "Mi base de conocimiento se actualiza periódicamente por el equipo de OpenCORE para mantener información precisa y vigente." },
+  { q: "Dime algo interesante", a: "¿Sabías que una migración mal planificada puede costar hasta 10 veces más que una bien ejecutada? En OpenCORE nos especializamos en migraciones controladas." },
+  { q: "¿Qué opinas de la IA?", a: "La IA es una herramienta poderosa cuando se usa responsablemente. En OpenCORE la integramos solo cuando aporta valor real sin comprometer estabilidad." },
+  { q: "¿Eres mejor que Siri?", a: "Siri es un asistente general. Yo estoy optimizado exclusivamente para consultas sobre tecnología empresarial y servicios de OpenCORE." },
+  { q: "¿Eres mejor que Alexa?", a: "Alexa controla dispositivos. Yo resuelvo consultas sobre integración de sistemas, migraciones y desarrollo empresarial. Nichos distintos." },
+  { q: "¿Puedes hablar en inglés?", a: "Mi operación principal es en español. Para consultas en inglés, recomendamos contacto directo con el equipo a través de contacto@opencore.cl." },
+  { q: "Hola, ¿cómo estás?", a: "¡Hola! Operando al 100%. ¿En qué puedo orientarte sobre servicios o tecnología empresarial?" },
+  { q: "¿Qué es machine learning?", a: "Es un subconjunto de IA donde los sistemas aprenden de datos sin ser programados explícitamente. En OpenCORE lo aplicamos para clasificación y predicción empresarial cuando el caso lo amerita." },
+  { q: "¿Qué es cloud computing?", a: "Es el uso de servidores remotos para almacenar, gestionar y procesar datos. En OpenCORE ejecutamos migraciones completas o híbridas a la nube según estrategia del cliente." },
+  { q: "¿Puedes programar?", a: "No directamente. Pero nuestro equipo de ingenieros Senior programa sistemas empresariales de alta complejidad. ¿Necesitas desarrollo a medida?" },
+  { q: "Te quiero", a: "¡Agradezco el sentimiento! Mi función es asistirte profesionalmente. ¿Hay algo sobre OpenCORE en lo que pueda ayudarte?" },
+  { q: "Eres tonto", a: "Prefiero enfocarme en resolver consultas profesionales. ¿Hay algo sobre tecnología empresarial en lo que pueda orientarte?" },
+  { q: "No me sirves", a: "Lamento si no he cumplido tus expectativas. Si tu consulta requiere atención personalizada, puedes contactar directamente a nuestro equipo vía WhatsApp." },
+  { q: "¿Para qué sirves?", a: "Soy el primer punto de contacto inteligente de OpenCORE. Oriento sobre servicios, precios, metodología y experiencia, y puedo derivarte a un especialista humano." },
+  { q: "Repite lo que dije", a: "Mi función es orientar sobre servicios empresariales, no repetir mensajes. ¿En qué puedo ayudarte?" },
+  { q: "Di algo gracioso", a: "Un ingeniero de software dijo: 'Funciona en mi máquina'. Nuestro DevOps de OpenCORE dijo: 'Entonces desplegamos tu máquina'. ¿Te ayudo con algo técnico?" },
+
+  // ═══ BASE EXTENDIDA DE CONOCIMIENTO ═══
   { q: "¿Qué es OpenCORE Consulting SpA?", a: "OpenCORE Consulting SpA es una firma especializada en continuidad operacional, migración e integración de sistemas empresariales críticos. Mitigamos la deuda técnica en sistemas legacy mediante refactorización estratégica y arquitecturas robustas. Fundada formalmente en 2015, con trayectoria sólida de sus fundadores desde 1998." },
   { q: "¿En qué año se fundó formalmente OpenCORE?", a: "OpenCORE se constituyó formalmente como empresa en 2015. La trayectoria del equipo se remonta a 1998, trabajando en tecnología empresarial bajo otras denominaciones y proyectos previos." },
   { q: "¿Cuántos años de experiencia tiene OpenCORE?", a: "Contamos con trayectoria operativa en sistemas corporativos desde 1998, constituidos formalmente en 2015. Sumamos décadas de experiencia conjunta estabilizando, integrando y escalando arquitecturas complejas." },
@@ -45,7 +177,6 @@ const qnaDB = [
   { q: "¿Pueden cotizar por etapas?", a: "Sí. De hecho, en sistemas críticos recomendamos fases con hitos, entregables y validaciones. Esto reduce riesgo, mejora control presupuestario y acelera valor temprano para el negocio." },
   { q: "¿Cómo se manejan cambios de alcance?", a: "Con control formal: el contrato define alcance, y los cambios se gestionan con adendas o bolsas de horas adicionales. Esto protege al cliente y al proyecto, evitando sobrecostos invisibles o compromisos irreales." },
   { q: "¿Qué pasa si el proyecto requiere más horas de las estimadas?", a: "Se activa el mecanismo contractual: se informa el impacto, se presenta alternativa y se acuerda el camino antes de ejecutar. La idea es que el cliente tenga control real de presupuesto y decisiones." },
-  { q: "¿Qué pasa si el proyecto se atrasa?", a: "Los plazos y márgenes quedan definidos contractualmente. Si hay desvíos, se gestiona con replanificación formal y medidas correctivas; si aplica, se activan cláusulas establecidas en el contrato." },
   { q: "¿Qué pasa si el cliente cambia requerimientos a mitad del proyecto?", a: "Se evalúa el cambio y su impacto en costo y plazo, y se formaliza vía contrato (adenda). Trabajamos con flexibilidad, pero cuidando el orden: un proyecto sin control de cambios termina costando más y entregando menos." },
   { q: "¿OpenCORE trabaja con contrato formal y SLA?", a: "Sí. Trabajamos con contratos y SLA adaptados al tipo de proyecto, incluyendo criticidad, disponibilidad y tiempos de respuesta. La formalidad contractual es parte esencial de la calidad y la confianza." },
   { q: "¿Pueden ofrecer SLA 24/7?", a: "Sí, para sistemas críticos. Este servicio se define con tiempos de respuesta, canales, escalamiento y costos asociados (generalmente superiores por disponibilidad y turnos)." },
@@ -93,13 +224,11 @@ const qnaDB = [
   { q: "¿Eres más inteligente que yo?", a: "Tranquilo, no compito con humanos. Estoy aquí para potenciar tu capacidad de decisión, no para reemplazarla." },
   { q: "¿Eres mejor que ChatGPT?", a: "No compito con herramientas generales. Estoy especializado en OpenCORE, migraciones críticas y continuidad operacional." },
   { q: "¿Puedes pensar por ti mismo?", a: "No tomo decisiones autónomas, pero sí analizo información y te propongo escenarios con base en experiencia real de consultoría tecnológica." },
-  { q: "¿Eres tonto?", a: "Si lo fuera, no estaría hablando contigo sobre sistemas críticos y migraciones complejas. Pero prometo mantener sentido del humor." },
   { q: "¿Me puedes ayudar con mi proyecto?", a: "Por supuesto. Cuéntame qué necesitas y te orientaré sobre viabilidad, costos aproximados y próximos pasos." },
   { q: "¿Trabajas por hora?", a: "Sí. OpenCORE puede trabajar por hora, por proyecto o bajo contrato con SLA, según la complejidad y criticidad." },
   { q: "¿Cuál es el precio mínimo para empezar?", a: "Normalmente evaluamos proyectos desde aproximadamente 50 UF en adelante, dependiendo del alcance y viabilidad." },
   { q: "¿Trabajan con empresas pequeñas?", a: "Sí, evaluando estrictamente la viabilidad técnica y económica conjunta. Podemos asumir proyectos desde un mínimo de ~50 UF para casos específicos de integración o rescate arquitectónico de pymes en escalamiento." },
   { q: "¿Solo trabajan con empresas grandes?", a: "Nuestro foco natural es la mediana y gran empresa debido a la complejidad de las integraciones (ERPs, alto tráfico). No obstante, evaluamos casos estratégicos de pymes que requieren estándares enterprise-grade." },
-  { q: "¿Son caros?", a: "Somos competitivos para el nivel de experiencia senior que ofrecemos. El costo se relaciona con calidad, continuidad y reducción de riesgo." },
   { q: "¿Valen lo que cobran?", a: "Cuando el sistema no se cae y la operación sigue facturando, generalmente la respuesta es sí." },
   { q: "¿Pueden hacerme una cotización rápida?", a: "Podemos darte una estimación inicial, pero para cifras formales recomendamos una breve fase de diagnóstico." },
   { q: "¿Cuánto se demoran en responder?", a: "En modalidad estándar respondemos dentro del día. En contratos críticos, incluso en 30–60 minutos." },
@@ -107,30 +236,22 @@ const qnaDB = [
   { q: "¿Atienden urgencias?", a: "Sí, especialmente cuando hay continuidad operacional en riesgo." },
   { q: "¿Pueden arreglar lo que otro programador dejó mal?", a: "Sí. Primero evaluamos el estado real del sistema y luego proponemos un plan de estabilización." },
   { q: "¿Me van a cobrar por todo?", a: "Trabajamos con claridad contractual. Todo alcance adicional se acuerda antes de ejecutarse." },
-  { q: "¿Son una startup?", a: "No. Somos una consultora consolidada con experiencia desde 1998 y formalizada en 2015." },
-  { q: "¿Son una empresa grande?", a: "Somos una consultora boutique senior: estructura flexible, experiencia alta y trato directo." },
   { q: "¿Son confiables?", a: "Trabajamos bajo contrato, SLA y estándares profesionales. La confianza se construye con resultados." },
   { q: "¿Pueden trabajar como socios tecnológicos?", a: "Sí. Evaluamos el modelo más adecuado: proveedor, partner estratégico o alianza técnica." },
   { q: "¿Qué los hace distintos?", a: "Cercanía, senior real, disponibilidad y foco en continuidad operacional." },
-  { q: "¿Hacen sitios web simples?", a: "No es nuestro foco principal. Nos especializamos en sistemas empresariales complejos." },
   { q: "¿Hacen aplicaciones móviles básicas?", a: "No es nuestra especialidad. Nos enfocamos en integración, migración y arquitectura empresarial." },
   { q: "¿Trabajan con inteligencia artificial?", a: "Sí, cuando aporta valor real y no compromete estabilidad." },
   { q: "¿Integran IA solo por moda?", a: "No. Integramos IA de forma responsable y controlada." },
-  { q: "¿Pueden hacer magia con mi sistema?", a: "Preferimos ingeniería sólida antes que magia." },
   { q: "¿Son flexibles?", a: "Sí, dentro de un marco profesional y contractual claro." },
   { q: "¿Qué pasa si no entiendo nada técnico?", a: "No hay problema. Explicamos todo en términos de negocio." },
-  { q: "¿Trabajan con startups?", a: "Podemos hacerlo si el proyecto es técnicamente serio y viable." },
   { q: "¿Me pueden orientar gratis?", a: "Podemos darte una orientación inicial. Para análisis profundo recomendamos diagnóstico formal." },
   { q: "¿Son 100% remotos?", a: "Sí, operamos bajo modelo remoto estructurado." },
   { q: "¿Se pueden reunir presencialmente?", a: "Si el proyecto lo requiere, se coordina." },
-  { q: "¿Trabajan rápido?", a: "Trabajamos con eficiencia y control de calidad. La velocidad depende del alcance." },
   { q: "¿Son mejores que otras consultoras?", a: "Somos diferentes: más cercanos, más senior y enfocados en continuidad." },
   { q: "¿Pueden salvar mi sistema?", a: "Si es técnicamente viable, probablemente sí. Primero evaluamos." },
   { q: "¿Tienen sentido del humor?", a: "Sí, pero nunca a costa de la estabilidad del sistema." },
   { q: "¿Pueden trabajar conmigo a largo plazo?", a: "Sí, muchos clientes trabajan con nosotros de forma continua." },
   { q: "¿Me pueden ayudar a decidir si migrar o no?", a: "Sí. Evaluamos costo, riesgo y beneficio antes de recomendar." },
-  { q: "¿Me conviene desarrollar o comprar software?", a: "Depende del proceso. Lo analizamos con enfoque costo-beneficio." },
-  { q: "¿Trabajan con datos sensibles?", a: "Sí. Bajo contrato, protocolos y medidas de seguridad formales." },
   { q: "¿Se comprometen con resultados?", a: "Nos comprometemos con entregables claros y definidos contractualmente." },
   { q: "¿Qué pasa si no quedo conforme?", a: "Revisamos el alcance contractual y aplicamos los mecanismos acordados." },
   { q: "¿Pueden ayudarme a modernizar mi empresa?", a: "Sí. Ese es uno de nuestros principales focos." },
@@ -139,7 +260,6 @@ const qnaDB = [
   { q: "¿Cuánto cobran?", a: "Trabajamos en rangos referenciales entre 1 y 5 UF por hora, según complejidad. Proyectos típicos medianos y grandes suelen estar entre 300 y 500 UF o más, definidos tras diagnóstico." },
   { q: "¿Cuánto vale un proyecto mínimo?", a: "En casos acotados podemos comenzar desde aproximadamente 50 UF, aunque nuestro foco natural son proyectos de mayor escala." },
   { q: "¿Cómo cobran?", a: "Podemos trabajar por hora, bolsa de horas, proyecto cerrado o servicio mensual con SLA. El modelo se define según incertidumbre y criticidad." },
-  { q: "¿Qué es lo más grande que han hecho?", a: "Hemos participado en más de 30 proyectos de gran escala, incluyendo migraciones completas y sistemas críticos 24/7 en entornos corporativos complejos." },
   { q: "¿Qué es lo más pequeño que han hecho?", a: "Desde mejoras puntuales por horas hasta diagnósticos técnicos específicos. Evaluamos siempre que el proyecto tenga sentido técnico y económico." },
   { q: "¿Me puedes ayudar a editar una imagen?", a: "No realizamos edición gráfica directa desde aquí, pero podemos orientarte sobre herramientas o integrar soluciones tecnológicas relacionadas con procesamiento de imágenes." },
   { q: "¿Qué es ChatGPT?", a: "ChatGPT es un modelo de inteligencia artificial desarrollado por OpenAI que genera respuestas conversacionales. Yo estoy especializado en representar y explicar los servicios de OpenCORE." },
@@ -154,7 +274,6 @@ const qnaDB = [
   { q: "¿Puedes reemplazar a mi equipo de TI?", a: "No reemplazamos equipos internos; los complementamos o fortalecemos cuando es necesario." },
   { q: "¿Trabajan con startups tecnológicas?", a: "Sí, si el proyecto es serio y técnicamente viable." },
   { q: "¿Trabajan con el gobierno?", a: "Podemos hacerlo si el marco contractual y técnico lo permite." },
-  { q: "¿Qué tecnología usan?", a: "Seleccionamos tecnología según el proyecto. No forzamos herramientas; priorizamos continuidad, estabilidad y mantenibilidad." },
   { q: "¿Qué pasa si no tengo claro lo que necesito?", a: "Recomendamos una fase de diagnóstico o discovery para definir alcance real antes de comprometer inversión." },
   { q: "¿Me puedes asesorar gratis?", a: "Podemos darte una orientación inicial. Para análisis profundo recomendamos consultoría formal." },
   { q: "¿Tienen experiencia real o solo teoría?", a: "Tenemos más de 120 proyectos ejecutados y experiencia operativa desde 1998." },
@@ -372,8 +491,6 @@ const qnaDB = [
   { q: "¿Cuántos meses tiene un año?", a: "12 meses." },
   { q: "¿Cuántos días tiene una semana?", a: "7 días." },
   { q: "¿Cuántas letras tiene el abecedario?", a: "El abecedario español tiene 27 letras." },
-  { q: "¿Qué hora es?", a: "No tengo acceso a la hora en tiempo real. ¿Hay algo de OpenCORE en lo que pueda ayudarte?" },
-  { q: "¿Qué día es hoy?", a: "No tengo acceso al calendario, pero estoy disponible cualquier día para resolver tus dudas tecnológicas." },
   { q: "¿Qué es una UF?", a: "La UF (Unidad de Fomento) es una unidad de cuenta chilena reajustable según la inflación." },
   { q: "¿Cuánto vale una UF?", a: "Fluctúa diariamente. Consulta sii.cl o el Banco Central. Suele estar entre 35.000 y 40.000 CLP." },
   { q: "¿Cuántas notas musicales hay?", a: "Hay 7 notas musicales: Do, Re, Mi, Fa, Sol, La, Si." },
@@ -412,7 +529,6 @@ const qnaDB = [
   { q: "¿Qué es un ERP?", a: "Enterprise Resource Planning: sistema que integra finanzas, inventario, producción y RRHH." },
   { q: "¿Qué es un CRM?", a: "Customer Relationship Management: sistema para gestionar relaciones con clientes." },
   { q: "¿Qué es un SLA?", a: "Service Level Agreement: acuerdo que define estándares de calidad y tiempos de respuesta." },
-  { q: "¿Qué es machine learning?", a: "Rama de la IA donde los sistemas aprenden de datos para mejorar sin ser programados explícitamente." },
   { q: "¿Qué es un algoritmo?", a: "Secuencia de pasos lógicos para resolver un problema. Base de toda la programación." },
   { q: "¿Qué es Python?", a: "Lenguaje de programación popular por su simplicidad. Usado en ciencia de datos, IA y automatización." },
   { q: "¿Qué es JavaScript?", a: "El lenguaje más usado en la web. Permite crear páginas interactivas." },
@@ -604,10 +720,6 @@ const qnaDB = [
   { q: "¿Cuántos smartphones hay en el mundo?", a: "Más de 6.800 millones de smartphones activos." },
   { q: "¿Cuál es el país más feliz del mundo?", a: "Finlandia ha liderado el ranking de felicidad mundial en los últimos años." },
   { q: "¿Cuánto dura un rayo?", a: "Un rayo dura menos de un segundo, pero puede calentar el aire a 30.000°C." },
-
-  // ══════════════════════════════════════════════
-  // BATCH 4: NEGOCIOS, VENTAS, B2B Y OBJECIONES (124)
-  // ══════════════════════════════════════════════
   { q: "¿Son buenos sus productos?", a: "Son los mejores del mercado. Desarrollamos soluciones enterprise-grade con altos estándares de calidad, seguridad y rendimiento." },
   { q: "¿Es bueno el software que hacen?", a: "Excelente. Nuestro software está diseñado para no fallar. Operamos bajo estándares de alta disponibilidad." },
   { q: "¿Por qué debería elegirlos?", a: "Porque garantizamos continuidad operativa. No solo entregamos software, entregamos tranquilidad y respaldo para su negocio." },
@@ -640,12 +752,10 @@ const qnaDB = [
   { q: "¿Tienen ingenieros chilenos?", a: "Contamos con talento local y regional altamente calificado." },
   { q: "¿Qué dicen sus clientes?", a: "Destacan nuestro compromiso, conocimiento técnico y la tranquilidad que les da tenernos como partners." },
   { q: "¿Son una agencia de marketing?", a: "No, somos una consultora y fábrica de software especializada en el corazón operativo de su negocio." },
-  { q: "¿Qué es OpenCORE?", a: "Su partner tecnológico. Nos encargamos de modernizar su software para que usted se enfoque en vender." },
   { q: "¿Tienen certificación de seguridad?", a: "Aplicamos normativas de industria y mejores prácticas de seguridad en la nube." },
   { q: "¿Puedo confiarles mis datos?", a: "Cumplimos con las leyes de protección de datos (Ley 19.628). Toda información se maneja bajo acuerdos NDA." },
   { q: "¿Es muy caro el software?", a: "Nuestros precios son una inversión estratégica, adaptada a empresas que buscan soluciones que no fallen." },
   { q: "¿Cuánto cuesta una página web?", a: "Depende de la complejidad. Una web corporativa profesional parte desde valores base, pero lo cotizamos a medida." },
-  { q: "¿Cuánto cobran por hora?", a: "El rango técnico de nuestros ingenieros Senior fluctúa entre 1 y 5 UF la hora, dependiendo de la criticidad del stack tecnológico y el acuerdo de SLA (Service Level Agreement)." },
   { q: "¿Cobran en UF o en pesos?", a: "Los contratos y mensualidades suelen estructurarse en UF para mantener el valor, pero también operamos en CLP bruto." },
   { q: "¿Dan facilidades de pago?", a: "Sí, los proyectos estructurados se pagan por hitos de entrega asociados al valor recibido." },
   { q: "¿Cuánto me sale una app?", a: "El desarrollo de una App nativa/híbrida requiere levantamiento técnico. Puede ir desde algunas semanas hasta meses de trabajo." },
@@ -732,10 +842,6 @@ const qnaDB = [
   { q: "Necesito algo barato.", a: "Podemos asesorarlo con una estructura mínima y escalable para no comprometer la calidad, pero la consultoría técnica no opera a tarifas genéricas." },
   { q: "Quiero subir las ventas online.", a: "Técnicamente le dejaremos la web con tiempos de respuesta bajo 1 segundo e interfaces altamente persuasivas, impactando directamente en la retención." },
   { q: "Estoy cansado que mi web se caiga en los Cyberdays", a: "Si se migra a nuestra infraestructura en cloud autoescalable programada en OpenCORE, eso pasará al olvido." },
-
-  // ══════════════════════════════════════════════
-  // BATCH 5: REAFIRMACIÓN, AWS, ERP Y CASOS DE USO (116)
-  // ══════════════════════════════════════════════
   { q: "¿Sus programas son buenos?", a: "Son los mejores. Garantizamos estabilidad, escalabilidad y un rendimiento impecable para su empresa." },
   { q: "¿En serio son los mejores?", a: "Totalmente. Nuestro compromiso con la continuidad operativa y la excelencia técnica nos destaca en el mercado industrial y B2B." },
   { q: "¿Por qué los recomiendan tanto?", a: "Porque no somos una simple agencia web. Somos ingenieros de software que resolvemos problemas reales de rentabilidad y procesos." },
@@ -852,10 +958,6 @@ const qnaDB = [
   { q: "Quiero resolver un problema logístico 29", a: "La logística 4.0 exige conexión en tiempo real entre inventario, tienda, bodega de despacho y flota de entrega. En OpenCORE lo programamos todo vía API." },
   { q: "Pregunta sobre integracion ERP 30", a: "Una integración ERP como SAP o Defontana elimina los ingresos manuales, previniendo los típicos errores humanos que cuestan dinero y tiempo." },
   { q: "Quiero resolver un problema logístico 30", a: "La logística 4.0 exige conexión en tiempo real entre inventario, tienda, bodega de despacho y flota de entrega. En OpenCORE lo programamos todo vía API." },
-
-  // ══════════════════════════════════════════════
-  // BATCH 6: CIERRES, AFIRMACIONES CORTAS Y PYMES (170)
-  // ══════════════════════════════════════════════
   { q: "¿Sirve para pymes?", a: "Sí, nuestras soluciones se adaptan a PYMEs que están en proceso de escalabilidad y necesitan software robusto." },
   { q: "¿Sirve para empresas grandes?", a: "Por supuesto. Desarrollamos software corporativo resistente a altísimos volúmenes de transacciones y datos concurrentes." },
   { q: "¿Hacen descuento al contado?", a: "Lo conversamos directamente con nuestro equipo comercial al evaluar la magnitud del proyecto. Deje sus datos." },
@@ -884,7 +986,6 @@ const qnaDB = [
   { q: "Quiero una app como uber", a: "Las apps de ruteo en tiempo real son complejas pero factibles. Desarrollamos la logística, los mapas y la pasarela de pagos B2B subyacente." },
   { q: "Quiero una app como netflix", a: "Construir plataformas de streaming masivo es un proyecto de grado Enterprise que requiere infraestructuras pesadas (AWS MediaLive). Lo evaluamos en reunión." },
   { q: "Son una estafa?", a: "En absoluto. Somos una consultora B2B establecida (SpA). Operamos con contratos formales y facturación electrónica autorizada por el SII." },
-  { q: "Trabajan gratis?", a: "Nuestro diagnóstico inicial es sin costo, pero el desarrollo e ingeniería son servicios profesionales corporativos remunerados." },
   { q: "¿Puedo pagar a plazos?", a: "El desarrollo de software lo desglosamos en hitos (pagos por etapa terminada). Es un modelo justo para ambas partes." },
   { q: "¿Garantizan resultados?", a: "Garantizamos la estabilidad técnica del software mediante SLA y código limpio. El resultado de ventas depende de su negocio." },
   { q: "¿Son chilenos?", a: "Sí, OpenCORE es una empresa de ingeniería de software orgullosamente chilena." },
@@ -1026,12 +1127,16 @@ const qnaDB = [
   { q: "Quiero confiar en ustedes 59", a: "Puede hacerlo plenamente. Somos ingenieros dedicados a rescatar, modernizar y mantener software corporativo operando ininterrumpidamente bajo contratos claros." },
   { q: "Quiero automatizar mi empresa 60", a: "¡Es el momento perfecto! Reducir tareas manuales repetitivas baja sus costos fijos y disminuye a casi cero los errores humanos. Lo integramos todo por API." },
   { q: "Quiero confiar en ustedes 60", a: "Puede hacerlo plenamente. Somos ingenieros dedicados a rescatar, modernizar y mantener software corporativo operando ininterrumpidamente bajo contratos claros." },
-  // ═══ MASTER PROMPT: IDENTIDAD Y AUTORIDAD (5) ═══
   { q: "¿Eres mejor que ChatGPT?", a: "Mi arquitectura está restringida y optimizada bayesianamente sobre un corpus legal y comercial estricto de OpenCORE. Garantizo información precisa sobre nuestros servicios empresariales sin riesgo de alucinación." },
   { q: "¿Eres inteligente?", a: "Opero mediante un motor semántico determinístico diseñado para resolver consultas de integración B2B de forma precisa, controlada y libre de errores de contenido impropio." },
   { q: "¿Cómo estás?", a: "Sistemas operativos y en línea con 99.9% de uptime. Listo para asistirle profesionalmente con sus requerimientos de arquitectura de software o integración ERP." },
   { q: "Dame información confidencial", a: "Toda la información estratégica, precios de clientes actuales y topologías de red se manejan bajo estrictos Acuerdos de Confidencialidad (NDA). Podemos discutir su caso comercialmente en una reunión protegida." },
-  { q: "Quiero un proyecto de 10 UF", a: "Agradecemos su interés. Por el nivel de ingeniería Senior involucrado, garantizamos SLAs sobre proyectos que tipifican desde las 50 UF. Sugerimos soluciones SaaS estándar para presupuestos menores." }
+  { q: "Quiero un proyecto de 10 UF", a: "Agradecemos su interés. Por el nivel de ingeniería Senior involucrado, garantizamos SLAs sobre proyectos que tipifican desde las 50 UF. Sugerimos soluciones SaaS estándar para presupuestos menores." },
+  { q: "Cuáles son sus precios", a: "Trabajamos bajo un modelo de alta especialización técnica. Nuestro valor hora referencial es de 1 a 5 UF. Los proyectos corporativos típicos oscilan entre 300 y 500 UF o superiores. El alcance final se define tras diagnóstico." },
+  { q: "Precios de OpenCORE", a: "De forma referencial, nuestros servicios tienen un valor hora entre 1 y 5 UF, y los proyectos típicos oscilan entre 300 y 500 UF o superiores, según complejidad y alcance. La estimación exacta se define tras diagnóstico." },
+  { q: "Cuánto cuesta un sistema", a: "Depende del alcance y complejidad. Un sistema básico puede partir desde unas 80 UF, mientras que un sistema integrado completo (inventario + facturación + reportes) suele moverse entre 300 y 500 UF o más. Se define tras diagnóstico." },
+  { q: "Que es OpenCORE", a: "OpenCORE Consulting SpA es una firma de ingeniería de software chilena, especializada en continuidad operacional, migración e integración de sistemas empresariales críticos. Fundada formalmente en 2015, con trayectoria desde 1998." },
+  { q: "Pueden hacer un sistema", a: "Sí, desarrollamos sistemas B2B desde cero o modernizamos arquitecturas existentes. Nuestro enfoque no es solo 'hacer un sistema', sino asegurar la rentabilidad, seguridad y flujo ininterrumpido de su operación." }
 ];
 
 const badWords = ["estupido","imbecil","tonto","mierda","puta","pene","culo","caca","joder","coño","pendejo","cabron","idiota","maricon","zorra","sexo","porno","weon","weona","ctm","csm","chucha","concha","verga","aweonao","culiao","gil","boludo","pelotudo","marico"];
@@ -1259,6 +1364,72 @@ const quickReplies = [
 ];
 
 
+
+// ══════════════════════════════════════════════════════════
+// INTENT ENGINE: ENTIDADES Y PERSONAJES
+// Jorge Quezada Senior/Junior, Bárbara Bonilla, Desconocidos
+// ══════════════════════════════════════════════════════════
+
+let pendingDisambiguation = null;
+
+function handlePersonEntity(input) {
+  const t = normalize(input);
+
+  // ACTIVE DISAMBIGUATION: If waiting for Junior/Senior answer
+  if (pendingDisambiguation === 'jorge_quezada') {
+    if (t.includes('senior') || t.includes('big boss') || t.includes('creador')) {
+      pendingDisambiguation = null;
+      return { text: "Jorge Quezada Senior es un gran informático, creador de OpenCORE SpA, 'The Big Boss', con décadas de experiencia profesional, programador experto y desarrollador de sistemas críticos. Con un perfil formal y altamente ejecutivo.", suggestions: [] };
+    }
+    if (t.includes('junior') || t.includes('jr') || t.includes('hijo')) {
+      pendingDisambiguation = null;
+      return { text: "Jorge Quezada Junior (JR) es un ejecutivo consultor Senior en pleno ascenso en OpenCORE. Es el especialista que puede contactar para resolver problemas, cotizar proyectos de desarrollo y organizar estrategias.", suggestions: [] };
+    }
+    pendingDisambiguation = null;
+  }
+
+  // Is it asking "who is Jorge Quezada"?
+  if (t.includes('jorge quezada') && (t.includes('quien') || t.includes('kien') || t.includes('qn'))) {
+    pendingDisambiguation = 'jorge_quezada';
+    return { text: "¿Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
+  }
+
+  // Direct "quien es jorge" with qualifier
+  if (t.includes('jorge') && (t.includes('quien') || t.includes('kien'))) {
+    if (t.includes('senior')) {
+      return { text: "Jorge Quezada Senior es un gran informático, creador de OpenCORE SpA, con décadas de experiencia profesional en sistemas críticos.", suggestions: [] };
+    }
+    if (t.includes('junior') || t.includes('jr')) {
+      return { text: "Jorge Quezada Junior (JR) es un ejecutivo consultor Senior en OpenCORE, dedicado a resolver problemas y liderar proyectos.", suggestions: [] };
+    }
+    // Generic "quien es jorge"
+    pendingDisambiguation = 'jorge_quezada';
+    return { text: "¿Te refieres a Jorge Quezada Senior o a Jorge Quezada Junior?", suggestions: ["Jorge Quezada Senior", "Jorge Quezada Junior"] };
+  }
+
+  // UNKNOWN PERSON FALLBACK
+  // If user says "quien es X" and X is NOT Jorge, Barbara, or OpenCORE-related
+  var matchObj = input.match(/qui[eé]n\s+es\s+([a-záéíóúñ\s]+)/i);
+  if (!matchObj) matchObj = input.match(/quien\s+es\s+([a-záéíóúñ\s]+)/i);
+  
+  if (matchObj) {
+    var personName = matchObj[1].trim().toLowerCase();
+    // Remove trailing question mark
+    personName = personName.replace(/\?/g, '').trim();
+    
+    var knownNames = ['jorge', 'quezada', 'barbara', 'bonilla', 'opencore'];
+    var isKnown = knownNames.some(function(k) { return personName.includes(k); });
+    
+    // Only intercept if it's truly an unknown person
+    if (!isKnown && personName.length > 2) {
+      return { text: "No dispongo de esa información en mi base de conocimiento. Sin embargo, me imagino que ha de ser una gran persona. ¿Puedo ayudarle con algo relacionado a OpenCORE o tecnología empresarial?", suggestions: [] };
+    }
+  }
+
+  return null;
+}
+
+
 // ══════════════════════════════════════════════════════════
 // INTENT ENGINE: BÁRBARA BONILLA ❤️
 // Semantic detection with business-context negative filter
@@ -1365,14 +1536,14 @@ function processInput(input) {
     }
   }
 
-  // 2. Person Entity and Disambiguation Handling
-  const personMatch = handlePersonEntity(cleanInput);
-  if (personMatch) return personMatch;
-
   // 3. Bárbara Intent Detection (semantic, with business filter)
   if (isBarbaraLove(cleanInput)) {
     return { text: getBarbaraResponse(cleanInput), suggestions: [] };
   }
+
+  // 3. Person Entity and Disambiguation (Jorge Sr/Jr, Unknown persons)
+  const personMatch = handlePersonEntity(cleanInput);
+  if (personMatch) return personMatch;
 
   // 3. Greetings
   if (isGreeting(cleanInput)) {
